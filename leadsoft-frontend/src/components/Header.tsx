@@ -37,7 +37,8 @@ const Nav = styled.nav<{ $isOpen: boolean }>`
     position: absolute;
     top: 100%;
     left: 0;
-    width: 70%;
+    width: 50%;
+    min-height:100vh;
     background: var(--primary-color1);
     display: ${({ $isOpen }) => ($isOpen ? "block" : "none")};
     padding: 1rem 0;
@@ -79,6 +80,7 @@ const ItemAncora = styled.a`
   @media (max-width: ${breakpoints.tablet}) {
     font-size: 1em;
   }
+
 `;
 const MenuToggle = styled.button`
   background: none;

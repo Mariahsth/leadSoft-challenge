@@ -50,17 +50,17 @@ const GlobalStyles = createGlobalStyle`
   }
   h1, h2, h3 {
     font-family: var(--font-title);
-    color:var(--secundary-color7);
+    color:var(--primary-color3);
   }
 
   h4, h5, h6 {
     font-family: var(--font-subtitle);
-    color:var(--secundary-color6);
+    color:var(--secundary-color5);
   }
 
   p, a, span, li, input, button {
     font-family: var(--font-body);
-    color:var(--secundary-color5);
+    color:var(--secundary-color9);
     
   }
 

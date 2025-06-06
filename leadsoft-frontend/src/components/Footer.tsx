@@ -1,4 +1,5 @@
 "use client";
+import { breakpoints } from "@/styles/breakPoints";
 import styled from "styled-components";
 
 const FooterStyle = styled.footer`
@@ -11,6 +12,10 @@ const ContainerFooter = styled.div`
   justify-content: center;
   align-items: center;
   padding: 1rem 5rem;
+
+    @media (max-width: ${breakpoints.mobile}) {
+      padding: 1rem;
+    }
 `;
 const ContainerTextFooter = styled.div`
   display: flex;
@@ -22,6 +27,7 @@ const ContainerTextFooter = styled.div`
 const TextFooter = styled.p`
   color: var(--secundary-color1);
   font-size: 0.8em;
+  text-align:center;
 `;
 const ContainerLambdaText = styled.div`
   display: flex;

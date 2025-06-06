@@ -1,5 +1,8 @@
 "use client"
 import styled from "styled-components";
+import { AiOutlineHome } from 'react-icons/ai';
+import { MdHowToReg, MdPhotoLibrary } from 'react-icons/md';
+import { RiLockFill } from 'react-icons/ri';
 
 const HeaderStyle=styled.header`
 display:flex;
@@ -22,11 +25,16 @@ justify-content:center;
 width:100%;
 gap:5rem;
 `
-
 const ItemAncora=styled.a`
 color:var(--secundary-color1);
 font-size:1.2em;
 font-family:var(--font-title);
+display:flex;
+flex-direction:column;
+align-items:center;
+text-align:center;
+gap:0.2rem;
+
 
 &:hover {
     color: var(--primary-color3); 
@@ -39,9 +47,10 @@ export default function Header() {
             <Logo src='/logotipo-leadsoft-branco.svg' alt="Logo LeadSoft"/>
             <Nav>
                 <ContainerListaNav>
-                    <li><ItemAncora href="#home">Início</ItemAncora></li>
-                    <li><ItemAncora href="#inicio">Incrição</ItemAncora></li>
-                    <li><ItemAncora href="#galeria">Galeria</ItemAncora></li>
+                    <li><ItemAncora href="#home"><AiOutlineHome/>Início</ItemAncora></li>
+                    <li><ItemAncora href="#inicio"><MdHowToReg/>Incrição</ItemAncora></li>
+                    <li><ItemAncora href="#galeria"><MdPhotoLibrary/>Galeria</ItemAncora></li>
+                    <li><ItemAncora href="#admin"><RiLockFill/>Painel Admin</ItemAncora></li>
 
                 </ContainerListaNav>
             </Nav>

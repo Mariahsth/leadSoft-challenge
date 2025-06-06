@@ -26,6 +26,9 @@ const HeaderStyle = styled.header`
 `;
 const Logo = styled.img`
   width: 20%;
+  @media (max-width: ${breakpoints.mobile}) {
+    width: 30%;
+  }
 `;
 const Nav = styled.nav<{ $isOpen: boolean }>`
   width: 60%;
@@ -60,7 +63,7 @@ const ContainerListaNav = styled.ul`
   @media (max-width: ${breakpoints.mobile}) {
     flex-direction: column;
     align-items: center;
-    gap: 1rem;
+    gap: 2.5rem;
   }
 `;
 const ItemAncora = styled.a`

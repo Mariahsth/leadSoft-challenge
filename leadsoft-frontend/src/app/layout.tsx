@@ -3,7 +3,7 @@ import StyledComponentsRegistry from "../components/StyledComponentsRegistry";
 import { Roboto } from "next/font/google";
 import { Roboto_Mono } from "next/font/google";
 import localFont from "next/font/local";
-import styled from "styled-components";
+
 
 export const metadata: Metadata = {
   title: "LeadIA",

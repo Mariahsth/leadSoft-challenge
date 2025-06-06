@@ -139,7 +139,7 @@ export default function Inicio() {
         <h1>
           Missão Marte com a <TextoDestaque>LeadSoft </TextoDestaque>
         </h1>
-        <MdRocketLaunch color="var(--primary-color3)" size={32} />
+        <MdRocketLaunch color="var(--secundary-color5)" size={32} />
       </TituloInicio>
       <ConteudoInicio>
         <ContainerImgInicio>

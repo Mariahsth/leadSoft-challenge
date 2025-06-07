@@ -85,7 +85,7 @@ export default function Galeria() {
   return (
     <GaleriaSection id='galeria'>
         <h2>Galeria</h2>
-        <h4>Explore os bastidores de uma jornada rumo ao futuro.</h4>
+        <h3>Explore os bastidores de uma jornada rumo ao futuro</h3>
         <ContainerItensGaleria>
             {listaGaleria.map((item)=> (
                 <ItemGaleria key={item.id} nome={item.nome} imagem={item.imagem} legenda={item.legenda}/>

@@ -48,17 +48,31 @@ const GlobalStyles = createGlobalStyle`
   li{
     list-style:none;
   }
-  h1, h2, h3 {
+
+  h1, h2 {
     font-family: var(--font-title);
     color:var(--secundary-color5);
   }
 
-  h4, h5, h6 {
+  h3{
+    color:var(--primary-color2);
+    font-family: var(--font-title);
+  }
+
+  h4{
+    color:var(--primary-color2);
+    font-family: var(--font-subtitle);
+  }
+
+  h5, h6  {
     font-family: var(--font-subtitle);
     color:var(--primary-color3);
   }
+  
 
-  p, a, span, li, input, button {
+
+
+  p, a, span, li,  button, label {
     font-family: var(--font-body);
     color:var(--secundary-color9);
     

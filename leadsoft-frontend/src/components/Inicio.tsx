@@ -10,6 +10,7 @@ const ContainerInicio = styled.section`
   display: flex;
   flex-direction: column;
   border: 1px solid var(--secundary-color12);
+  padding-top:50px;
 
     @media (max-width: ${breakpoints.tablet}) {
       padding: 1rem;

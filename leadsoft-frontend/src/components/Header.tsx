@@ -52,8 +52,8 @@ const Nav = styled.nav<{ $isOpen: boolean }>`
     background: var(--primary-color1);
     display: ${({ $isOpen }) => ($isOpen ? "block" : "none")};
     padding: 1rem 0;
-    z-index: 999
-    border-top: 1px solid var(--secundary-color12);;
+    z-index: 999;
+    border-top: 1px solid var(--secundary-color12);
     border-right:1px solid var(--secundary-color12);
     border-bottom:1px solid var(--secundary-color12);
   }
@@ -85,7 +85,7 @@ const ItemAncora = styled.a`
   gap: 0.2rem;
 
   &:hover {
-    color: var(--primary-color3);
+    color: var(--primary-color2);
   }
 
   @media (max-width: ${breakpoints.tablet}) {
@@ -124,7 +124,7 @@ export default function Header() {
             </ItemAncora>
           </li>
           <li>
-            <ItemAncora href="#inicio">
+            <ItemAncora href="#form">
               <MdHowToReg />
               Incrição
             </ItemAncora>

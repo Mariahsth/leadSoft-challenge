@@ -2,6 +2,7 @@ import Banner from "@/components/Banner";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import Inicio from "@/components/Inicio";
+import Form from "@/components/Form";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
@@ -12,6 +13,7 @@ export default function Home() {
       <Header/>
       <Banner/>
       <Inicio/>
+      <Form/>
       <Footer/>
 
     </div>

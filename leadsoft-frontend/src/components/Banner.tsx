@@ -62,7 +62,7 @@ const Slide = styled.div<{ $bg: string }>`
 `;
 
 export default function Banner() {
-  const images = ["mars.jpg", "eclipse.jpg", "galaxy2.jpg"];
+  const images = ["mars.jpg", "eclipse.jpg", "galaxy2.jpg", "telescope.jpg"];
 
   const settings = {
     dots: true,

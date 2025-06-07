@@ -5,7 +5,8 @@ import { MdHowToReg, MdPhotoLibrary } from "react-icons/md";
 import { RiLockFill } from "react-icons/ri";
 import { breakpoints } from "@/styles/breakPoints";
 import { FiMenu, FiX } from "react-icons/fi";
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
+
 
 const HeaderStyle = styled.header`
   display: flex;
@@ -31,11 +32,15 @@ const HeaderStyle = styled.header`
 
   }
 `;
-const Logo = styled.img`
+const AncoraLogo = styled.a`
   width: 20%;
+
   @media (max-width: ${breakpoints.mobile}) {
     width: 30%;
   }
+`;
+const Logo = styled.img`
+  width: 90%;
 `;
 const Nav = styled.nav<{ $isOpen: boolean }>`
   width: 60%;
@@ -108,14 +113,36 @@ const MenuToggle = styled.button`
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
   const toggleMenu = () => setMenuOpen((prev) => !prev);
+  const navRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        navRef.current &&
+        !navRef.current.contains(event.target as Node) &&
+        menuOpen
+      ) {
+        setMenuOpen(false);
+      }
+    };
+  
+    document.addEventListener("mousedown", handleClickOutside);
+  
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [menuOpen]);
 
   return (
     <HeaderStyle>
-      <Logo src="/logotipo-leadsoft-branco.svg" alt="Logo LeadSoft" />
+      <AncoraLogo href="#home">
+        <Logo src="/logotipo-leadsoft-branco.svg" alt="Logo LeadSoft" />
+
+      </AncoraLogo>
       <MenuToggle onClick={toggleMenu} aria-label="Abrir menu de navegação">
         {menuOpen ? <FiX /> : <FiMenu />}
       </MenuToggle>
-      <Nav $isOpen={menuOpen} >
+      <Nav $isOpen={menuOpen} ref={navRef}>
         <ContainerListaNav>
           <li>
             <ItemAncora href="#home">

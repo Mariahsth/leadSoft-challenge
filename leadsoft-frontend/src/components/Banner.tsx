@@ -76,13 +76,13 @@ export default function Banner() {
   };
 
   return (
-    <BannerContainer>
+    <BannerContainer >
       <Slider {...settings}>
         {images.map((src, i) => (
           <Slide key={i} $bg={src} />
         ))}
       </Slider>
-      <TitleOverlay>Potencializando decisões com inteligência além da Terra</TitleOverlay>
-    </BannerContainer>
+      <TitleOverlay id='home'>Potencializando decisões com inteligência além da Terra</TitleOverlay>
+    </BannerContainer> 
   );
 }

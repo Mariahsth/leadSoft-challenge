@@ -10,7 +10,6 @@ const ContainerInicio = styled.section`
   display: flex;
   flex-direction: column;
   border: 1px solid var(--secundary-color12);
-  padding-top:50px;
 
     @media (max-width: ${breakpoints.tablet}) {
       padding: 1rem;
@@ -135,7 +134,7 @@ const ConteudoTexto = styled.div`
 
 export default function Inicio() {
   return (
-    <ContainerInicio id='home'>
+    <ContainerInicio >
       <TituloInicio>
         <h1>
           Missão Marte com a <TextoDestaque>LeadSoft </TextoDestaque>

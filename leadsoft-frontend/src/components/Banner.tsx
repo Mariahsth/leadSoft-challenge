@@ -7,6 +7,7 @@ const BannerContainer = styled.section`
   width: 100%;
   height: 25rem;
   position: relative;
+  margin-top:100px;
 
   .slick-slider,
   .slick-list,
@@ -21,6 +22,11 @@ const BannerContainer = styled.section`
     }
   }
 
+  @media (max-width: ${breakpoints.tablet}) {
+    margin-top:50px;
+
+  
+  }
   @media (max-width: ${breakpoints.mobile}) {
     height: 15rem;
   

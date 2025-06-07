@@ -14,7 +14,13 @@ const HeaderStyle = styled.header`
   padding: 1rem 5rem;
   border-bottom: 1px solid var(--secundary-color12);
   box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.25);
-  position: relative;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  width: 100%;
+  background-color:var(--primary-color1);
+  
 
   @media (max-width: ${breakpoints.tablet}) {
     padding: 1rem;
@@ -22,6 +28,7 @@ const HeaderStyle = styled.header`
 
   @media (max-width: ${breakpoints.mobile}) {
     flex-direction: row-reverse;
+
   }
 `;
 const Logo = styled.img`
@@ -45,7 +52,8 @@ const Nav = styled.nav<{ $isOpen: boolean }>`
     background: var(--primary-color1);
     display: ${({ $isOpen }) => ($isOpen ? "block" : "none")};
     padding: 1rem 0;
-    z-index: 10;
+    z-index: 999
+    border-top: 1px solid var(--secundary-color12);;
     border-right:1px solid var(--secundary-color12);
     border-bottom:1px solid var(--secundary-color12);
   }

@@ -5,6 +5,7 @@ import Inicio from "@/components/Inicio";
 import Form from "@/components/Form";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import Galeria from "@/components/Galeria";
 
 
 export default function Home() {
@@ -14,6 +15,7 @@ export default function Home() {
       <Banner/>
       <Inicio/>
       <Form/>
+      <Galeria/>
       <Footer/>
 
     </div>

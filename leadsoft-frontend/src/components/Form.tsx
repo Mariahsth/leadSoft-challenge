@@ -7,10 +7,11 @@ display:flex;
 justify-content:center;
 align-items:center;
 width:100%;
-padding:2rem 1rem;
-padding-top:150px;
+padding:9rem 1rem;
+
 text-align:center;
 gap:1rem;
+border: 1px solid var(--secundary-color12);
 
 @media (max-width: ${breakpoints.mobile}) {
     flex-direction: column;
@@ -43,12 +44,12 @@ border-radius:16px;
 background: linear-gradient(
     to bottom,
     var(--primary-color1),
-    var(--secundary-color12),
-    var(--primary-color1)
+    var(--secundary-color12)
   );
 padding:1rem 5rem;
 margin:2rem 0;
 box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.25);
+border: 1px solid var(--primary-color1);
 @media (max-width: ${breakpoints.tablet}) {
     padding:1rem 3rem;
   }

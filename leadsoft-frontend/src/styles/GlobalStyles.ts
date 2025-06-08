@@ -38,6 +38,7 @@ const GlobalStyles = createGlobalStyle`
     background-color: #f9f9f9;
     color: #333;
     background-color:var(--primary-color1);
+    overflow-x: hidden;
 
   }
 

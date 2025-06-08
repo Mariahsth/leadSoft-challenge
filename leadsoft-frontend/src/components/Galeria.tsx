@@ -2,6 +2,8 @@
 import { breakpoints } from "@/styles/breakPoints";
 import styled from "styled-components";
 import ItemGaleria from "./ItemGaleria";
+import { useSlideInOnView } from "@/hooks/useSlideInOnView";
+import { SlideInTitleH2, SlideInTitleH3 } from "@/styles/slideAnimation";
 
 
 const GaleriaSection=styled.section`
@@ -32,6 +34,9 @@ const ContainerItensGaleria=styled.div`
 
 
 export default function Galeria() {
+    const slideInRef = useSlideInOnView("slide-in", { threshold: 0.2 });
+    const slideInRef2 = useSlideInOnView("slide-in", { threshold: 0.2 });
+    
     const listaGaleria=[
         {
             id:1,
@@ -57,35 +62,12 @@ export default function Galeria() {
             imagem:'/LeadIA-perfil.png',
             legenda:'Legenda4'
         },
-        {
-            id:5,
-            nome:'Nome5',
-            imagem:'/LeadIA-perfil.png',
-            legenda:'Legenda5'
-        },
-        {
-            id:6,
-            nome:'Nome6',
-            imagem:'/LeadIA-perfil.png',
-            legenda:'Legenda6'
-        },
-        {
-            id:7,
-            nome:'Nome74',
-            imagem:'/LeadIA-perfil.png',
-            legenda:'Legenda7'
-        },
-        {
-            id:8,
-            nome:'Nome8',
-            imagem:'/LeadIA-perfil.png',
-            legenda:'Legenda8'
-        },
+        
     ]
   return (
     <GaleriaSection id='galeria'>
-        <h2>Galeria</h2>
-        <h3>Explore os bastidores de uma jornada rumo ao futuro</h3>
+        <SlideInTitleH2 ref={slideInRef} className="slide-in">Galeria</SlideInTitleH2>
+        <SlideInTitleH3 ref={slideInRef2} className="slide-in">Explore os bastidores de uma jornada rumo ao futuro</SlideInTitleH3>
         <ContainerItensGaleria>
             {listaGaleria.map((item)=> (
                 <ItemGaleria key={item.id} nome={item.nome} imagem={item.imagem} legenda={item.legenda}/>

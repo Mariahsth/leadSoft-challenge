@@ -3,6 +3,7 @@ import { breakpoints } from "@/styles/breakPoints";
 import { ItemGaleriaProps } from "@/types/ItemGaleriaTypes";
 import styled from "styled-components";
 import { FaComment } from "react-icons/fa";
+import { BotaoForm } from "@/styles/FomularioStyle";
 
 const ItemGaleriaContainer = styled.div`
   display: flex;
@@ -38,23 +39,8 @@ width:100%;
 
   }
 `;
-const BotaoComentar = styled.button`
-  padding: 0.5rem 1rem;
-  width: 50%;
-  border-radius: 8px;
-  color: var(--secundary-color12);
-  font-weight: 800;
-  cursor: pointer;
-  border: none;
-  background: linear-gradient(
-    to bottom,
-    var(--secundary-color6),
-    var(--secundary-color8)
-  );
-  display: flex;
-  align-items: center;
-  gap: 0.2rem;
-  justify-content: center;
+
+export const BotaoComentar = styled(BotaoForm)`
 
   @media (max-width: ${breakpoints.tablet}) {
     width: 75%;
@@ -64,7 +50,17 @@ const BotaoComentar = styled.button`
     padding: 0;
     width: auto; 
     justify-content: flex-end;
-    padding-right: 1rem;
+    padding-right: 0;
+    margin-right:1rem;
+    box-shadow: none;
+
+
+    &:hover{
+      background: none;  
+      color:none;
+    }
+    
+    
   }
 `;
 const TextoBotao = styled.span`
@@ -82,8 +78,14 @@ const IconeComentario = styled(FaComment)`
   font-size: 1em;
 
   @media (max-width: ${breakpoints.mobile}) {
-    font-size: 1.5em; 
+    font-size: 2em; 
     color: var(--secundary-color7);
+
+
+    &:hover{
+      color: var(--secundary-color6);
+
+    }
   }
 `;
 
@@ -98,7 +100,7 @@ export default function ItemGaleria({
       <ImagemItemGaleria src={imagem} alt={`imagem de ${nome}`} />
       <p>"{legenda}"</p>
       <ContainerBotao>
-        <BotaoComentar>
+        <BotaoComentar className="BotaoComentar" >
             <TextoBotao>Comentar</TextoBotao>
             <IconeComentario  />
         </BotaoComentar>

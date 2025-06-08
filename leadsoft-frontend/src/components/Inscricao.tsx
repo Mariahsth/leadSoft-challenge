@@ -1,8 +1,8 @@
 "use client";
+import { useSlideInOnView } from "@/hooks/useSlideInOnView";
 import { breakpoints } from "@/styles/breakPoints";
 import { BotaoForm, ContainerBotao, ContainerTitulo, FormCard, FormSection, Formulario, Input } from "@/styles/FomularioStyle";
 import styled from "styled-components";
-
 
 
 const ImgFoguete=styled.img`
@@ -13,17 +13,20 @@ border-bottom: 1px solid var(--secundary-color12);
     display:none
   }
 `
-
 export default function Inscricao() {
+    const slideInRef = useSlideInOnView("slide-in", { threshold: 0.2 });
+    const slideInRef2 = useSlideInOnView("slide-in", { threshold: 0.2 });
+
+  
   return (
     <FormSection id='form'>
-        <ContainerTitulo>
-            <h2>Grandes jornadas começam com um clique</h2>
-            <h3>Inscreva-se e transforme o amanhã</h3>
+        <ContainerTitulo ref={slideInRef} className="slide-in">
+            <h2 >Grandes jornadas começam com um clique</h2>
+            <h3 >Inscreva-se e transforme o amanhã</h3>
             <ImgFoguete src='/rocket3.png'alt="Foguete" />
 
         </ContainerTitulo>
-        <FormCard>
+        <FormCard ref={slideInRef2} className="slide-out">
             <Formulario>
                 <h3>Cadastro</h3>
 

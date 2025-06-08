@@ -1,6 +1,7 @@
 "use client";
 import { breakpoints } from "@/styles/breakPoints";
 import styled from "styled-components";
+import { slideInStyle } from "./slideAnimation";
 
 export const FormSection=styled.section`
 display:flex;
@@ -25,6 +26,8 @@ justify-content:center;
 flex-direction:column;
 align-items:center;
 gap:1rem;
+${slideInStyle};
+
 `
 export const FormCard = styled.div`
   display: flex;
@@ -44,6 +47,7 @@ export const FormCard = styled.div`
   @media (max-width: ${breakpoints.tablet}) {
     padding: 1rem 3rem;
   }
+  ${slideInStyle}
 `;
 export const Formulario = styled.form`
   display: flex;
@@ -68,6 +72,7 @@ export const Input = styled.input`
     color: var(--secundary-color9);
   }
 `;
+
 export const BotaoForm = styled.button`
 padding: 0.5rem 1rem;
 width: 50%;
@@ -80,25 +85,28 @@ background: linear-gradient(
   to bottom,
   var(--secundary-color9),
   var(--secundary-color10)
-);
-display: flex;
-align-items: center;
-gap: 0.2rem;
-justify-content: center;
-box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.25);
-margin-top:1rem;
+  );
+  display: flex;
+  align-items: center;
+  gap: 0.2rem;
+  justify-content: center;
+  box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.25);
+  margin-top:1rem;
+  
+  &:hover{
+    background: linear-gradient(
+      to bottom,
+      var(--secundary-color5),
+      var(--secundary-color6)
+      );
+      color: var(--secundary-color8);
+      
+    }
+    
+    `;
 
-&:hover{
-  background: linear-gradient(
-  to bottom,
-  var(--secundary-color5),
-  var(--secundary-color6)
-);
-color: var(--secundary-color8);
 
-}
 
-`;
 export const ContainerBotao = styled.div`
 
 display: flex;

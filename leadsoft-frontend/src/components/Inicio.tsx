@@ -3,7 +3,8 @@ import styled from "styled-components";
 import { MdRocketLaunch } from "react-icons/md";
 import { HiOutlineSparkles } from "react-icons/hi2";
 import { breakpoints } from "@/styles/breakPoints";
-
+import { SlideInDiv, slideInStyle, SlideInTitleH1 } from "@/styles/slideAnimation";
+import { useSlideInOnView } from "@/hooks/useSlideInOnView";
 
 const ContainerInicio = styled.section`
   padding: 1rem 5rem;
@@ -11,9 +12,9 @@ const ContainerInicio = styled.section`
   flex-direction: column;
   border: 1px solid var(--secundary-color12);
 
-    @media (max-width: ${breakpoints.tablet}) {
-      padding: 1rem;
-    }
+  @media (max-width: ${breakpoints.tablet}) {
+    padding: 1rem;
+  }
 `;
 const TituloInicio = styled.div`
   width: 100%;
@@ -25,24 +26,23 @@ const TituloInicio = styled.div`
   font-size: 1.7em;
   padding: 1em 0;
   @media (max-width: ${breakpoints.tablet}) {
-    flex-direction:column;
+    flex-direction: column;
   }
   @media (max-width: ${breakpoints.mobile}) {
-    font-size:1.2em;
+    font-size: 1.2em;
   }
 `;
 const TextoDestaque = styled.strong`
   color: var(--primary-color2);
-
-
 `;
 const ConteudoInicio = styled.div`
   display: flex;
   border: 1px solid var(--secundary-color12);
   border-radius: 16px;
   box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.25);
+  ${slideInStyle}
   @media (max-width: ${breakpoints.mobile}) {
-    flex-direction:column;
+    flex-direction: column;
   }
 `;
 const ImgLeadIA = styled.img`
@@ -78,7 +78,7 @@ const ContainerImgInicio = styled.div`
   opacity: 1;
   overflow: hidden;
   @media (max-width: ${breakpoints.mobile}) {
-    width:100%;
+    width: 100%;
     border-radius: 16px 16px 0 0;
   }
 `;
@@ -112,38 +112,42 @@ const ContainerTextoInicio = styled.div`
     z-index: 1;
   }
 
-  &>h2{
-    margin-top:2rem;
-
-}
-@media (max-width: ${breakpoints.mobile}) {
-width:100%;
-border-radius: 0 0 16px 16px;
-
-}
+  & > h2 {
+    margin-top: 2rem;
+  }
+  @media (max-width: ${breakpoints.mobile}) {
+    width: 100%;
+    border-radius: 0 0 16px 16px;
+  }
 `;
 const ConteudoTexto = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items:center;
-  margin:3rem 0.5rem;
-  gap:0.7rem;
-
+  align-items: center;
+  margin: 3rem 0.5rem;
+  gap: 0.7rem;
 `;
 
 export default function Inicio() {
+  const slideInRef = useSlideInOnView("slide-in", { threshold: 0.2 });
+  const slideInRef2 = useSlideInOnView("slide-in", { threshold: 0.2 });
+  const slideInRef3 = useSlideInOnView("slide-in", { threshold: 0.2 });
+
   return (
-    <ContainerInicio >
+    <ContainerInicio>
       <TituloInicio>
-        <h1>
+        <SlideInTitleH1 ref={slideInRef} className="slide-in">
           Missão Marte com a <TextoDestaque>LeadSoft </TextoDestaque>
-        </h1>
-        <MdRocketLaunch color="var(--secundary-color5)" size={32} />
+        </SlideInTitleH1>
+        <SlideInDiv ref={slideInRef2} className="slide-in" >
+          <MdRocketLaunch color="var(--secundary-color5)" size={32} />
+
+        </SlideInDiv>
       </TituloInicio>
-      <ConteudoInicio>
+      <ConteudoInicio ref={slideInRef3} className="slide-out">
         <ContainerImgInicio>
-          <ImgLeadIA src="/LeadIA.png" />
+          <ImgLeadIA src="/LeadIA.png" alt="Representação da IA LeadSoft" />
           <LegendaLeadIA>
             A <TextoDestaque>LeadIA</TextoDestaque>, nossa agente espacial mais
             inteligente e visionária, está formando a tripulação perfeita para
@@ -154,30 +158,26 @@ export default function Inicio() {
         <ContainerTextoInicio>
           <h2>Embarque na Missão!</h2>
           <div>
-
-            <h4>Atenção, exploradores do futuro!</h4> 
+            <h4>Atenção, exploradores do futuro!</h4>
             <ConteudoTexto>
-                <p>
-                    Na LeadSoft, acreditamos que a inovação não tem limites — e agora,
-                    vamos além da Terra em busca de novos horizontes, desafios e
-                    conquistas.
-                </p>
-                <p>
-                    Se você é movido por tecnologia, coragem e um espírito aventureiro,
-                    essa missão é para você!
-                </p>
-                <p>
-                    Descubra os desafios, conheça a tripulação e inscreva-se para fazer
-                    parte da nossa história interplanetária.
-                </p>
+              <p>
+                Na LeadSoft, acreditamos que a inovação não tem limites — e
+                agora, vamos além da Terra em busca de novos horizontes,
+                desafios e conquistas.
+              </p>
+              <p>
+                Se você é movido por tecnologia, coragem e um espírito
+                aventureiro, essa missão é para você!
+              </p>
+              <p>
+                Descubra os desafios, conheça a tripulação e inscreva-se para
+                fazer parte da nossa história interplanetária.
+              </p>
 
-                <p>Prepare-se para decolar com a gente.</p>
-                <HiOutlineSparkles color="var(--secundary-color9)" size={24}/>
-
+              <p>Prepare-se para decolar com a gente.</p>
+              <HiOutlineSparkles color="var(--secundary-color9)" size={24} />
             </ConteudoTexto>
           </div>
-
-
         </ContainerTextoInicio>
       </ConteudoInicio>
     </ContainerInicio>

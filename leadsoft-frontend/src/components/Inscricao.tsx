@@ -1,7 +1,7 @@
 "use client";
 import { useSlideInOnView } from "@/hooks/useSlideInOnView";
 import { breakpoints } from "@/styles/breakPoints";
-import { BotaoForm, ContainerBotao, ContainerTitulo, FormCard, FormSection, Formulario, Input } from "@/styles/FomularioStyle";
+import { Botao, ContainerBotao, ContainerTitulo, Card, FormSection, Formulario, Input } from "@/styles/FomularioStyle";
 import styled from "styled-components";
 
 
@@ -26,7 +26,7 @@ export default function Inscricao() {
             <ImgFoguete src='/rocket3.png'alt="Foguete" />
 
         </ContainerTitulo>
-        <FormCard ref={slideInRef2} className="slide-out">
+        <Card ref={slideInRef2} className="slide-out">
             <Formulario>
                 <h3>Cadastro</h3>
 
@@ -74,13 +74,13 @@ export default function Inscricao() {
                 placeholder="Insira uma imagem:" 
                 required />
                 <ContainerBotao>
-                  <BotaoForm type="submit" >Enviar</BotaoForm>
-                  <BotaoForm>Cancelar</BotaoForm>
+                  <Botao type="submit" >Enviar</Botao>
+                  <Botao>Cancelar</Botao>
 
                 </ContainerBotao>
 
             </Formulario>
-        </FormCard>
+        </Card>
     </FormSection>
   );
 }

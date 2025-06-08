@@ -62,7 +62,7 @@ const Slide = styled.div<{ $bg: string }>`
 `;
 
 export default function Banner() {
-  const images = ["mars.jpg", "eclipse.jpg", "galaxy2.jpg", "telescope.jpg"];
+  const images = ["mars.jpg", "eclipse.jpg", "galaxy2.jpg", "telescope.jpg", "mars4.jpg"];
 
   const settings = {
     dots: true,
@@ -76,7 +76,7 @@ export default function Banner() {
   };
 
   return (
-    <BannerContainer >
+    <BannerContainer>
       <Slider {...settings}>
         {images.map((src, i) => (
           <Slide key={i} $bg={src} />

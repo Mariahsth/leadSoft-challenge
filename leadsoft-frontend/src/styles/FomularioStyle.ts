@@ -29,9 +29,10 @@ gap:1rem;
 ${slideInStyle};
 
 `
-export const FormCard = styled.div`
+export const Card = styled.div`
   display: flex;
   flex-direction: column;
+  text-align: center;
   justify-content: center;
   align-items: center;
   border-radius: 16px;
@@ -73,7 +74,7 @@ export const Input = styled.input`
   }
 `;
 
-export const BotaoForm = styled.button`
+export const Botao = styled.button`
 padding: 0.5rem 1rem;
 width: 50%;
 border-radius: 8px;
@@ -104,8 +105,6 @@ background: linear-gradient(
     }
     
     `;
-
-
 
 export const ContainerBotao = styled.div`
 

@@ -1,5 +1,5 @@
 "use client";
-import { BotaoForm, ContainerBotao, ContainerTitulo, FormCard, Formulario, Input } from "@/styles/FomularioStyle";
+import { Botao, ContainerBotao, ContainerTitulo, Card, Formulario, Input } from "@/styles/FomularioStyle";
 import styled from "styled-components";
 import { RiLockFill } from "react-icons/ri";
 import { useSlideInOnView } from "@/hooks/useSlideInOnView";
@@ -37,7 +37,7 @@ export default function PainelAdmin() {
             </ContainerTituloIcone>
 
         </ContainerTitulo>
-        <FormCard ref={slideInRef2} className="slide-out">
+        <Card ref={slideInRef2} className="slide-out">
             <Formulario>
                 <h3>Login</h3>
 
@@ -57,13 +57,13 @@ export default function PainelAdmin() {
                 required />
 
                 <ContainerBotao>
-                  <BotaoForm type="submit" >Enviar</BotaoForm>
-                  <BotaoForm>Cancelar</BotaoForm>
+                  <Botao type="submit" >Enviar</Botao>
+                  <Botao>Cancelar</Botao>
 
                 </ContainerBotao>
 
             </Formulario>
-        </FormCard>
+        </Card>
     </FormSection>
   );
 }

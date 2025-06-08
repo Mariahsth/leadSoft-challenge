@@ -3,22 +3,11 @@ import { breakpoints } from "@/styles/breakPoints";
 import { ItemGaleriaProps } from "@/types/ItemGaleriaTypes";
 import styled from "styled-components";
 import { FaComment } from "react-icons/fa";
-import { BotaoForm } from "@/styles/FomularioStyle";
+import { Botao, Card } from "@/styles/FomularioStyle";
+import { useSlideInOnView } from "@/hooks/useSlideInOnView";
 
-const ItemGaleriaContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  border: 1px solid var(--secundary-color12);
+const ItemGaleriaContainer = styled(Card)`
   padding: 1rem;
-  background: linear-gradient(
-    to bottom,
-    var(--primary-color1),
-    var(--secundary-color12)
-  );
-  border-radius: 16px;
   gap: 0.5rem;
 `;
 const ImagemItemGaleria = styled.img`
@@ -39,8 +28,7 @@ width:100%;
 
   }
 `;
-
-export const BotaoComentar = styled(BotaoForm)`
+const BotaoComentar = styled(Botao)`
 
   @media (max-width: ${breakpoints.tablet}) {
     width: 75%;
@@ -94,8 +82,10 @@ export default function ItemGaleria({
   imagem,
   legenda,
 }: ItemGaleriaProps) {
+    const slideInRef = useSlideInOnView("slide-in", { threshold: 0.1 });
+
   return (
-    <ItemGaleriaContainer>
+    <ItemGaleriaContainer ref={slideInRef} className="slide-out">
       <NomeItemGaleria>{nome}</NomeItemGaleria>
       <ImagemItemGaleria src={imagem} alt={`imagem de ${nome}`} />
       <p>"{legenda}"</p>

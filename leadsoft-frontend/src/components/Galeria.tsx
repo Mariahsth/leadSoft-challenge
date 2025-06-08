@@ -34,8 +34,8 @@ const ContainerItensGaleria=styled.div`
 
 
 export default function Galeria() {
-    const slideInRef = useSlideInOnView("slide-in", { threshold: 0.2 });
-    const slideInRef2 = useSlideInOnView("slide-in", { threshold: 0.2 });
+    const slideInRef = useSlideInOnView("slide-in", { threshold: 0.1 });
+    const slideInRef2 = useSlideInOnView("slide-in", { threshold: 0.1 });
     
     const listaGaleria=[
         {

@@ -23,8 +23,8 @@ flex-direction:column;
 align-items:center;
 `
 export default function PainelAdmin() {
-  const slideInRef = useSlideInOnView("slide-in", { threshold: 0.2 });
-  const slideInRef2 = useSlideInOnView("slide-in", { threshold: 0.2 });
+  const slideInRef = useSlideInOnView("slide-in", { threshold: 0.1 });
+  const slideInRef2 = useSlideInOnView("slide-in", { threshold: 0.1 });
   
   return (
     <FormSection id='admin'>

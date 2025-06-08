@@ -130,9 +130,9 @@ const ConteudoTexto = styled.div`
 `;
 
 export default function Inicio() {
-  const slideInRef = useSlideInOnView("slide-in", { threshold: 0.2 });
-  const slideInRef2 = useSlideInOnView("slide-in", { threshold: 0.2 });
-  const slideInRef3 = useSlideInOnView("slide-in", { threshold: 0.2 });
+  const slideInRef = useSlideInOnView("slide-in", { threshold: 0.1 });
+  const slideInRef2 = useSlideInOnView("slide-in", { threshold: 0.1 });
+  const slideInRef3 = useSlideInOnView("slide-in", { threshold: 0.05 });
 
   return (
     <ContainerInicio>

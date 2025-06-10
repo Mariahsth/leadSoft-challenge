@@ -1,8 +1,16 @@
-import {Router} from 'express';
-import { registerCandidate } from '../controllers/CandidateController';
+import express from 'express';
+import { CandidateController } from '../controllers/CandidateController';
+import { RegisterCandidate } from '../../application/use-cases/RegisterCandidate';
+import { RavenCandidateRepository } from '../../infrastructure/database/RavenCandidateRepository';
+import { GoogleRecaptchaVerifier } from '../../infrastructure/services/GoogleRecaptchaVerifier';
 
-const router=Router();
+const router = express.Router();
 
-router.post('/', registerCandidate)
+const recaptchaVerifier = new GoogleRecaptchaVerifier(process.env.RECAPTCHA_SECRET_KEY!);
+const candidateRepository = new RavenCandidateRepository(/* store RavenDB */);
+const registerCandidate = new RegisterCandidate(candidateRepository, recaptchaVerifier);
+const candidateController = new CandidateController(registerCandidate);
+
+router.post('/register', candidateController.register.bind(candidateController));
 
 export default router;

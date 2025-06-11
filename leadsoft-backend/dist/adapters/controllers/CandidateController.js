@@ -2,8 +2,9 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CandidateController = void 0;
 class CandidateController {
-    constructor(registerCandidate, candidateRepository) {
+    constructor(registerCandidate, deleteCandidate, candidateRepository) {
         this.registerCandidate = registerCandidate;
+        this.deleteCandidate = deleteCandidate;
         this.candidateRepository = candidateRepository;
     }
     // Método para registrar um candidato
@@ -30,6 +31,7 @@ class CandidateController {
             res.status(200).json(candidates);
         }
         catch (error) {
+            console.error('Erro ao buscar candidatos:', error);
             res.status(500).json({ message: 'Erro ao buscar candidatos' });
         }
     }
@@ -47,6 +49,22 @@ class CandidateController {
         }
         catch (error) {
             res.status(500).json({ message: 'Erro ao buscar candidato' });
+        }
+    }
+    async delete(req, res) {
+        try {
+            const { id } = req.params;
+            const { recaptchaToken } = req.body;
+            await this.deleteCandidate.execute(id, recaptchaToken);
+            res.status(200).json({ message: 'Candidato deletado com sucesso!' });
+        }
+        catch (error) {
+            if (error instanceof Error) {
+                res.status(400).json({ message: error.message });
+            }
+            else {
+                res.status(500).json({ message: 'Erro desconhecido' });
+            }
         }
     }
 }

@@ -1,13 +1,16 @@
 import { Request, Response } from 'express';
 import { RegisterCandidate } from '../../application/use-cases/RegisterCandidate';
 import { CandidateRepository } from '../../domain/repositories/CandidateRepository';
+import { DeleteCandidate } from '../../application/use-cases/DeleteCandidate';
 
 export class CandidateController {
   private registerCandidate: RegisterCandidate;
+  private deleteCandidate: DeleteCandidate;
   private candidateRepository: CandidateRepository;
 
-  constructor(registerCandidate: RegisterCandidate, candidateRepository: CandidateRepository) {
+  constructor(registerCandidate: RegisterCandidate, deleteCandidate:DeleteCandidate, candidateRepository: CandidateRepository) {
     this.registerCandidate = registerCandidate;
+    this.deleteCandidate = deleteCandidate;
     this.candidateRepository = candidateRepository;
   }
 
@@ -55,4 +58,25 @@ export class CandidateController {
       res.status(500).json({ message: 'Erro ao buscar candidato' });
     }
   }
+
+  async delete(req: Request, res: Response) {
+    try {
+      const { id } = req.params;
+      const { recaptchaToken } = req.body;
+  
+      await this.deleteCandidate.execute(id, recaptchaToken);
+  
+      res.status(200).json({ message: 'Candidato deletado com sucesso!' });
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        res.status(400).json({ message: error.message });
+      } else {
+        res.status(500).json({ message: 'Erro desconhecido' });
+      }
+    }
+  }
+
+
+
+
 }

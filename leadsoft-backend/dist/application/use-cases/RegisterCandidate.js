@@ -14,7 +14,7 @@ class RegisterCandidate {
         this.recaptchaVerifier = recaptchaVerifier;
     }
     async execute(name, cpf, email, dateOfBirth, caption, image, recaptchaToken) {
-        const existingCandidate = await this.candidateRepository.findById('candidates/' + cpf);
+        const existingCandidate = await this.candidateRepository.findByCpf(cpf);
         if (existingCandidate) {
             throw new Error('Candidato com este CPF já existe');
         }

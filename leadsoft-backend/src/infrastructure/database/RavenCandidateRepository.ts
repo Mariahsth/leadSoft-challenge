@@ -57,7 +57,7 @@ export class RavenCandidateRepository implements CandidateRepository {
   
     try {
       const result = await session.query<Candidate>({ collection: 'Candidates' })
-        .whereEquals('cpf._value', cpf) 
+        .whereEquals('cpf.value', cpf) 
         .firstOrNull();
   
       return result;

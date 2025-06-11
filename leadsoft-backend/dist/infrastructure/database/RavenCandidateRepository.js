@@ -11,7 +11,7 @@ class RavenCandidateRepository {
     async save(candidate) {
         const session = this.store.openSession();
         try {
-            await session.store(candidate, 'candidates/' + candidate.cpf.getValue()); // Armazena o candidato com um id único
+            await session.store(candidate, candidate.id); // Armazena o candidato com um id único
             await session.saveChanges();
         }
         catch (error) {
@@ -44,6 +44,20 @@ class RavenCandidateRepository {
         if (candidate) {
             await session.delete(candidate);
             await session.saveChanges();
+        }
+    }
+    // Método para buscar um candidato pelo cpf
+    async findByCpf(cpf) {
+        const session = this.store.openSession();
+        try {
+            const result = await session.query({ collection: 'Candidates' })
+                .whereEquals('cpf._value', cpf)
+                .firstOrNull();
+            return result;
+        }
+        catch (error) {
+            console.error('Erro ao buscar candidato por CPF:', error);
+            throw new Error('Erro ao consultar candidato por CPF');
         }
     }
 }

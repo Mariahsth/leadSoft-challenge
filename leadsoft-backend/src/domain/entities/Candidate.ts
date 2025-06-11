@@ -4,8 +4,11 @@ import { Caption } from '../value-objects/Caption';
 import { DateOfBirth } from '../value-objects/DateOfBirth';
 import { CPF } from '../value-objects/CPF';
 import { Image } from '../value-objects/Image';
+import { v4 as uuidv4 } from 'uuid';
+
 
 export class Candidate {
+  public readonly id: string;
   public readonly name: Name;
   public readonly email: Email;
   public readonly caption: Caption;
@@ -19,8 +22,10 @@ export class Candidate {
     caption: Caption,
     dateOfBirth: DateOfBirth,
     cpf: CPF,
-    image: Image
+    image: Image,
+    id?: string 
   ) {
+    this.id = id ?? `${uuidv4()}`;
     this.name = name;
     this.email = email;
     this.caption = caption;

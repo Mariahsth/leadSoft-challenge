@@ -26,26 +26,30 @@ export class RegisterCandidate {
     email: string,
     dateOfBirth: string,
     caption: string,
-    image: string,
+    image: Buffer,
     recaptchaToken: string
   ): Promise<void> {
-    // Verifica o reCAPTCHA
+
+
+    const existingCandidate = await this.candidateRepository.findByCpf(cpf);
+    if (existingCandidate) {
+      throw new Error('Candidato com este CPF já existe');
+    }
+    
     const isValidRecaptcha = await this.recaptchaVerifier.verify(recaptchaToken);
     if (!isValidRecaptcha) {
       throw new Error('reCAPTCHA inválido');
     }
 
-    // Cria a entidade Candidate
     const candidate = new Candidate(
       new Name(name),
       new Email(email),
       new Caption(caption),
       new DateOfBirth(dateOfBirth),
       new CPF(cpf),
-      new Image(image)
+      new Image(image.toString('base64'))
     );
 
-    // Salva o candidato no repositório
     await this.candidateRepository.save(candidate);
   }
 }

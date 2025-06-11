@@ -7,10 +7,14 @@ import { GoogleRecaptchaVerifier } from '../../infrastructure/services/GoogleRec
 const router = express.Router();
 
 const recaptchaVerifier = new GoogleRecaptchaVerifier(process.env.RECAPTCHA_SECRET_KEY!);
-const candidateRepository = new RavenCandidateRepository(/* store RavenDB */);
+const candidateRepository = new RavenCandidateRepository();
 const registerCandidate = new RegisterCandidate(candidateRepository, recaptchaVerifier);
-const candidateController = new CandidateController(registerCandidate);
+const candidateController = new CandidateController(registerCandidate, candidateRepository);
 
 router.post('/register', candidateController.register.bind(candidateController));
+
+router.get('/candidates', candidateController.getAllCandidates.bind(candidateController));
+
+router.get('/candidates/:id', candidateController.getCandidateById.bind(candidateController));
 
 export default router;

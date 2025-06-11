@@ -12,7 +12,7 @@ app.use(cors())
 
 app.use(express.json());
 
-app.use('/api/candidates', candidateRoutes);
+app.use('/api', candidateRoutes);
 
 app.get('/', (req, res) => {
     res.send('API da missão LeadSoft está no ar! 🚀')

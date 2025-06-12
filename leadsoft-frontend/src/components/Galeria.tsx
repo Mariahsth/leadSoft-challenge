@@ -42,27 +42,38 @@ export default function Galeria() {
             const data = await buscarCandidatos();
             setCandidatos(data);
           } catch (err: any) {
-            setErro(err.message);
+            setErro('Erro ao buscar candidatos inscritos');
           }
         };
     
         fetchCandidatos();
       }, []);
     
-      if (erro) return <p>Erro: {erro}</p>;
 
-      console.log(candidatos)
-      
+        
+            
   return (
+    
     <GaleriaSection id='galeria'>
+
         <SlideInTitleH2 ref={slideInRef} className="slide-in">Galeria</SlideInTitleH2>
         <SlideInTitleH3 ref={slideInRef2} className="slide-in">Explore os bastidores de uma jornada rumo ao futuro</SlideInTitleH3>
-        <ContainerItensGaleria>
-            {candidatos.map((item:any)=> (
-                <ItemGaleria key={item.id} nome={item.name} imagem={item.image} legenda={item.caption}/>
-            ))}
-            
-        </ContainerItensGaleria>
+        
+        {
+          erro ? 
+            (
+              <p>Erro: {erro}</p>
+            )
+            :
+            (
+            <ContainerItensGaleria>
+              {candidatos.map((item:any)=> (
+                  <ItemGaleria key={item.id} nome={item.name} imagem={item.image} legenda={item.caption}/>
+              ))}
+            </ContainerItensGaleria>
+            )
+        }
+
     </GaleriaSection>
   );
 }

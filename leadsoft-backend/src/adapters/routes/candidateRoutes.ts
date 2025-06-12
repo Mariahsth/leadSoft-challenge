@@ -26,19 +26,7 @@ router.get('/candidates/:id', candidateController.getCandidateById.bind(candidat
 
 router.delete('/candidates/:id', candidateController.delete.bind(candidateController));
 
-router.get('/candidates/:id/image', async (req, res) => {
-    const session = getRavenDbConnection().openSession();
-    const { id } = req.params;
-  
-    const result = await session.advanced.attachments.get(id, 'LeadIA-perfil.png');
-  
-    if (!result || !result.data) {
-      return res.status(404).send('Imagem não encontrada');
-    }
-  
-    res.setHeader('Content-Type', result.details.contentType);
-    result.data.pipe(res);
-  });
+router.get('/candidates/:id/image', candidateController.getImages.bind(candidateController));
 
 
 export default router;

@@ -1,20 +1,12 @@
 "use client";
-import { Botao, ContainerBotao, ContainerTitulo, Card, Formulario, Input } from "@/styles/FomularioStyle";
+import { Botao, ContainerBotao, ContainerTitulo, Card, Formulario, Input, FormSection } from "@/styles/FomularioStyle";
 import styled from "styled-components";
 import { RiLockFill } from "react-icons/ri";
 import { useSlideInOnView } from "@/hooks/useSlideInOnView";
 import { SlideInTitleH2, SlideInTitleH3 } from "@/styles/slideAnimation";
 
-export const FormSection=styled.section`
-display:flex;
-justify-content:center;
+export const PainelSection=styled(FormSection)`
 flex-direction:column;
-align-items:center;
-width:100%;
-padding:9rem 1rem;
-text-align:center;
-gap:1rem;
-border: 1px solid var(--secundary-color12);
 `
 export const ContainerTituloIcone=styled.div`
 display:flex;
@@ -27,7 +19,7 @@ export default function PainelAdmin() {
   const slideInRef2 = useSlideInOnView("slide-in", { threshold: 0.1 });
   
   return (
-    <FormSection id='admin'>
+    <PainelSection id='admin'>
         <ContainerTitulo ref={slideInRef} className="slide-in">
             <SlideInTitleH2 >Painel Admin </SlideInTitleH2>
             <ContainerTituloIcone>
@@ -64,6 +56,6 @@ export default function PainelAdmin() {
 
             </Formulario>
         </Card>
-    </FormSection>
+    </PainelSection>
   );
 }

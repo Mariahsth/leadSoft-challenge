@@ -64,6 +64,9 @@ export default function Inscricao() {
     try {
       const response = await enviarInscricao(dataToSend);
       console.log("Cadastro enviado com sucesso", response);
+      alert('Candidatura enviada!')
+      window.location.reload();
+
     } catch (error: any) {
       console.error("Erro ao enviar formulário:", error.message);
     }
@@ -114,6 +117,7 @@ export default function Inscricao() {
           <Input
             type="date"
             id="dateOfBirth"
+
             onChange={(e) =>
               setFormData({ ...formData, dateOfBirth: e.target.value })
             }
@@ -136,8 +140,7 @@ export default function Inscricao() {
             id="image"
             accept="image/*"
             onChange={(e) => {
-              const file = e.target.files?.[0];
-              if (file) setImageFile(file);
+              if (e.target.files?.[0]) setImageFile(e.target.files[0]);
             }}
             required
           />

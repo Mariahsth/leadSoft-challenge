@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import { RegisterCandidate } from '../../application/use-cases/RegisterCandidate';
 import { CandidateRepository } from '../../domain/repositories/CandidateRepository';
 import { DeleteCandidate } from '../../application/use-cases/DeleteCandidate';
+import { getRavenDbConnection } from '../../config/ravenDbConfig';
 
 export class CandidateController {
   private registerCandidate: RegisterCandidate;
@@ -65,6 +66,41 @@ export class CandidateController {
       res.status(500).json({ message: 'Erro ao buscar candidatos' });
     }
   }
+
+    //Método para buscar as imagens dos candidatos
+    async getImages(req: Request, res: Response) {
+      try {
+        const session = getRavenDbConnection().openSession();
+        const { id } = req.params;
+    
+        const candidateDoc = await session.load(id);
+        if (!candidateDoc) {
+          return res.status(404).json({ message: 'Candidato não encontrado' });
+        }
+    
+        const metadata = session.advanced.getMetadataFor(candidateDoc);
+        const attachments = metadata['@attachments'];
+    
+        if (!attachments || attachments.length === 0) {
+          return res.status(404).json({ message: 'Nenhuma imagem encontrada para esse candidato' });
+        }
+    
+        const attachmentName = attachments[0].name;
+    
+        const result = await session.advanced.attachments.get(id, attachmentName);
+    
+        if (!result || !result.data) {
+          return res.status(404).send('Imagem não encontrada');
+        }
+    
+        res.setHeader('Content-Type', result.details.contentType);
+        result.data.pipe(res);
+      } catch (error) {
+        console.error('Erro ao buscar imagem do candidato:', error);
+        res.status(500).json({ message: 'Erro ao buscar imagem do candidato' });
+      }
+    }
+  
 
   // Método para buscar um candidato por ID
   async getCandidateById(req: Request, res: Response) {

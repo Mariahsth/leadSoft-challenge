@@ -12,7 +12,6 @@ padding:9rem 1rem;
 
 text-align:center;
 gap:1rem;
-border: 1px solid var(--secundary-color12);
 
 @media (max-width: ${breakpoints.mobile}) {
     flex-direction: column;

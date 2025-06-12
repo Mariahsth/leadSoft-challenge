@@ -27,7 +27,9 @@ const ContainerItensGaleria = styled.div`
   padding: 1rem;
   margin-top: 2rem;
 `;
-
+const ErroBusca=styled.p`
+  margin-top:2rem;
+`
 
 export default function Galeria() {
     const slideInRef = useSlideInOnView("slide-in", { threshold: 0.1 });
@@ -42,7 +44,7 @@ export default function Galeria() {
             const data = await buscarCandidatos();
             setCandidatos(data);
           } catch (err: any) {
-            setErro('Erro ao buscar candidatos inscritos');
+            setErro('Ops! Houve um problema ao buscar os candidatos inscritos');
           }
         };
     

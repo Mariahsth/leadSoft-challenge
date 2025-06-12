@@ -64,7 +64,7 @@ export default function Galeria() {
         {
           erro ? 
             (
-              <p>Erro: {erro}</p>
+              <ErroBusca>Erro: {erro}</ErroBusca>
             )
             :
             (

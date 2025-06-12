@@ -14,13 +14,26 @@ export function useSlideInOnView(className = "slide-in", options: IntersectionOb
     const el = elementRef.current;
     if (!el) return;
 
-    if (isInView) {
-      el.classList.remove("visible");
-      void el.offsetWidth; 
-      el.classList.add("visible");
-    } else {
-      el.classList.remove("visible");
-    }
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            el.classList.remove("visible");
+            void el.offsetWidth;
+            el.classList.add("visible");
+          } else {
+            el.classList.remove("visible");
+          }
+        }
+      },
+      options
+    );
+
+    observer.observe(el);
+
+    return () => {
+      observer.disconnect(); 
+    };
   }, [isInView]);
 
   return combinedRef;

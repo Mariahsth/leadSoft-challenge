@@ -2,6 +2,7 @@
 import styled from "styled-components";
 import Slider from "react-slick";
 import { breakpoints } from "@/styles/breakPoints";
+import { useMemo } from "react";
 
 const BannerContainer = styled.section`
   width: 100%;
@@ -64,7 +65,7 @@ const Slide = styled.div<{ $bg: string }>`
 export default function Banner() {
   const images = ["mars.jpg", "eclipse.jpg", "galaxy2.jpg", "telescope.jpg", "mars4.jpg"];
 
-  const settings = {
+  const settings = useMemo(() => ({
     dots: true,
     infinite: true,
     speed: 500,
@@ -73,7 +74,7 @@ export default function Banner() {
     slidesToShow: 1,
     slidesToScroll: 1,
     arrows: false,
-  };
+  }), []);
 
   return (
     <BannerContainer>

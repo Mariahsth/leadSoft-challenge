@@ -1,6 +1,6 @@
 export function validateCPF(cpf: string): boolean {
     const cleanedCpf = cpf.replace(/\D/g, ''); // Remove qualquer caractere não numérico
-  
+
     if (cleanedCpf.length !== 11) return false;
   
     // Validação básica do CPF (número repetido não é válido)
@@ -9,6 +9,7 @@ export function validateCPF(cpf: string): boolean {
       '55555555555', '66666666666', '77777777777', '88888888888', '99999999999'
     ];
     if (invalidCPFs.includes(cleanedCpf)) return false;
+
   
     // Lógica de cálculo dos dígitos verificadores do CPF (simplificada)
     let sum = 0;

@@ -1,12 +1,15 @@
+"use client"
 import Banner from "@/components/Banner";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import Inicio from "@/components/Inicio";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import Galeria from "@/components/Galeria";
 import Inscricao from "@/components/Inscricao";
-import PainelAdmin from "@/components/PainelAdmin";
+import dynamic from "next/dynamic";
+
+const Galeria = dynamic(() => import("@/components/Galeria"), { ssr: false });
+const PainelAdmin = dynamic(() => import("@/components/PainelAdmin"), { ssr: false });
 
 
 export default function Home() {
@@ -18,7 +21,7 @@ export default function Home() {
       <Inscricao/>
       <Galeria/>
       <PainelAdmin/>
-      <Footer/>
+      <Footer/> 
 
     </div>
   );

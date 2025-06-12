@@ -9,17 +9,40 @@ export class GoogleRecaptchaVerifier implements RecaptchaVerifier {
   }
 
   async verify(token: string): Promise<boolean> {
-    const response = await axios.post(
-      `https://www.google.com/recaptcha/api/siteverify`,
-      null,
-      {
-        params: {
-          secret: this.secretKey,
-          response: token,
-        },
+    try {
+      const response = await axios.post(
+        `https://www.google.com/recaptcha/api/siteverify`,
+        null,
+        {
+          params: {
+            secret: this.secretKey,
+            response: token,
+          },
+        }
+      );
+      console.log("secretkey no recaptcha verifier:", this.secretKey);
+      const data = response.data;
+  
+      console.log("🔍 Resultado reCAPTCHA:", data);
+  
+      const isValid =
+        data.success === true &&
+        data.action === "submit" &&
+        data.score >= 0.5;
+  
+      if (!isValid) {
+        console.warn("❌ Verificação reCAPTCHA inválida:", {
+          success: data.success,
+          action: data.action,
+          score: data.score,
+          errors: data["error-codes"],
+        });
       }
-    );
-    
-    return response.data.success;
+  
+      return isValid;
+    } catch (err) {
+      console.error("❌ Erro ao verificar reCAPTCHA:", err);
+      return false;
+    }
   }
 }

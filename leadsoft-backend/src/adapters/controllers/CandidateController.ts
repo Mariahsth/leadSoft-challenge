@@ -16,15 +16,38 @@ export class CandidateController {
 
   // Método para registrar um candidato
   async register(req: Request, res: Response) {
+    console.log("Recebido no backend:", req.body);
+  
     try {
-      const { name, cpf, email, dateOfBirth, caption, image, recaptchaToken } = req.body;
-      
-      // Chama o caso de uso para registrar o candidato
-      await this.registerCandidate.execute(name, cpf, email, dateOfBirth, caption, image, recaptchaToken);
-      
+      const { name, cpf, email, dateOfBirth, caption, recaptchaToken } = req.body;
+      if (!req.file) {
+        return res.status(400).json({ message: "Imagem não enviada" });
+      }
+  
+      const imageBuffer = req.file.buffer;
+      const mimeType = req.file.mimetype;
+      const fileName = req.file.originalname;
+      console.log("req.file =", req.file);
+  
+      await this.registerCandidate.execute(
+        name,
+        cpf,
+        email,
+        dateOfBirth,
+        caption,
+        imageBuffer,
+        recaptchaToken,
+        mimeType,
+        fileName
+      );
+
+      console.log("📦 Arquivo recebido:", req.file);
+      console.log("📦 Buffer:", req.file?.buffer?.slice(0, 20));
+  
       res.status(201).json({ message: 'Candidato registrado com sucesso!' });
     } catch (error: unknown) {
       if (error instanceof Error) {
+        console.error("Erro no register:", error.message);
         res.status(400).json({ message: error.message });
       } else {
         res.status(500).json({ message: 'Erro desconhecido' });

@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import StyledComponentsRegistry from "../components/StyledComponentsRegistry";
-import RecaptchaProviderWrapper from "../components/RecaptchaProviderWrapper"; // <== aqui
+import RecaptchaProviderWrapper from "../components/RecaptchaProviderWrapper";
 
 import { Roboto } from "next/font/google";
 import { Roboto_Mono } from "next/font/google";

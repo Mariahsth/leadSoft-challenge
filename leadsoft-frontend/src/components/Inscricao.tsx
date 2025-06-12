@@ -1,5 +1,4 @@
 "use client";
-import { breakpoints } from "@/styles/breakPoints";
 import {
   Botao,
   ContainerBotao,
@@ -7,13 +6,14 @@ import {
   Card,
   FormSection,
   Formulario,
-  Input
+  Input,
 } from "@/styles/FomularioStyle";
 import styled from "styled-components";
-import { useGoogleReCaptcha } from 'react-google-recaptcha-v3';
-import { useEffect, useRef, useState } from "react";
-import axios from "axios";
+import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
+import { useState } from "react";
 import { useSlideInOnView } from "@/hooks/useSlideInOnView";
+import { breakpoints } from "@/styles/breakPoints";
+import { enviarInscricao } from "@/services/inscricaoService";
 
 const ImgFoguete = styled.img`
   width: 15em;
@@ -35,18 +35,9 @@ export default function Inscricao() {
     email: "",
     dateOfBirth: "",
     caption: "",
-    image: "",
   });
 
-  const fileReaderRef = useRef<FileReader | null>(null);
-
-  useEffect(() => {
-    return () => {
-      if (fileReaderRef.current && fileReaderRef.current.readyState === 1) {
-        fileReaderRef.current.abort();
-      }
-    };
-  }, []);
+  const [imageFile, setImageFile] = useState<File | null>(null);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -57,17 +48,24 @@ export default function Inscricao() {
     }
 
     const token = await executeRecaptcha("submit");
+    const dataToSend = new FormData();
 
-    const data = {
-      ...formData,
-      recaptchaToken: token,
-    };
+    dataToSend.append("name", formData.name);
+    dataToSend.append("cpf", formData.cpf);
+    dataToSend.append("email", formData.email);
+    dataToSend.append("dateOfBirth", formData.dateOfBirth);
+    dataToSend.append("caption", formData.caption);
+    dataToSend.append("recaptchaToken", token);
+
+    if (imageFile) {
+      dataToSend.append("image", imageFile);
+    }
+
     try {
-      console.log(data);
-      const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/register`, data);
-      console.log('Cadastro enviado com sucesso', response.data);
+      const response = await enviarInscricao(dataToSend);
+      console.log("Cadastro enviado com sucesso", response);
     } catch (error: any) {
-      console.error('Erro ao enviar formulário:', error.message);
+      console.error("Erro ao enviar formulário:", error.message);
     }
   };
 
@@ -87,9 +85,7 @@ export default function Inscricao() {
           <label htmlFor="name">Nome completo:</label>
           <Input
             type="text"
-            name="name"
             id="name"
-            placeholder="Insira seu nome completo"
             onChange={(e) =>
               setFormData({ ...formData, name: e.target.value })
             }
@@ -99,19 +95,15 @@ export default function Inscricao() {
           <label htmlFor="cpf">CPF:</label>
           <Input
             type="text"
-            name="cpf"
             id="cpf"
-            placeholder="Insira seu CPF"
             onChange={(e) => setFormData({ ...formData, cpf: e.target.value })}
             required
           />
 
           <label htmlFor="email">E-mail:</label>
           <Input
-            type="text"
-            name="email"
+            type="email"
             id="email"
-            placeholder="Insira seu e-mail"
             onChange={(e) =>
               setFormData({ ...formData, email: e.target.value })
             }
@@ -121,9 +113,7 @@ export default function Inscricao() {
           <label htmlFor="dateOfBirth">Data de nascimento:</label>
           <Input
             type="date"
-            name="dateOfBirth"
             id="dateOfBirth"
-            placeholder="Insira sua data de nascimento:"
             onChange={(e) =>
               setFormData({ ...formData, dateOfBirth: e.target.value })
             }
@@ -133,9 +123,7 @@ export default function Inscricao() {
           <label htmlFor="caption">Legenda:</label>
           <Input
             type="text"
-            name="caption"
             id="caption"
-            placeholder="Insira uma legenda criativa:"
             onChange={(e) =>
               setFormData({ ...formData, caption: e.target.value })
             }
@@ -145,23 +133,11 @@ export default function Inscricao() {
           <label htmlFor="image">Imagem:</label>
           <Input
             type="file"
-            name="image"
             id="image"
+            accept="image/*"
             onChange={(e) => {
               const file = e.target.files?.[0];
-              if (file) {
-                const reader = new FileReader();
-                fileReaderRef.current = reader;
-
-                reader.onloadend = () => {
-                  setFormData((prev) => ({
-                    ...prev,
-                    image: reader.result as string,
-                  }));
-                };
-
-                reader.readAsDataURL(file);
-              }
+              if (file) setImageFile(file);
             }}
             required
           />

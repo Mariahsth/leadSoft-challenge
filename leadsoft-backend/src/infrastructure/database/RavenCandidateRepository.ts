@@ -2,6 +2,8 @@ import { CandidateRepository } from '../../domain/repositories/CandidateReposito
 import { Candidate } from '../../domain/entities/Candidate';
 import { DocumentStore } from 'ravendb'; 
 import { getRavenDbConnection } from '../../config/ravenDbConfig';
+import { Buffer } from 'buffer';
+import { Readable } from 'stream';
 
 export class RavenCandidateRepository implements CandidateRepository {
   private store: DocumentStore;
@@ -11,15 +13,26 @@ export class RavenCandidateRepository implements CandidateRepository {
   }
 
   // Método para salvar um candidato
-  async save(candidate: Candidate): Promise<void> {
+  async save(candidate: Candidate, imageBuffer: Buffer, mimeType: string, fileName: string): Promise<void> {
     const session = this.store.openSession();
-    try {
-      await session.store(candidate, candidate.id); // Armazena o candidato com um id único
-      await session.saveChanges();
-    } catch (error) {
-      console.error('Erro ao salvar o candidato:', error);
-      throw new Error('Não foi possível salvar o candidato');
-    }
+  
+    const candidateDoc = {
+      id: candidate.id,
+      name: candidate.name.getValue(),
+      email: candidate.email.getValue(),
+      caption: candidate.caption.getValue(),
+      dateOfBirth: candidate.dateOfBirth.getValue(),
+      cpf: candidate.cpf.getValue(),
+    };
+  
+    const docId = candidate.id;
+  
+    await session.store(candidateDoc, docId);
+    session.advanced.getMetadataFor(candidateDoc)['@collection'] = 'Candidates';
+  
+    session.advanced.attachments.store(docId, fileName, imageBuffer, mimeType);
+  
+    await session.saveChanges();
   }
 
   // Método para buscar um candidato por ID

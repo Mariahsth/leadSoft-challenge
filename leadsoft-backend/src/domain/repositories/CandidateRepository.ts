@@ -1,8 +1,9 @@
 import { Candidate } from "../entities/Candidate";
+import { Buffer } from 'buffer';
 
 export interface CandidateRepository {
   // Método para salvar um candidato
-  save(candidate: Candidate): Promise<void>;
+  save(candidate: Candidate, imageBuffer: Buffer, mimeType: string, fileName: string): Promise<void>;
 
   // Método para encontrar todos os candidatos 
   findAll(): Promise<Candidate[]>;

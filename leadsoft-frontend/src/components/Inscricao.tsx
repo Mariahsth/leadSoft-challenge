@@ -7,7 +7,6 @@ import {
   FormSection,
   Formulario,
   Input,
-  ContainerColuna,
 } from "@/styles/ReusableStyle";
 import styled from "styled-components";
 import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
@@ -18,6 +17,7 @@ import { enviarInscricao } from "@/services/inscricaoService";
 import { validateForm } from "@/utils/validateForm";
 import { FormFields } from "@/types/FormFields";
 import { resizeImage } from "@/utils/resizeImage";
+import ImagePreview from "./ImagePreview";
 
 const ImgFoguete = styled.img`
   width: 15em;
@@ -26,14 +26,6 @@ const ImgFoguete = styled.img`
   @media (max-width: ${breakpoints.mobile}) {
     display: none;
   }
-`;
-const ImgPreview = styled.img`
-  width: 15em;
-  max-width: 100%;
-  border: 2px solid var(--secundary-color9);
-  border-radius: 8px;
-  display: block;
-  margin-bottom: 6px;
 `;
 
 export default function Inscricao() {
@@ -213,22 +205,7 @@ export default function Inscricao() {
           {formErrors.image && (
             <span style={{ color: "red" }}>{formErrors.image}</span>
           )}
-          {previewUrl && (
-            <ContainerColuna style={{ marginTop: 10 }}>
-              <ImgPreview
-                src={previewUrl}
-                alt="Prévia da imagem redimensionada"
-              />
-              <small
-                style={{
-                  color: "var(--secundary-color11)",
-                  fontSize: "0.85rem",
-                }}
-              >
-                A imagem será ajustada para 1080x1080px, sem distorções.
-              </small>
-            </ContainerColuna>
-          )}
+          {previewUrl && <ImagePreview src={previewUrl} />}
 
           <ContainerBotao>
             <Botao type="submit" disabled={isSubmitting}>

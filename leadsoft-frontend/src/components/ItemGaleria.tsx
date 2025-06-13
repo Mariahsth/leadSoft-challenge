@@ -3,7 +3,7 @@ import { breakpoints } from "@/styles/breakPoints";
 import { ItemGaleriaProps } from "@/types/ItemGaleriaTypes";
 import styled from "styled-components";
 import { FaComment } from "react-icons/fa";
-import { Botao, Card } from "@/styles/FomularioStyle";
+import { Botao, Card, ContainerBotao, ContainerHorizontal } from "@/styles/ReusableStyle";
 import { useSlideInOnView } from "@/hooks/useSlideInOnView";
 import { useState } from "react";
 
@@ -17,19 +17,13 @@ const ImagemItemGaleria = styled.img`
   display: block;
   object-fit: cover;
 `;
-const ContainerImagem = styled.div`
+const ContainerImagem = styled(ContainerHorizontal)`
   height: 100%;
-  display:flex;
-  align-items:center;
-  justify-content:center;
 `;
 const NomeItemGaleria = styled.h2`
   font-size: 1em;
 `;
-const ContainerBotao = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
+const ContainerBotaoComentar = styled(ContainerBotao)`
   width: 100%;
 
   @media (max-width: ${breakpoints.mobile}) {
@@ -94,17 +88,16 @@ export default function ItemGaleria({
         <ImagemItemGaleria
           src={imgSrc}
           alt={`imagem de ${nome}`}
-          onError={() => setImgSrc('/fallback-image.png')}
+          onError={() => setImgSrc("/fallback-image.png")}
         />
-
       </ContainerImagem>
       <p>{legenda}</p>
-      <ContainerBotao>
+      <ContainerBotaoComentar>
         <BotaoComentar className="BotaoComentar">
           <TextoBotao>Comentar</TextoBotao>
           <IconeComentario />
         </BotaoComentar>
-      </ContainerBotao>
+      </ContainerBotaoComentar>
     </ItemGaleriaContainer>
   );
 }

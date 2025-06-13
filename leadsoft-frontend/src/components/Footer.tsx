@@ -1,37 +1,26 @@
 "use client";
 import { breakpoints } from "@/styles/breakPoints";
+import { ContainerColuna, ContainerHorizontal } from "@/styles/ReusableStyle";
 import styled from "styled-components";
 
 const FooterStyle = styled.footer`
   border-top: 1px solid var(--secundary-color12);
   box-shadow: 4px -4px 10px rgba(0, 0, 0, 0.25);
-
 `;
-const ContainerFooter = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
+const ContainerFooter = styled(ContainerHorizontal)`
   padding: 1rem 5rem;
 
-    @media (max-width: ${breakpoints.mobile}) {
-      padding: 1rem;
-    }
+  @media (max-width: ${breakpoints.mobile}) {
+    padding: 1rem;
+  }
 `;
-const ContainerTextFooter = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-  justify-content: center;
-  align-items: center;
-`;
+
 const TextFooter = styled.p`
   color: var(--secundary-color1);
   font-size: 0.8em;
-  text-align:center;
+  text-align: center;
 `;
-const ContainerLambdaText = styled.div`
-  display: flex;
-  align-items: center;
+const ContainerLambdaText = styled(ContainerHorizontal)`
   gap: 0.2rem;
 `;
 const LambdaImg = styled.img`
@@ -42,7 +31,7 @@ export default function Footer() {
   return (
     <FooterStyle>
       <ContainerFooter>
-        <ContainerTextFooter>
+        <ContainerColuna style={{ gap: "0.5rem" }}>
           <ContainerLambdaText>
             <LambdaImg src="/lambda-leadsoft-2023.svg" alt="Lambda" />
             <TextFooter>LeadSoft</TextFooter>
@@ -50,7 +39,7 @@ export default function Footer() {
           <TextFooter>
             LeadSoft® Soluções Web | © 2018 - 2025 Copyright
           </TextFooter>
-        </ContainerTextFooter>
+        </ContainerColuna>
       </ContainerFooter>
     </FooterStyle>
   );

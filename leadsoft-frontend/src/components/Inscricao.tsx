@@ -7,15 +7,17 @@ import {
   FormSection,
   Formulario,
   Input,
-} from "@/styles/FomularioStyle";
+  ContainerColuna,
+} from "@/styles/ReusableStyle";
 import styled from "styled-components";
 import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useSlideInOnView } from "@/hooks/useSlideInOnView";
 import { breakpoints } from "@/styles/breakPoints";
 import { enviarInscricao } from "@/services/inscricaoService";
 import { validateForm } from "@/utils/validateForm";
 import { FormFields } from "@/types/FormFields";
+import { resizeImage } from "@/utils/resizeImage";
 
 const ImgFoguete = styled.img`
   width: 15em;
@@ -25,11 +27,22 @@ const ImgFoguete = styled.img`
     display: none;
   }
 `;
+const ImgPreview = styled.img`
+  width: 15em;
+  max-width: 100%;
+  border: 2px solid var(--secundary-color9);
+  border-radius: 8px;
+  display: block;
+  margin-bottom: 6px;
+`;
 
 export default function Inscricao() {
   const slideInRef = useSlideInOnView("slide-in", { threshold: 0.1 });
   const slideInRef2 = useSlideInOnView("slide-in", { threshold: 0.1 });
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const { executeRecaptcha } = useGoogleReCaptcha();
+  const formRef = useRef<HTMLFormElement>(null);
+  const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const [formErrors, setFormErrors] = useState<
     Partial<Record<keyof FormFields, string>>
   >({});
@@ -39,16 +52,27 @@ export default function Inscricao() {
     email: "",
     dateOfBirth: "",
     caption: "",
+    image: null,
   });
   const [imageFile, setImageFile] = useState<File | null>(null);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setIsSubmitting(true);
+    if (!imageFile) {
+      setFormErrors({ image: "Imagem obrigatória." });
+      return;
+    }
 
-    const { isValid, errors } = validateForm(formData);
+    // Atualiza o formData com a imagem redimensionada
+    const updatedFormData = { ...formData, image: imageFile };
+
+    // Agora valida com a imagem já redimensionada
+    const { isValid, errors } = await validateForm(updatedFormData, imageFile);
     setFormErrors(errors);
 
     if (!isValid) {
+      setIsSubmitting(false);
       return;
     }
 
@@ -58,31 +82,39 @@ export default function Inscricao() {
     }
 
     const token = await executeRecaptcha("submit");
-    const dataToSend = new FormData();
 
+    const dataToSend = new FormData();
     dataToSend.append("name", formData.name);
     dataToSend.append("cpf", formData.cpf);
     dataToSend.append("email", formData.email);
     dataToSend.append("dateOfBirth", formData.dateOfBirth);
     dataToSend.append("caption", formData.caption);
     dataToSend.append("recaptchaToken", token);
+    dataToSend.append("image", imageFile);
 
-    if (imageFile) {
-      dataToSend.append("image", imageFile);
-    }
+    setIsSubmitting(false);
     try {
-      const response = await enviarInscricao(dataToSend);
+      await enviarInscricao(dataToSend);
       alert("Candidatura enviada!");
-      window.location.reload();
+      formRef.current?.reset();
+      setFormData({
+        name: "",
+        cpf: "",
+        email: "",
+        dateOfBirth: "",
+        caption: "",
+        image: null,
+      });
+
+      setImageFile(null);
+      setPreviewUrl(null);
     } catch (error: any) {
-       // err pode ser { field: 'cpf', message: 'CPF já cadastrado' } ou outra coisa
-    if (error.field && error.message) {
-      setFormErrors(prev => ({ ...prev, [error.field]: error.message }));
-    } else {
-      alert(error.message || 'Erro desconhecido');
+      if (error.field && error.message) {
+        setFormErrors((prev) => ({ ...prev, [error.field]: error.message }));
+      } else {
+        alert(error.message || "Erro desconhecido");
+      }
     }
-  }
-    
   };
 
   return (
@@ -94,7 +126,7 @@ export default function Inscricao() {
       </ContainerTitulo>
 
       <Card ref={slideInRef2} className="slide-out">
-        <Formulario onSubmit={handleSubmit}>
+        <Formulario onSubmit={handleSubmit} ref={formRef}>
           <h3>Cadastro</h3>
 
           <Input type="hidden" id="id" />
@@ -161,15 +193,57 @@ export default function Inscricao() {
             type="file"
             id="image"
             accept="image/*"
-            onChange={(e) => {
-              if (e.target.files?.[0]) setImageFile(e.target.files[0]);
+            onChange={async (e) => {
+              const file = e.target.files?.[0];
+              if (!file) return;
+
+              try {
+                const resized = await resizeImage(file);
+                setImageFile(resized);
+                setPreviewUrl(URL.createObjectURL(resized)); // Mostra o preview da versão redimensionada 1080x1080px
+              } catch (err) {
+                console.error(
+                  "Erro ao redimensionar imagem para preview:",
+                  err
+                );
+              }
             }}
             required
           />
+          {formErrors.image && (
+            <span style={{ color: "red" }}>{formErrors.image}</span>
+          )}
+          {previewUrl && (
+            <ContainerColuna style={{ marginTop: 10 }}>
+              <ImgPreview
+                src={previewUrl}
+                alt="Prévia da imagem redimensionada"
+              />
+              <small
+                style={{
+                  color: "var(--secundary-color11)",
+                  fontSize: "0.85rem",
+                }}
+              >
+                A imagem será ajustada para 1080x1080px, sem distorções.
+              </small>
+            </ContainerColuna>
+          )}
 
           <ContainerBotao>
-            <Botao type="submit">Enviar</Botao>
-            <Botao type="reset">Cancelar</Botao>
+            <Botao type="submit" disabled={isSubmitting}>
+              {isSubmitting ? "Enviando..." : "Enviar"}
+            </Botao>
+            <Botao
+              type="reset"
+              onClick={() => {
+                setFormErrors({});
+                setIsSubmitting(false);
+                setPreviewUrl(null);
+              }}
+            >
+              Cancelar
+            </Botao>
           </ContainerBotao>
         </Formulario>
       </Card>

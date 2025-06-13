@@ -4,4 +4,5 @@ export interface FormFields {
     email: string;
     dateOfBirth: string;
     caption: string;
+    image:File | null;
   }

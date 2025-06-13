@@ -3,24 +3,22 @@ import styled from "styled-components";
 import { MdRocketLaunch } from "react-icons/md";
 import { HiOutlineSparkles } from "react-icons/hi2";
 import { breakpoints } from "@/styles/breakPoints";
-import { SlideInDiv, slideInStyle, SlideInTitleH1 } from "@/styles/slideAnimation";
+import {
+  SlideInDiv,
+  slideInStyle,
+  SlideInTitleH1,
+} from "@/styles/slideAnimation";
 import { useSlideInOnView } from "@/hooks/useSlideInOnView";
+import { ContainerColuna, ContainerHorizontal } from "@/styles/ReusableStyle";
 
-const ContainerInicio = styled.section`
+const ContainerInicio = styled(ContainerColuna)`
   padding: 1rem 5rem;
-  display: flex;
-  flex-direction: column;
 
   @media (max-width: ${breakpoints.tablet}) {
     padding: 1rem;
   }
 `;
-const TituloInicio = styled.div`
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
+const TituloInicio = styled(ContainerHorizontal)`
   gap: 1rem;
   font-size: 1.7em;
   padding: 1em 0;
@@ -62,12 +60,7 @@ const LegendaLeadIA = styled.p`
     border-radius: 0;
   }
 `;
-const ContainerImgInicio = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
+const ContainerImgInicio = styled(ContainerColuna)`
   width: 50%;
   border-right: 1px solid var(--secundary-color12);
   background-image: url("/space.jpg");
@@ -81,12 +74,8 @@ const ContainerImgInicio = styled.div`
     border-radius: 16px 16px 0 0;
   }
 `;
-const ContainerTextoInicio = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+const ContainerTextoInicio = styled(ContainerColuna)`
   justify-content: space-between;
-  text-align: center;
   width: 80%;
   position: relative;
 
@@ -119,11 +108,7 @@ const ContainerTextoInicio = styled.div`
     border-radius: 0 0 16px 16px;
   }
 `;
-const ConteudoTexto = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+const ConteudoTexto = styled(ContainerColuna)`
   margin: 3rem 0.5rem;
   gap: 0.7rem;
 `;
@@ -139,9 +124,8 @@ export default function Inicio() {
         <SlideInTitleH1 ref={slideInRef} className="slide-in">
           Missão Marte com a <TextoDestaque>LeadSoft </TextoDestaque>
         </SlideInTitleH1>
-        <SlideInDiv ref={slideInRef2} className="slide-in" >
+        <SlideInDiv ref={slideInRef2} className="slide-in">
           <MdRocketLaunch color="var(--secundary-color5)" size={32} />
-
         </SlideInDiv>
       </TituloInicio>
       <ConteudoInicio ref={slideInRef3} className="slide-out">
@@ -156,7 +140,7 @@ export default function Inicio() {
         </ContainerImgInicio>
         <ContainerTextoInicio>
           <h2>Embarque na Missão!</h2>
-          <div>
+          <ContainerColuna>
             <h4>Atenção, exploradores do futuro!</h4>
             <ConteudoTexto>
               <p>
@@ -176,7 +160,7 @@ export default function Inicio() {
               <p>Prepare-se para decolar com a gente.</p>
               <HiOutlineSparkles color="var(--secundary-color9)" size={24} />
             </ConteudoTexto>
-          </div>
+          </ContainerColuna>
         </ContainerTextoInicio>
       </ConteudoInicio>
     </ContainerInicio>

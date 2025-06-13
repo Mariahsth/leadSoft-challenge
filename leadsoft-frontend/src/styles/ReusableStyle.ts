@@ -106,12 +106,24 @@ background: linear-gradient(
     `;
 
 export const ContainerBotao = styled.div`
-
 display: flex;
 align-items: center;
 gap: 0.8rem;
 justify-content: center;
-
 `;
 
-
+export const ContainerColuna=styled.div`
+display: flex;
+align-items: center;
+flex-direction:column;
+text-align:'center';
+justify-content: center;
+width:100%;
+`
+export const ContainerHorizontal=styled.div`
+display: flex;
+align-items: center;
+text-align:'center';
+justify-content: center;
+width:100%;
+`

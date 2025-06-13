@@ -4,7 +4,7 @@ export class CPF {
   private value: string;
 
   constructor(value: string) {
-    const cleanedValue = value.replace(/\D/g, ''); // limpa aqui também
+    const cleanedValue = value.replace(/\D/g, ''); 
     if (!validateCPF(cleanedValue)) {
       throw new Error('CPF inválido');
     }

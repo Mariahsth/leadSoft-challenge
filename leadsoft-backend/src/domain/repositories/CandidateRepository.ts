@@ -16,4 +16,7 @@ export interface CandidateRepository {
 
   // Método para encontrar um candidato pelo cpf
   findByCpf(cpf: string): Promise<Candidate | null>;
+  
+  // Método para encontrar um candidato pelo email
+  findByEmail(email: string): Promise<Candidate | null>;
 }

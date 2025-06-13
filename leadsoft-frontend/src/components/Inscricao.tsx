@@ -75,8 +75,14 @@ export default function Inscricao() {
       alert("Candidatura enviada!");
       window.location.reload();
     } catch (error: any) {
-      console.error("Erro ao enviar formulário:", error.message);
+       // err pode ser { field: 'cpf', message: 'CPF já cadastrado' } ou outra coisa
+    if (error.field && error.message) {
+      setFormErrors(prev => ({ ...prev, [error.field]: error.message }));
+    } else {
+      alert(error.message || 'Erro desconhecido');
     }
+  }
+    
   };
 
   return (

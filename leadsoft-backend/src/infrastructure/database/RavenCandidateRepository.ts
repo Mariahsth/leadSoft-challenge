@@ -70,13 +70,28 @@ export class RavenCandidateRepository implements CandidateRepository {
   
     try {
       const result = await session.query<Candidate>({ collection: 'Candidates' })
-        .whereEquals('cpf.value', cpf) 
+        .whereEquals('cpf', cpf) 
         .firstOrNull();
   
       return result;
     } catch (error) {
       console.error('Erro ao buscar candidato por CPF:', error);
       throw new Error('Erro ao consultar candidato por CPF');
+    }
+  }
+  // Método para buscar um candidato pelo email
+  async findByEmail(email: string): Promise<Candidate | null> {
+    const session = this.store.openSession();
+  
+    try {
+      const result = await session.query<Candidate>({ collection: 'Candidates' })
+        .whereEquals('email', email) 
+        .firstOrNull();
+  
+      return result;
+    } catch (error) {
+      console.error('Erro ao buscar candidato por email:', error);
+      throw new Error('Erro ao consultar candidato por email');
     }
   }
 }

@@ -29,7 +29,20 @@ export class CandidateController {
       const mimeType = req.file.mimetype;
       const fileName = req.file.originalname;
       console.log("req.file =", req.file);
-  
+
+      // verifica se já tem o cpf cadastrado
+      const cleanedCpf = cpf.replace(/\D/g, '');
+      const existingCPF = await this.candidateRepository.findByCpf(cleanedCpf);
+      if(existingCPF){
+        return res.status(400).json({ field: "cpf", message: "CPF já cadastrado" });
+      }
+
+      // verifica se já tem o email cadastrado
+      const existingEmail = await this.candidateRepository.findByEmail(email);
+      if(existingEmail){
+        return res.status(400).json({ field: "email", message: "Email já cadastrado" });
+      }
+
       await this.registerCandidate.execute(
         name,
         cpf,

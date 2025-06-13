@@ -1,4 +1,4 @@
-export function validateCPF(cpf: string): boolean {
+export const validateCPF = (cpf: string): boolean => {
     // Remove qualquer caractere não numérico
     cpf = cpf.replace(/[^\d]+/g, '');
 
@@ -23,6 +23,5 @@ export function validateCPF(cpf: string): boolean {
     const check2 = remainder < 2 ? 0 : 11 - remainder;
 
     return check2 === +cpf[10];
-    
-  }
+  };
   

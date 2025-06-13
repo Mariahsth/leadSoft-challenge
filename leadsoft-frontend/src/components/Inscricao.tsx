@@ -14,6 +14,8 @@ import { useState } from "react";
 import { useSlideInOnView } from "@/hooks/useSlideInOnView";
 import { breakpoints } from "@/styles/breakPoints";
 import { enviarInscricao } from "@/services/inscricaoService";
+import { validateForm } from "@/utils/validateForm";
+import { FormFields } from "@/types/FormFields";
 
 const ImgFoguete = styled.img`
   width: 15em;
@@ -28,19 +30,27 @@ export default function Inscricao() {
   const slideInRef = useSlideInOnView("slide-in", { threshold: 0.1 });
   const slideInRef2 = useSlideInOnView("slide-in", { threshold: 0.1 });
   const { executeRecaptcha } = useGoogleReCaptcha();
-
-  const [formData, setFormData] = useState({
+  const [formErrors, setFormErrors] = useState<
+    Partial<Record<keyof FormFields, string>>
+  >({});
+  const [formData, setFormData] = useState<FormFields>({
     name: "",
     cpf: "",
     email: "",
     dateOfBirth: "",
     caption: "",
   });
-
   const [imageFile, setImageFile] = useState<File | null>(null);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    const { isValid, errors } = validateForm(formData);
+    setFormErrors(errors);
+
+    if (!isValid) {
+      return;
+    }
 
     if (!executeRecaptcha) {
       console.error("Recaptcha not ready");
@@ -60,13 +70,10 @@ export default function Inscricao() {
     if (imageFile) {
       dataToSend.append("image", imageFile);
     }
-
     try {
       const response = await enviarInscricao(dataToSend);
-      console.log("Cadastro enviado com sucesso", response);
-      alert('Candidatura enviada!')
+      alert("Candidatura enviada!");
       window.location.reload();
-
     } catch (error: any) {
       console.error("Erro ao enviar formulário:", error.message);
     }
@@ -85,15 +92,16 @@ export default function Inscricao() {
           <h3>Cadastro</h3>
 
           <Input type="hidden" id="id" />
-          <label htmlFor="name">Nome completo:</label>
+          <label htmlFor="name">Nome:</label>
           <Input
             type="text"
             id="name"
-            onChange={(e) =>
-              setFormData({ ...formData, name: e.target.value })
-            }
+            onChange={(e) => setFormData({ ...formData, name: e.target.value })}
             required
           />
+          {formErrors.name && (
+            <span style={{ color: "red" }}>{formErrors.name}</span>
+          )}
 
           <label htmlFor="cpf">CPF:</label>
           <Input
@@ -102,6 +110,9 @@ export default function Inscricao() {
             onChange={(e) => setFormData({ ...formData, cpf: e.target.value })}
             required
           />
+          {formErrors.cpf && (
+            <span style={{ color: "red" }}>{formErrors.cpf}</span>
+          )}
 
           <label htmlFor="email">E-mail:</label>
           <Input
@@ -112,17 +123,22 @@ export default function Inscricao() {
             }
             required
           />
+          {formErrors.email && (
+            <span style={{ color: "red" }}>{formErrors.email}</span>
+          )}
 
           <label htmlFor="dateOfBirth">Data de nascimento:</label>
           <Input
             type="date"
             id="dateOfBirth"
-
             onChange={(e) =>
               setFormData({ ...formData, dateOfBirth: e.target.value })
             }
             required
           />
+          {formErrors.dateOfBirth && (
+            <span style={{ color: "red" }}>{formErrors.dateOfBirth}</span>
+          )}
 
           <label htmlFor="caption">Legenda:</label>
           <Input

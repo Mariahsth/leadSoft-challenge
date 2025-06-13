@@ -1,5 +1,5 @@
 export function validateName(name: string): boolean {
-    const regex = /^[a-zA-Z\s]+$/;
-    return regex.test(name) && name.length >= 3 && name.length <= 100;
-  }
+  const regex = /^[A-Za-zÀ-ÖØ-öø-ÿÇçÑñ\s~]+$/u;
+  return regex.test(name) && name.length >= 3 && name.length <= 100;
+}
   

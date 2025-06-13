@@ -98,7 +98,7 @@ export default function ItemGaleria({
         />
 
       </ContainerImagem>
-      <p>"{legenda}"</p>
+      <p>{legenda}</p>
       <ContainerBotao>
         <BotaoComentar className="BotaoComentar">
           <TextoBotao>Comentar</TextoBotao>

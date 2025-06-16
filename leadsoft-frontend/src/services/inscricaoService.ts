@@ -11,7 +11,6 @@ export const enviarInscricao = async (formData: FormData) => {
   } catch (error:any) {
     // Verifica se o erro veio do backend (ex: 400, 409...)
     if (error.response && error.response.data) {
-      // Retorna o erro para o componente tratar
       throw error.response.data;
     }
 

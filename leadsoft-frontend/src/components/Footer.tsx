@@ -2,6 +2,7 @@
 import { breakpoints } from "@/styles/breakPoints";
 import { ContainerColuna, ContainerHorizontal } from "@/styles/ReusableStyle";
 import styled from "styled-components";
+import React from "react";
 
 const FooterStyle = styled.footer`
   border-top: 1px solid var(--secundary-color12);
@@ -27,13 +28,13 @@ const LambdaImg = styled.img`
   width: 0.5em;
 `;
 
-export default function Footer() {
+export default React.memo(function Footer() {
   return (
     <FooterStyle>
       <ContainerFooter>
         <ContainerColuna style={{ gap: "0.5rem" }}>
           <ContainerLambdaText>
-            <LambdaImg src="/lambda-leadsoft-2023.svg" alt="Lambda" />
+            <LambdaImg src="/lambda-leadsoft-2023.svg" alt="Lambda" loading="lazy"/>
             <TextFooter>LeadSoft</TextFooter>
           </ContainerLambdaText>
           <TextFooter>
@@ -43,4 +44,4 @@ export default function Footer() {
       </ContainerFooter>
     </FooterStyle>
   );
-}
+})

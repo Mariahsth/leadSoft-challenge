@@ -5,7 +5,7 @@ import { MdHowToReg, MdPhotoLibrary } from "react-icons/md";
 import { RiLockFill } from "react-icons/ri";
 import { breakpoints } from "@/styles/breakPoints";
 import { FiMenu, FiX } from "react-icons/fi";
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 
 
 const HeaderStyle = styled.header`
@@ -112,7 +112,7 @@ const MenuToggle = styled.button`
 
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
-  const toggleMenu = () => setMenuOpen((prev) => !prev);
+  const toggleMenu = useCallback(() => setMenuOpen(prev => !prev), []);
   const navRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {

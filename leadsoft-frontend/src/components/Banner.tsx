@@ -3,6 +3,7 @@ import styled from "styled-components";
 import Slider from "react-slick";
 import { breakpoints } from "@/styles/breakPoints";
 import { useMemo } from "react";
+import type { Settings } from "react-slick";
 
 const BannerContainer = styled.section`
   width: 100%;
@@ -63,9 +64,9 @@ const Slide = styled.div<{ $bg: string }>`
 `;
 
 export default function Banner() {
-  const images = ["mars.jpg", "eclipse.jpg", "galaxy2.jpg", "telescope.jpg", "mars4.jpg"];
+  const images = ["mars.webp", "eclipse.webp", "galaxy2.webp", "telescope.webp", "mars4.webp"];
 
-  const settings = useMemo(() => ({
+  const settings: Settings = useMemo(() => ({
     dots: true,
     infinite: true,
     speed: 500,
@@ -74,16 +75,17 @@ export default function Banner() {
     slidesToShow: 1,
     slidesToScroll: 1,
     arrows: false,
+    lazyLoad: "ondemand",
   }), []);
 
   return (
     <BannerContainer>
-      <Slider {...settings}>
+      <Slider {...settings} accessibility={true} >
         {images.map((src, i) => (
-          <Slide key={i} $bg={src} />
+          <Slide key={i} $bg={src} role="img" aria-label={`Imagem de fundo ${i + 1}`}/>
         ))}
       </Slider>
-      <TitleOverlay id='home'>Potencializando decisões com inteligência além da Terra</TitleOverlay>
+      <TitleOverlay id='home' role="heading" aria-level={2}>Potencializando decisões com inteligência além da Terra</TitleOverlay>
     </BannerContainer> 
   );
 }

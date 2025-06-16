@@ -5,7 +5,7 @@ import styled from "styled-components";
 import { FaComment } from "react-icons/fa";
 import { Botao, Card, ContainerBotao, ContainerHorizontal } from "@/styles/ReusableStyle";
 import { useSlideInOnView } from "@/hooks/useSlideInOnView";
-import { useState } from "react";
+import React from "react";
 
 const ItemGaleriaContainer = styled(Card)`
   padding: 1rem;
@@ -73,22 +73,23 @@ const IconeComentario = styled(FaComment)`
   }
 `;
 
-export default function ItemGaleria({
+export default React.memo(function ItemGaleria({
   nome,
   imagem,
   legenda,
 }: ItemGaleriaProps) {
-  const slideInRef = useSlideInOnView("slide-in", { threshold: 0.1 });
-  const [imgSrc, setImgSrc] = useState(imagem);
+  const slideInRef = useSlideInOnView("slide-out", { threshold: 0.1 });
 
   return (
     <ItemGaleriaContainer ref={slideInRef} className="slide-out">
       <NomeItemGaleria>{nome}</NomeItemGaleria>
       <ContainerImagem>
         <ImagemItemGaleria
-          src={imgSrc}
+          src={imagem}
           alt={`imagem de ${nome}`}
-          onError={() => setImgSrc("/fallback-image.png")}
+          onError={(e) => {
+            e.currentTarget.src = "/fallback-image.png";
+          }}
         />
       </ContainerImagem>
       <p>{legenda}</p>
@@ -100,4 +101,4 @@ export default function ItemGaleria({
       </ContainerBotaoComentar>
     </ItemGaleriaContainer>
   );
-}
+})

@@ -22,6 +22,7 @@ const TituloInicio = styled(ContainerHorizontal)`
   gap: 1rem;
   font-size: 1.7em;
   padding: 1em 0;
+  text-align:center;
   @media (max-width: ${breakpoints.tablet}) {
     flex-direction: column;
   }
@@ -63,7 +64,7 @@ const LegendaLeadIA = styled.p`
 const ContainerImgInicio = styled(ContainerColuna)`
   width: 50%;
   border-right: 1px solid var(--secundary-color12);
-  background-image: url("/space.jpg");
+  background-image: url("/space.webp");
   background-size: cover;
   background-position: center;
   border-radius: 16px 0 0 16px;
@@ -86,7 +87,7 @@ const ContainerTextoInicio = styled(ContainerColuna)`
     left: 0;
     width: 100%;
     height: 100%;
-    background-image: url("/astronaut.jpg");
+    background-image: url("/astronaut.webp");
     background-size: cover;
     background-position: 50% 50%;
     opacity: 0.2;
@@ -111,6 +112,7 @@ const ContainerTextoInicio = styled(ContainerColuna)`
 const ConteudoTexto = styled(ContainerColuna)`
   margin: 3rem 0.5rem;
   gap: 0.7rem;
+  text-align:center;
 `;
 
 export default function Inicio() {
@@ -130,7 +132,7 @@ export default function Inicio() {
       </TituloInicio>
       <ConteudoInicio ref={slideInRef3} className="slide-out">
         <ContainerImgInicio>
-          <ImgLeadIA src="/LeadIA.png" alt="Representação da IA LeadSoft" />
+          <ImgLeadIA src="/LeadIA.webp" alt="Ilustração da inteligência artificial LeadSoft" loading="lazy" />
           <LegendaLeadIA>
             A <TextoDestaque>LeadIA</TextoDestaque>, nossa agente espacial mais
             inteligente e visionária, está formando a tripulação perfeita para

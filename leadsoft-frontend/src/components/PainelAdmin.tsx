@@ -13,6 +13,7 @@ import styled from "styled-components";
 import { RiLockFill } from "react-icons/ri";
 import { useSlideInOnView } from "@/hooks/useSlideInOnView";
 import { SlideInTitleH2, SlideInTitleH3 } from "@/styles/slideAnimation";
+import { CampoFormulario } from "./CampoFormulario";
 
 export const PainelSection = styled(FormSection)`
   flex-direction: column;
@@ -28,28 +29,27 @@ export default function PainelAdmin() {
         <SlideInTitleH2>Painel Admin </SlideInTitleH2>
         <ContainerColuna>
           <SlideInTitleH3>Acesso restrito </SlideInTitleH3>
-          <RiLockFill color={"var(--primary-color2)"} />
+          <RiLockFill color={"var(--primary-color2)"} aria-hidden />
         </ContainerColuna>
       </ContainerTitulo>
       <Card ref={slideInRef2} className="slide-out">
         <Formulario>
           <h3>Login</h3>
 
-          <label htmlFor="usuario">Usuário:</label>
-          <Input
+          <CampoFormulario
+            id="user"
+            label="Usuário:"
             type="text"
-            name="usuario"
-            id="usuario"
-            placeholder="Insira seu e-mail"
             required
+            onChange={() => {}}
           />
-          <label htmlFor="senha">Senha:</label>
-          <Input
-            type="text"
-            name="senha"
+
+          <CampoFormulario
             id="senha"
-            placeholder="Insira sua senha"
+            label="Senha:"
+            type="password"
             required
+            onChange={() => {}}
           />
 
           <ContainerBotao>

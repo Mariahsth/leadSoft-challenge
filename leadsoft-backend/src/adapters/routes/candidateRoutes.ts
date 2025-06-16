@@ -5,7 +5,6 @@ import { RavenCandidateRepository } from '../../infrastructure/database/RavenCan
 import { GoogleRecaptchaVerifier } from '../../infrastructure/services/GoogleRecaptchaVerifier';
 import { DeleteCandidate } from '../../application/use-cases/DeleteCandidate';
 import multer from 'multer';
-import { getRavenDbConnection } from '../../config/ravenDbConfig';
 
 const upload = multer();
 

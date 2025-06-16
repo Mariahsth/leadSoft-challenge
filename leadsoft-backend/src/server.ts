@@ -3,6 +3,7 @@ dotenv.config();
 import express from 'express';
 import cors from 'cors';
 import candidateRoutes from './adapters/routes/candidateRoutes';
+import authRoutes from "./adapters/routes/auth";
 
 
 const app=express();
@@ -15,6 +16,7 @@ app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 
 
 app.use('/api', candidateRoutes);
+app.use("/api/auth", authRoutes);
 
 app.get('/', (req, res) => {
     res.send('API da missão LeadSoft está no ar! 🚀')

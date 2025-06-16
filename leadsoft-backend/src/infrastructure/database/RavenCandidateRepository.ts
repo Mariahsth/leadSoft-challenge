@@ -3,7 +3,6 @@ import { Candidate } from '../../domain/entities/Candidate';
 import { DocumentStore } from 'ravendb'; 
 import { getRavenDbConnection } from '../../config/ravenDbConfig';
 import { Buffer } from 'buffer';
-import { Readable } from 'stream';
 
 export class RavenCandidateRepository implements CandidateRepository {
   private store: DocumentStore;

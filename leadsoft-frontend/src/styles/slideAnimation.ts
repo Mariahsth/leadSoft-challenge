@@ -1,4 +1,4 @@
-import styled, { keyframes, css } from "styled-components";
+import { keyframes, css } from "styled-components";
 
 const slideInFromLeft = keyframes`
   from {
@@ -41,17 +41,3 @@ export const slideInStyle = css`
   }
 `;
 
-export const SlideInTitleH1 = styled.h1`
-  ${slideInStyle}
-`;
-
-export const SlideInTitleH2 = styled.h2`
-  ${slideInStyle}
-`;
-
-export const SlideInTitleH3 = styled.h3`
-  ${slideInStyle}
-`;
-export const SlideInDiv = styled.div`
-  ${slideInStyle}
-`;

@@ -3,11 +3,7 @@ import styled from "styled-components";
 import { MdRocketLaunch } from "react-icons/md";
 import { HiOutlineSparkles } from "react-icons/hi2";
 import { breakpoints } from "@/styles/breakPoints";
-import {
-  SlideInDiv,
-  slideInStyle,
-  SlideInTitleH1,
-} from "@/styles/slideAnimation";
+import { slideInStyle } from "@/styles/slideAnimation";
 import { useSlideInOnView } from "@/hooks/useSlideInOnView";
 import { ContainerColuna, ContainerHorizontal } from "@/styles/ReusableStyle";
 
@@ -23,6 +19,7 @@ const TituloInicio = styled(ContainerHorizontal)`
   font-size: 1.7em;
   padding: 1em 0;
   text-align:center;
+  ${slideInStyle}
   @media (max-width: ${breakpoints.tablet}) {
     flex-direction: column;
   }
@@ -117,20 +114,19 @@ const ConteudoTexto = styled(ContainerColuna)`
 
 export default function Inicio() {
   const slideInRef = useSlideInOnView("slide-in", { threshold: 0.1 });
-  const slideInRef2 = useSlideInOnView("slide-in", { threshold: 0.1 });
-  const slideInRef3 = useSlideInOnView("slide-in", { threshold: 0.05 });
+  const slideInRef2 = useSlideInOnView("slide-in", { threshold: 0.05 });
 
   return (
     <ContainerInicio>
-      <TituloInicio>
-        <SlideInTitleH1 ref={slideInRef} className="slide-in">
+      <TituloInicio ref={slideInRef} className="slide-in">
+        <h1 >
           Missão Marte com a <TextoDestaque>LeadSoft </TextoDestaque>
-        </SlideInTitleH1>
-        <SlideInDiv ref={slideInRef2} className="slide-in">
+        </h1>
+        <div >
           <MdRocketLaunch color="var(--secundary-color5)" size={32} />
-        </SlideInDiv>
+        </div>
       </TituloInicio>
-      <ConteudoInicio ref={slideInRef3} className="slide-out">
+      <ConteudoInicio ref={slideInRef2} className="slide-out">
         <ContainerImgInicio>
           <ImgLeadIA src="/LeadIA.webp" alt="Ilustração da inteligência artificial LeadSoft" loading="lazy" />
           <LegendaLeadIA>

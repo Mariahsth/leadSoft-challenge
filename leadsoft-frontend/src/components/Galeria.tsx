@@ -2,7 +2,6 @@
 import styled from "styled-components";
 import ItemGaleria from "./ItemGaleria";
 import { useSlideInOnView } from "@/hooks/useSlideInOnView";
-import { SlideInTitleH2, SlideInTitleH3 } from "@/styles/slideAnimation";
 import { useEffect, useState } from "react";
 import { buscarCandidatos } from "@/services/galeriaService";
 import { ContainerTitulo } from "@/styles/ReusableStyle";
@@ -52,10 +51,10 @@ export default function Galeria() {
   return (
     <GaleriaSection id="galeria">
       <ContainerTitulo ref={slideInRef} className="slide-in">
-        <SlideInTitleH2>Galeria</SlideInTitleH2>
-        <SlideInTitleH3>
+        <h2>Galeria</h2>
+        <h3>
           Explore os bastidores de uma jornada rumo ao futuro
-        </SlideInTitleH3>
+        </h3>
       </ContainerTitulo>
       {erro ? (
         <ErroBusca>Erro: {erro}</ErroBusca>

@@ -34,7 +34,7 @@ export class RegisterCandidate {
   ): Promise<void> {
 
 
-    const isHuman = await this.recaptchaVerifier.verify(recaptchaToken);
+    const isHuman = await this.recaptchaVerifier.verify(recaptchaToken, "submit");
     if (!isHuman) {
       throw new Error("Verificação reCAPTCHA falhou. Ação suspeita detectada.");
     }

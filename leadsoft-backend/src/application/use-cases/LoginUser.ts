@@ -1,11 +1,21 @@
 import { UserRepository } from "../../domain/repositories/UserRepository";
 import bcrypt from "bcrypt";
 import { JwtService } from "../../infrastructure/services/JwtService";
+import { RecaptchaVerifier } from "../../domain/services/RecaptchaVerifier";
 
 export class LoginUser {
-  constructor(private userRepository: UserRepository) {}
+  constructor(
+    private userRepository: UserRepository,
+    private recaptchaVerifier: RecaptchaVerifier
+  ) {}
 
-  async execute(user: string, password: string): Promise<string> {
+  async execute(user: string, password: string, recaptchaToken: string): Promise<string> {
+    const isHuman = await this.recaptchaVerifier.verify(recaptchaToken, "login");
+    if (!isHuman) {
+      throw { field: "recaptcha", message: "Verificação reCAPTCHA falhou" };
+    }
+    
+    
     const existingUser = await this.userRepository.findByEmail(user);
   
     if (!existingUser) {

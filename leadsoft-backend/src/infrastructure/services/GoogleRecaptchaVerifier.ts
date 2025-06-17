@@ -8,7 +8,7 @@ export class GoogleRecaptchaVerifier implements RecaptchaVerifier {
     this.secretKey = secretKey;
   }
 
-  async verify(token: string): Promise<boolean> {
+  async verify(token: string, expectedAction: string = "submit"): Promise<boolean> {
     try {
       const response = await axios.post(
         `https://www.google.com/recaptcha/api/siteverify`,
@@ -20,14 +20,14 @@ export class GoogleRecaptchaVerifier implements RecaptchaVerifier {
           },
         }
       );
-      console.log("secretkey no recaptcha verifier:", this.secretKey);
+  
       const data = response.data;
   
       console.log("🔍 Resultado reCAPTCHA:", data);
   
       const isValid =
         data.success === true &&
-        data.action === "submit" &&
+        data.action === expectedAction &&
         data.score >= 0.5;
   
       if (!isValid) {

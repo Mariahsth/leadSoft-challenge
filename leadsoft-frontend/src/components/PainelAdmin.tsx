@@ -5,7 +5,6 @@ import {
   ContainerTitulo,
   Card,
   Formulario,
-  Input,
   FormSection,
   ContainerColuna,
 } from "@/styles/ReusableStyle";
@@ -14,7 +13,10 @@ import { RiLockFill } from "react-icons/ri";
 import { useSlideInOnView } from "@/hooks/useSlideInOnView";
 import { login } from "@/services/loginService";
 import { CampoFormulario } from "./CampoFormulario";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import Cookies from "js-cookie";
+import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
 
 export const PainelSection = styled(FormSection)`
   flex-direction: column;
@@ -23,13 +25,16 @@ export const PainelSection = styled(FormSection)`
 export default function PainelAdmin() {
   const slideInRef = useSlideInOnView("slide-in", { threshold: 0.1 });
   const slideInRef2 = useSlideInOnView("slide-out", { threshold: 0.1 });
-
   const [user, setUser] = useState("");
   const [password, setPassword] = useState("");
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
   const [errors, setErrors] = useState<{ user?: string; password?: string }>(
     {}
   );
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const router = useRouter();
+  const { executeRecaptcha } = useGoogleReCaptcha();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -42,15 +47,20 @@ export default function PainelAdmin() {
       });
       return;
     }
+    const token = await executeRecaptcha?.("login");
+    if (!token) {
+      alert("reCAPTCHA não verificado. Tente novamente.");
+      return;
+    }
 
     try {
       setIsSubmitting(true);
-      const result = await login({ user, password });
+      const result = await login({ user, password, recaptchaToken: token });
 
       alert("Login realizado com sucesso!");
       // Armazene o token ou redirecione
-      // localStorage.setItem("token", result.token);
-      // router.push("/dashboard"); <-- se usar next/navigation
+      Cookies.set("token", result.token, { expires: 1, secure: true, sameSite: "strict" });
+      router.push("/admin");
     } catch (error: any) {
       // Erro retornado do backend: { field: "user", message: "Usuário inválido" }
       if (error.field && error.message) {
@@ -63,6 +73,13 @@ export default function PainelAdmin() {
     }
   };
 
+  useEffect(() => {
+    const token = Cookies.get("token");
+    if (token) {
+      setIsAuthenticated(true);
+    }
+  }, []);
+
   return (
     <PainelSection id="admin">
       <ContainerTitulo ref={slideInRef} className="slide-in">
@@ -73,6 +90,17 @@ export default function PainelAdmin() {
         </ContainerColuna>
       </ContainerTitulo>
       <Card ref={slideInRef2} className="slide-out">
+
+        {isAuthenticated ? 
+        (
+          <ContainerColuna style={{ gap: "1rem", textAlign: "center" }}>
+            <p>Você já está logado!</p>
+            <Botao style={{ width: "100%"}} onClick={() => router.push("/admin")}>Acessar Painel</Botao>
+          </ContainerColuna>
+        )
+        :
+        (
+          
         <Formulario onSubmit={handleSubmit}>
           <h3>Login</h3>
 
@@ -116,6 +144,8 @@ export default function PainelAdmin() {
             </Botao>
           </ContainerBotao>
         </Formulario>
+        )
+        }
       </Card>
     </PainelSection>
   );

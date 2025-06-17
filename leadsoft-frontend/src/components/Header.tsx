@@ -4,9 +4,11 @@ import { AiOutlineHome } from "react-icons/ai";
 import { MdHowToReg, MdPhotoLibrary } from "react-icons/md";
 import { RiLockFill } from "react-icons/ri";
 import { breakpoints } from "@/styles/breakPoints";
-import { FiMenu, FiX } from "react-icons/fi";
+import { FiMenu, FiX, FiLogOut, FiArrowLeft } from "react-icons/fi";
 import { useState, useRef, useEffect, useCallback } from "react";
-
+import { usePathname } from "next/navigation";
+import { useRouter } from "next/navigation";
+import Cookies from "js-cookie";
 
 const HeaderStyle = styled.header`
   display: flex;
@@ -88,6 +90,7 @@ const ItemAncora = styled.a`
   align-items: center;
   text-align: center;
   gap: 0.2rem;
+  cursor:pointer;
 
   &:hover {
     color: var(--primary-color2);
@@ -114,6 +117,9 @@ export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
   const toggleMenu = useCallback(() => setMenuOpen(prev => !prev), []);
   const navRef = useRef<HTMLDivElement>(null);
+  const pathname = usePathname();
+  const isAdminPage = pathname === "/admin";
+  const router = useRouter();
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -133,6 +139,12 @@ export default function Header() {
     };
   }, [menuOpen]);
 
+  function logout(){
+    alert("Realizando logout");
+    Cookies.remove("token");
+    router.push("/");
+  }
+
   return (
     <HeaderStyle>
       <AncoraLogo href="#home">
@@ -144,30 +156,54 @@ export default function Header() {
       </MenuToggle>
       <Nav $isOpen={menuOpen} ref={navRef}>
         <ContainerListaNav>
-          <li>
-            <ItemAncora href="#home">
-              <AiOutlineHome />
-              Início
-            </ItemAncora>
-          </li>
-          <li>
-            <ItemAncora href="#form">
-              <MdHowToReg />
-              Incrição
-            </ItemAncora>
-          </li>
-          <li>
-            <ItemAncora href="#galeria">
-              <MdPhotoLibrary />
-              Galeria
-            </ItemAncora>
-          </li>
-          <li>
-            <ItemAncora href="#admin">
-              <RiLockFill />
-              Painel Admin
-            </ItemAncora>
-          </li>
+          {isAdminPage ? (
+            <>
+             <li>
+                <ItemAncora href="/">
+                  <FiArrowLeft />
+                  Voltar ao site
+                </ItemAncora>
+              </li>
+             <li>
+                <ItemAncora onClick={() => logout()}>
+                  <FiLogOut />
+                  Logout
+                </ItemAncora>
+              </li>
+              
+
+            </>
+          )
+          :
+          (
+            <>
+              <li>
+                <ItemAncora href="#home">
+                  <AiOutlineHome />
+                  Início
+                </ItemAncora>
+              </li>
+              <li>
+                <ItemAncora href="#form">
+                  <MdHowToReg />
+                  Incrição
+                </ItemAncora>
+              </li>
+              <li>
+                <ItemAncora href="#galeria">
+                  <MdPhotoLibrary />
+                  Galeria
+                </ItemAncora>
+              </li>
+              <li>
+                <ItemAncora href="#admin">
+                  <RiLockFill />
+                  Painel Admin
+                </ItemAncora>
+              </li>
+            </>
+          )
+          }
         </ContainerListaNav>
       </Nav>
     </HeaderStyle>

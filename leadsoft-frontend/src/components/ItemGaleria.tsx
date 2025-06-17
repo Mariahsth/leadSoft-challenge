@@ -29,13 +29,16 @@ const ItemGaleriaContainer = styled(Card)`
 const ContainerImagem = styled(ContainerHorizontal)`
   height: 100%;
 `;
-
 const ContainerBotaoComentar = styled(ContainerBotao)`
   width: 100%;
 `;
 const TextoBotao = styled.span`
   color: var(--secundary-color12);
 `;
+const ContainerComentarios=styled.div`
+display:flex;
+text-align:left;
+`
 
 export default React.memo(function ItemGaleria({
   id,
@@ -126,7 +129,10 @@ export default React.memo(function ItemGaleria({
       <p>{legenda}</p>
       {isAdminPage ? (
         <>
-          <Botao onClick={() => setVisualizarDetalhes(!visualizarDetalhes)}>
+          <Botao onClick={() => {
+            setVisualizarDetalhes(!visualizarDetalhes)
+            setMostrarComentario(!mostrarComentario)
+            }}>
             {visualizarDetalhes ? (
               <>
                 <TextoBotao>Ver menos</TextoBotao>
@@ -141,21 +147,34 @@ export default React.memo(function ItemGaleria({
           </Botao>
           {visualizarDetalhes && (
             <>
-              <ContainerHorizontal>
-                <h5>CPF: </h5>
-                <p>{cpf}</p>
-              </ContainerHorizontal>
-              <ContainerHorizontal>
-                <h5>Email: </h5>
-                <p>{email}</p>
-              </ContainerHorizontal>
-              <ContainerHorizontal>
-                <h5>Data de nascimento: </h5>
-                <p>{dataNascimento}</p>
-              </ContainerHorizontal>
+              <div style={{ textAlign: "left" }}>
+                <p><strong>CPF:</strong> {cpf}</p>
+                <p><strong>Email:</strong> {email}</p>
+                <p><strong>Data de nascimento:</strong> {dataNascimento}</p>
+              </div>
+              <h4>Comentários:</h4>
+              {comentarios.length > 0 ? 
+              (
+                <ul >
+                  {comentarios.map((c, i) => (
+                    <li key={i} >
+                      <ContainerComentarios >
+                        <h5 >{c.author}</h5>
+                        <p>: {c.content}</p>
+                      </ContainerComentarios>
+                    </li>
+                  ))}
+                </ul>
+              )
+              : 
+              (
+                <p>Nenhum comentário</p>
+              )
+            
+            }
             </>
           )}
-          <Botao onClick={handleDelete}>
+          <Botao onClick={handleDelete} style={{ marginTop: "0" }}>
             <TextoBotao>Excluir</TextoBotao>
             <FaTrash />
           </Botao>
@@ -202,6 +221,7 @@ export default React.memo(function ItemGaleria({
               )}
             </Botao>
           </ContainerBotaoComentar>
+          
         </>
       )}
     </ItemGaleriaContainer>

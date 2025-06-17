@@ -72,6 +72,23 @@ export const Input = styled.input`
     color: var(--secundary-color9);
   }
 `;
+export const TexAreaInput = styled.textarea`
+  padding: 0.5rem;
+  border-radius: 16px;
+  border: transparent;
+  width: 100%;
+  max-width:100%;
+
+  background-color: white;
+  font-weight: 500;
+  color: var(--secundary-color9);
+  text-align: center;
+
+  &::placeholder {
+    font-family: var(--font-body);
+    color: var(--secundary-color9);
+  }
+`;
 
 export const Botao = styled.button`
 padding: 0.5rem 1rem;
@@ -135,4 +152,11 @@ export const ContainerItensGaleria = styled.div`
   gap: 1rem;
   padding: 1rem;
   margin-top: 2rem;
+`;
+
+export const ImagemItemGaleria = styled.img`
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
 `;

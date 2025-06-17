@@ -130,6 +130,10 @@ export default React.memo(function ItemGaleria({
       alert("Preencha nome e comentário");
       return;
     }
+    if (content.length > 150) {
+      alert("O comentário deve ter no máximo 150 caracteres.");
+      return;
+    }
 
     const recaptchaToken = await executeRecaptcha?.("submit");
     if (!recaptchaToken) {

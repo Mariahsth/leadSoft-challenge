@@ -19,8 +19,8 @@ export class CommentOnCandidate {
     if (!isHuman) {
       throw new Error("Verificação reCAPTCHA falhou. Ação suspeita detectada.");
     }
-    if (content.length > 300) {
-      throw new Error("Comentário excede o limite de 300 caracteres");
+    if (content.length > 150) {
+      throw new Error("Comentário excede o limite de 150 caracteres");
     }
 
     await this.commentRepository.add(comment);

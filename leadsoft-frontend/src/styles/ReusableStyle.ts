@@ -127,3 +127,12 @@ text-align:'center';
 justify-content: center;
 width:100%;
 `
+export const ContainerItensGaleria = styled.div`
+  width: 100%;
+  max-width: 1200px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1rem;
+  padding: 1rem;
+  margin-top: 2rem;
+`;

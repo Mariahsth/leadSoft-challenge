@@ -4,7 +4,7 @@ import ItemGaleria from "./ItemGaleria";
 import { useSlideInOnView } from "@/hooks/useSlideInOnView";
 import { useEffect, useState } from "react";
 import { buscarCandidatos } from "@/services/galeriaService";
-import { ContainerTitulo } from "@/styles/ReusableStyle";
+import { ContainerItensGaleria, ContainerTitulo } from "@/styles/ReusableStyle";
 import type { Candidate } from "@/types/Candidate";
 
 const GaleriaSection = styled.section`
@@ -17,15 +17,7 @@ const GaleriaSection = styled.section`
   justify-content: center;
 `;
 
-const ContainerItensGaleria = styled.div`
-  width: 100%;
-  max-width: 1200px;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 1rem;
-  padding: 1rem;
-  margin-top: 2rem;
-`;
+
 const ErroBusca = styled.p`
   margin-top: 2rem;
 `;

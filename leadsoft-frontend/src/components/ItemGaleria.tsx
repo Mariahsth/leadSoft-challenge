@@ -2,10 +2,11 @@
 import { breakpoints } from "@/styles/breakPoints";
 import { ItemGaleriaProps } from "@/types/ItemGaleriaTypes";
 import styled from "styled-components";
-import { FaComment } from "react-icons/fa";
+import { FaComment,FaPlus, FaMinus } from "react-icons/fa";
 import { Botao, Card, ContainerBotao, ContainerHorizontal } from "@/styles/ReusableStyle";
 import { useSlideInOnView } from "@/hooks/useSlideInOnView";
-import React from "react";
+import React, { useState } from "react";
+import { usePathname } from "next/navigation";
 
 const ItemGaleriaContainer = styled(Card)`
   padding: 1rem;
@@ -77,8 +78,14 @@ export default React.memo(function ItemGaleria({
   nome,
   imagem,
   legenda,
+  cpf, 
+  dataNascimento,
+  email
 }: ItemGaleriaProps) {
   const slideInRef = useSlideInOnView("slide-out", { threshold: 0.1 });
+  const pathname = usePathname();
+  const isAdminPage = pathname === "/admin";
+  const [visualizarDetalhes, setVisualizarDetalhes] = useState(false)
 
   return (
     <ItemGaleriaContainer ref={slideInRef} className="slide-out">
@@ -93,12 +100,60 @@ export default React.memo(function ItemGaleria({
         />
       </ContainerImagem>
       <p>{legenda}</p>
+      {isAdminPage ? 
+      (
+        <>
+          {visualizarDetalhes ? 
+          (
+            <>
+              <ContainerHorizontal>
+                <h5>CPF: </h5>
+                <p>{cpf}</p>
+              </ContainerHorizontal>
+              <ContainerHorizontal>
+                <h5>Email: </h5>
+                <p>{email}</p>
+              </ContainerHorizontal>
+              <ContainerHorizontal>
+                <h5>Data de nascimento: </h5>
+                <p>{dataNascimento}</p>
+              </ContainerHorizontal>
+            </>
+          ) 
+          : 
+          (
+            ''
+          )}
+          <BotaoComentar onClick={() => setVisualizarDetalhes(!visualizarDetalhes)} className="BotaoComentar">
+            {visualizarDetalhes ? 
+            (
+              <>
+                <TextoBotao >Ver menos</TextoBotao>
+                <FaMinus/>
+              </>
+            ) 
+            : 
+            (
+              <>
+              <TextoBotao >Ver mais</TextoBotao>
+              <FaPlus/>
+              </>
+
+            )}
+            
+          </BotaoComentar>
+        </>
+      )
+      :
+      (
       <ContainerBotaoComentar>
         <BotaoComentar className="BotaoComentar">
           <TextoBotao>Comentar</TextoBotao>
           <IconeComentario />
         </BotaoComentar>
       </ContainerBotaoComentar>
+      )
+      }
     </ItemGaleriaContainer>
   );
 })

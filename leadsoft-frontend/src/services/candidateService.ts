@@ -21,3 +21,15 @@ export const buscarCandidatos = async (): Promise<Candidate[]> => {
     throw new Error(error.message || 'Erro ao buscar candidatos');
   }
 };
+
+export const deleteCandidate = async (id: string, token: string) => {
+  try {
+    await apiClient.delete(`/api/candidates/${id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+  } catch (error: any) {
+    throw new Error(error.response?.data?.message || "Erro ao excluir candidato");
+  }
+};

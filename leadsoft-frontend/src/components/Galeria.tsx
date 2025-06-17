@@ -3,7 +3,7 @@ import styled from "styled-components";
 import ItemGaleria from "./ItemGaleria";
 import { useSlideInOnView } from "@/hooks/useSlideInOnView";
 import { useEffect, useState } from "react";
-import { buscarCandidatos } from "@/services/galeriaService";
+import { buscarCandidatos } from "@/services/candidateService";
 import { ContainerItensGaleria, ContainerTitulo } from "@/styles/ReusableStyle";
 import type { Candidate } from "@/types/Candidate";
 
@@ -16,7 +16,6 @@ const GaleriaSection = styled.section`
   text-align: center;
   justify-content: center;
 `;
-
 
 const ErroBusca = styled.p`
   margin-top: 2rem;
@@ -44,9 +43,7 @@ export default function Galeria() {
     <GaleriaSection id="galeria">
       <ContainerTitulo ref={slideInRef} className="slide-in">
         <h2>Galeria</h2>
-        <h3>
-          Explore os bastidores de uma jornada rumo ao futuro
-        </h3>
+        <h3>Explore os bastidores de uma jornada rumo ao futuro</h3>
       </ContainerTitulo>
       {erro ? (
         <ErroBusca>Erro: {erro}</ErroBusca>
@@ -56,6 +53,7 @@ export default function Galeria() {
         <ContainerItensGaleria>
           {candidatos.map((item) => (
             <ItemGaleria
+              id={item.id}
               key={item.id}
               nome={item.name}
               imagem={item.image}

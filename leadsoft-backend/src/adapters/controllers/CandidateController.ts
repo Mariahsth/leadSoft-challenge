@@ -134,16 +134,15 @@ export class CandidateController {
   async delete(req: Request, res: Response) {
     try {
       const { id } = req.params;
-      const { recaptchaToken } = req.body;
   
-      await this.deleteCandidate.execute(id, recaptchaToken);
+      await this.deleteCandidate.execute(id);
   
-      res.status(200).json({ message: 'Candidato deletado com sucesso!' });
+      res.status(200).json({ message: "Candidato deletado com sucesso!" });
     } catch (error: unknown) {
       if (error instanceof Error) {
         res.status(400).json({ message: error.message });
       } else {
-        res.status(500).json({ message: 'Erro desconhecido' });
+        res.status(500).json({ message: "Erro desconhecido" });
       }
     }
   }

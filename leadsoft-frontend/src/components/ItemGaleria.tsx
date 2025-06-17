@@ -2,11 +2,14 @@
 import { breakpoints } from "@/styles/breakPoints";
 import { ItemGaleriaProps } from "@/types/ItemGaleriaTypes";
 import styled from "styled-components";
-import { FaComment,FaPlus, FaMinus } from "react-icons/fa";
+import { FaComment,FaPlus, FaMinus, FaTrash } from "react-icons/fa";
 import { Botao, Card, ContainerBotao, ContainerHorizontal } from "@/styles/ReusableStyle";
 import { useSlideInOnView } from "@/hooks/useSlideInOnView";
 import React, { useState } from "react";
 import { usePathname } from "next/navigation";
+import { deleteCandidate } from "@/services/candidateService";
+import Cookies from "js-cookie";
+
 
 const ItemGaleriaContainer = styled(Card)`
   padding: 1rem;
@@ -75,17 +78,40 @@ const IconeComentario = styled(FaComment)`
 `;
 
 export default React.memo(function ItemGaleria({
+  id,
   nome,
   imagem,
   legenda,
   cpf, 
   dataNascimento,
-  email
-}: ItemGaleriaProps) {
+  email,
+  onDelete,
+}: ItemGaleriaProps & { id: string, onDelete?: (id: string) => void }) {
   const slideInRef = useSlideInOnView("slide-out", { threshold: 0.1 });
   const pathname = usePathname();
   const isAdminPage = pathname === "/admin";
   const [visualizarDetalhes, setVisualizarDetalhes] = useState(false)
+
+  const handleDelete = async () => {
+    if (!confirm(`Deseja realmente excluir o candidato ${nome}?`)) return;
+
+    const token = Cookies.get("token");
+    if (!token) {
+      alert("Você não está autenticado");
+      return;
+    }
+
+    try {
+      await deleteCandidate(id, token);
+      alert("Candidato excluído com sucesso!");
+
+      // notifica o pai para remover da lista
+      if (onDelete) onDelete(id);
+    } catch (err: any) {
+      alert(err.message);
+    }
+  };
+
 
   return (
     <ItemGaleriaContainer ref={slideInRef} className="slide-out">
@@ -103,6 +129,24 @@ export default React.memo(function ItemGaleria({
       {isAdminPage ? 
       (
         <>
+          <BotaoComentar onClick={() => setVisualizarDetalhes(!visualizarDetalhes)} className="BotaoComentar">
+            {visualizarDetalhes ? 
+            (
+              <>
+                <TextoBotao >Ver menos</TextoBotao>
+                <FaMinus/>
+              </>
+            ) 
+            : 
+            (
+              <>
+              <TextoBotao >Ver mais</TextoBotao>
+              <FaPlus/>
+              </>
+
+            )}
+            
+          </BotaoComentar>
           {visualizarDetalhes ? 
           (
             <>
@@ -124,23 +168,9 @@ export default React.memo(function ItemGaleria({
           (
             ''
           )}
-          <BotaoComentar onClick={() => setVisualizarDetalhes(!visualizarDetalhes)} className="BotaoComentar">
-            {visualizarDetalhes ? 
-            (
-              <>
-                <TextoBotao >Ver menos</TextoBotao>
-                <FaMinus/>
-              </>
-            ) 
-            : 
-            (
-              <>
-              <TextoBotao >Ver mais</TextoBotao>
-              <FaPlus/>
-              </>
-
-            )}
-            
+          <BotaoComentar onClick={handleDelete} className="BotaoComentar">
+            <TextoBotao>Excluir</TextoBotao>
+            <FaTrash />
           </BotaoComentar>
         </>
       )

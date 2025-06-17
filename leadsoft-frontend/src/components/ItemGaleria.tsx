@@ -53,9 +53,12 @@ const BotaoComentar = styled(Botao)`
     }
   }
 `;
+
 const TextoBotao = styled.span`
   color: var(--secundary-color12);
+`;
 
+const TextoBotaoComentario = styled(TextoBotao)`
   @media (max-width: ${breakpoints.tablet}) {
     font-size: 0.8em;
   }
@@ -63,6 +66,7 @@ const TextoBotao = styled.span`
     display: none;
   }
 `;
+
 const IconeComentario = styled(FaComment)`
   color: var(--secundary-color8);
   font-size: 1em;
@@ -129,7 +133,7 @@ export default React.memo(function ItemGaleria({
       {isAdminPage ? 
       (
         <>
-          <BotaoComentar onClick={() => setVisualizarDetalhes(!visualizarDetalhes)} className="BotaoComentar">
+          <Botao onClick={() => setVisualizarDetalhes(!visualizarDetalhes)} >
             {visualizarDetalhes ? 
             (
               <>
@@ -146,7 +150,7 @@ export default React.memo(function ItemGaleria({
 
             )}
             
-          </BotaoComentar>
+          </Botao>
           {visualizarDetalhes ? 
           (
             <>
@@ -168,17 +172,17 @@ export default React.memo(function ItemGaleria({
           (
             ''
           )}
-          <BotaoComentar onClick={handleDelete} className="BotaoComentar">
+          <Botao onClick={handleDelete}>
             <TextoBotao>Excluir</TextoBotao>
             <FaTrash />
-          </BotaoComentar>
+          </Botao>
         </>
       )
       :
       (
       <ContainerBotaoComentar>
         <BotaoComentar className="BotaoComentar">
-          <TextoBotao>Comentar</TextoBotao>
+          <TextoBotaoComentario>Comentar</TextoBotaoComentario>
           <IconeComentario />
         </BotaoComentar>
       </ContainerBotaoComentar>

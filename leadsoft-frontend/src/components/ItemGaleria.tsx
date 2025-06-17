@@ -18,7 +18,7 @@ import React, { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import { deleteCandidate } from "@/services/candidateService";
 import Cookies from "js-cookie";
-import { enviarComentario, buscarComentarios } from "@/services/commentService";
+import { enviarComentario, buscarComentarios, deleteComment } from "@/services/commentService";
 import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
 import { Comment } from "@/types/Comment";
 
@@ -38,8 +38,30 @@ const TextoBotao = styled.span`
 const ContainerComentarios=styled.div`
 display:flex;
 text-align:left;
-`
+justify-content:center;
+align-items:center;
+width:100%;
+gap:0.3rem;
+border:1px solid var(--secundary-color9);
+border-radius:16px;
+padding:0.5rem;
+margin-bottom:0.5rem;
 
+&:hover{
+border:1px solid var(--primary-color3);
+  p{
+    color:var(--primary-color3);
+
+  }
+}
+`
+const ExcluirComentario=styled(FiX)`
+cursor:pointer;
+
+&:hover{
+color:var(--primary-color3);
+}
+`
 export default React.memo(function ItemGaleria({
   id,
   nome,
@@ -78,6 +100,31 @@ export default React.memo(function ItemGaleria({
     }
   };
 
+  const handleDeleteComment = async (comment:Comment) => {
+
+    if (!comment.id) {
+      alert("ID do comentário não encontrado.");
+      return;
+    }
+    
+    if (!confirm(`Deseja realmente excluir o comentário de ${comment.author}?`)) return;
+
+    const token = Cookies.get("token");
+    if (!token) {
+      alert("Você não está autenticado");
+      return;
+    }
+
+    try {
+      await deleteComment(comment.id, token);
+      const atualizados = await buscarComentarios(id);
+      setComentarios(atualizados);
+      alert("Comentário excluído com sucesso!");
+    } catch (err: any) {
+      alert(err.message);
+    }
+  };
+
   const novoComentario = async () => {
     if (!author || !content) {
       alert("Preencha nome e comentário");
@@ -99,7 +146,9 @@ export default React.memo(function ItemGaleria({
       });
       const novos = await buscarComentarios(id);
       setComentarios(novos);
+      setAuthor("");
       setContent("");
+      setMostrarComentario(!mostrarComentario)
       alert("Comentário enviado com sucesso!");
     } catch (err: any) {
       alert(err.message || "Erro ao comentar");
@@ -129,6 +178,39 @@ export default React.memo(function ItemGaleria({
       <p>{legenda}</p>
       {isAdminPage ? (
         <>
+          
+          {visualizarDetalhes && (
+            <>
+              <div style={{ textAlign: "left" }}>
+                <p><strong>CPF:</strong> {cpf}</p>
+                <p><strong>Email:</strong> {email}</p>
+                <p><strong>Data de nascimento:</strong> {dataNascimento}</p>
+              </div>
+              <h5>Comentários:</h5>
+              {comentarios.length > 0 ? 
+              (
+                <ul >
+                  {comentarios.map((c, i) => (
+                    <li key={i} >
+                      <ContainerComentarios >
+                        <ContainerColuna>
+                          <h5 >{c.author}:</h5>
+                          <p style={{textAlign:'center'}}>{c.content}</p>
+                        </ContainerColuna>
+                        <ExcluirComentario onClick={() => handleDeleteComment(c)}/>
+                      </ContainerComentarios>
+                    </li>
+                  ))}
+                </ul>
+              )
+              : 
+              (
+                <p>Nenhum comentário</p>
+              )
+            
+            }
+            </>
+          )}
           <Botao onClick={() => {
             setVisualizarDetalhes(!visualizarDetalhes)
             setMostrarComentario(!mostrarComentario)
@@ -145,35 +227,6 @@ export default React.memo(function ItemGaleria({
               </>
             )}
           </Botao>
-          {visualizarDetalhes && (
-            <>
-              <div style={{ textAlign: "left" }}>
-                <p><strong>CPF:</strong> {cpf}</p>
-                <p><strong>Email:</strong> {email}</p>
-                <p><strong>Data de nascimento:</strong> {dataNascimento}</p>
-              </div>
-              <h4>Comentários:</h4>
-              {comentarios.length > 0 ? 
-              (
-                <ul >
-                  {comentarios.map((c, i) => (
-                    <li key={i} >
-                      <ContainerComentarios >
-                        <h5 >{c.author}</h5>
-                        <p>: {c.content}</p>
-                      </ContainerComentarios>
-                    </li>
-                  ))}
-                </ul>
-              )
-              : 
-              (
-                <p>Nenhum comentário</p>
-              )
-            
-            }
-            </>
-          )}
           <Botao onClick={handleDelete} style={{ marginTop: "0" }}>
             <TextoBotao>Excluir</TextoBotao>
             <FaTrash />

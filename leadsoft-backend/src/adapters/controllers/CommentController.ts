@@ -5,7 +5,7 @@ import { CommentRepository } from "../../domain/repositories/CommentRepository";
 export class CommentController {
   constructor(
     private commentOnCandidate: CommentOnCandidate,
-    private commentRepository: CommentRepository
+    private commentRepository: CommentRepository,
   ) {}
 
   async add(req: Request, res: Response) {
@@ -31,4 +31,17 @@ export class CommentController {
       res.status(500).json({ message: err.message || "Erro ao buscar comentários" });
     }
   }
+  async deleteById(req: Request, res: Response) {
+    const { id } = req.params;
+    console.log("Tentando deletar comentário com id:", id);
+
+    try {
+      await this.commentRepository.deleteById(id);
+      res.status(200).json({ message: "Comentário deletado com sucesso!" });
+    } catch (error) {
+      res.status(500).json({ message: "Erro ao deletar comentário" });
+    }
+  }
+
+
 }

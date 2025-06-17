@@ -14,5 +14,6 @@ const controller = new CommentController(commentUseCase, commentRepo);
 
 router.post("/comments", controller.add.bind(controller));
 router.get("/comments/:candidateId", controller.getByCandidate.bind(controller));
+router.delete("/comments/:id", controller.deleteById.bind(controller));
 
 export default router;

@@ -21,6 +21,8 @@ import Cookies from "js-cookie";
 import { enviarComentario, buscarComentarios, deleteComment } from "@/services/commentService";
 import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
 import { Comment } from "@/types/Comment";
+import { formatCPF } from "@/utils/formatCpf";
+import { formatDate } from "@/utils/formatDate";
 
 const ItemGaleriaContainer = styled(Card)`
   padding: 1rem;
@@ -186,9 +188,9 @@ export default React.memo(function ItemGaleria({
           {visualizarDetalhes && (
             <>
               <div style={{ textAlign: "left" }}>
-                <p><strong>CPF:</strong> {cpf}</p>
+                <p><strong>CPF:</strong> {formatCPF(cpf)}</p>
                 <p><strong>Email:</strong> {email}</p>
-                <p><strong>Data de nascimento:</strong> {dataNascimento}</p>
+                <p><strong>Data de nascimento:</strong> {formatDate(dataNascimento)}</p>
               </div>
               <h5>Comentários:</h5>
               {comentarios.length > 0 ? 

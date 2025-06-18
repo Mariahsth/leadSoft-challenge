@@ -3,6 +3,9 @@ import { Candidate } from '../../domain/entities/Candidate';
 import { DocumentStore } from 'ravendb'; 
 import { getRavenDbConnection } from '../../config/ravenDbConfig';
 import { Buffer } from 'buffer';
+import { Readable } from 'stream';
+import { fileTypeFromBuffer } from 'file-type';
+import { PutAttachmentOperation } from 'ravendb';
 
 export class RavenCandidateRepository implements CandidateRepository {
   private store: DocumentStore;
@@ -14,24 +17,31 @@ export class RavenCandidateRepository implements CandidateRepository {
   // Método para salvar um candidato
   async save(candidate: Candidate, imageBuffer: Buffer, mimeType: string, fileName: string): Promise<void> {
     const session = this.store.openSession();
-  
-    const candidateDoc = {
-      id: candidate.id,
-      name: candidate.name.getValue(),
-      email: candidate.email.getValue(),
-      caption: candidate.caption.getValue(),
-      dateOfBirth: candidate.dateOfBirth.getValue(),
-      cpf: candidate.cpf.getValue(),
-    };
-  
-    const docId = candidate.id;
-  
-    await session.store(candidateDoc, docId);
-    session.advanced.getMetadataFor(candidateDoc)['@collection'] = 'Candidates';
-  
-    session.advanced.attachments.store(docId, fileName, imageBuffer, mimeType);
-  
-    await session.saveChanges();
+
+  const candidateDoc = {
+    id: candidate.id,
+    name: candidate.name.getValue(),
+    email: candidate.email.getValue(),
+    caption: candidate.caption.getValue(),
+    dateOfBirth: candidate.dateOfBirth.getValue(),
+    cpf: candidate.cpf.getValue(),
+  };
+
+  const docId = candidate.id;
+
+  await session.store(candidateDoc, docId);
+  session.advanced.getMetadataFor(candidateDoc)['@collection'] = 'Candidates';
+  await session.saveChanges();
+
+  // 🔍 Detecta mimetype real
+  const detectedType = await fileTypeFromBuffer(imageBuffer);
+  const realMimeType = detectedType?.mime || mimeType;
+  console.log('🧪 MimeType real:', realMimeType);
+
+  // 🧩 Usa PutAttachmentOperation
+  const operation = new PutAttachmentOperation(docId, fileName, imageBuffer, realMimeType);
+  await this.store.operations.send(operation);
+
   }
 
   // Método para buscar um candidato por ID

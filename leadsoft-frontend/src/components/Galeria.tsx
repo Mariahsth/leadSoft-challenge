@@ -37,7 +37,7 @@ export default function Galeria() {
     };
 
     fetchCandidatos();
-  }, []);
+  }, [candidatos]);
 
   return (
     <GaleriaSection id="galeria">

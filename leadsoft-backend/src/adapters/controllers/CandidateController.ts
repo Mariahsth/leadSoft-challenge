@@ -4,6 +4,7 @@ import { CandidateRepository } from '../../domain/repositories/CandidateReposito
 import { DeleteCandidate } from '../../application/use-cases/DeleteCandidate';
 import { getRavenDbConnection } from '../../config/ravenDbConfig';
 
+
 export class CandidateController {
   private registerCandidate: RegisterCandidate;
   private deleteCandidate: DeleteCandidate;
@@ -26,9 +27,10 @@ export class CandidateController {
       }
   
       const imageBuffer = req.file.buffer;
+
       const mimeType = req.file.mimetype;
       const fileName = req.file.originalname;
-      console.log("req.file =", req.file);
+      console.log(req.file?.mimetype, req.file?.originalname, req.file?.buffer?.length);
 
       // verifica se já tem o cpf cadastrado
       const cleanedCpf = cpf.replace(/\D/g, '');
@@ -107,6 +109,8 @@ export class CandidateController {
         }
     
         res.setHeader('Content-Type', result.details.contentType);
+        res.setHeader('Content-Disposition', `inline; filename="${attachmentName}"`);
+        res.setHeader('Content-Length', result.details.size);
         result.data.pipe(res);
       } catch (error) {
         console.error('Erro ao buscar imagem do candidato:', error);

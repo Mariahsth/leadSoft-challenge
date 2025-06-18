@@ -4,10 +4,9 @@ import { RegisterCandidate } from '../../application/use-cases/RegisterCandidate
 import { RavenCandidateRepository } from '../../infrastructure/database/RavenCandidateRepository';
 import { GoogleRecaptchaVerifier } from '../../infrastructure/services/GoogleRecaptchaVerifier';
 import { DeleteCandidate } from '../../application/use-cases/DeleteCandidate';
-import multer from 'multer';
+import upload from '../middlewares/upload';
 import { authMiddleware } from '../middlewares/authMiddleware';
 
-const upload = multer();
 
 const router = express.Router();
 

@@ -1,7 +1,5 @@
 import dotenv from 'dotenv';
-dotenv.config({
-  path: process.env.NODE_ENV === 'production' ? '../.env.production' : '../.env.local',
-});
+dotenv.config();
 import express from 'express';
 import cors from 'cors';
 import candidateRoutes from './adapters/routes/candidateRoutes';

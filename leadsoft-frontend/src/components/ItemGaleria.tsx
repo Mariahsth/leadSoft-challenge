@@ -23,6 +23,7 @@ import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
 import { Comment } from "@/types/Comment";
 import { formatCPF } from "@/utils/formatCpf";
 import { formatDate } from "@/utils/formatDate";
+import { ageCalculator } from "@/utils/ageCalculator";
 
 const ItemGaleriaContainer = styled(Card)`
   padding: 1rem;
@@ -191,6 +192,7 @@ export default React.memo(function ItemGaleria({
                 <p><strong>CPF:</strong> {formatCPF(cpf)}</p>
                 <p><strong>Email:</strong> {email}</p>
                 <p><strong>Data de nascimento:</strong> {formatDate(dataNascimento)}</p>
+                <p><strong>Idade:</strong> {ageCalculator(dataNascimento)} anos</p>
               </div>
               <h5>Comentários:</h5>
               {comentarios.length > 0 ? 

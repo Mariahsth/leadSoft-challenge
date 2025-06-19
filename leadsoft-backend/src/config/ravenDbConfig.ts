@@ -21,8 +21,8 @@ export const getRavenDbConnection = (): DocumentStore => {
   console.log("📁 Existe certificado?", fs.existsSync(certificatePath));
 
   const store = new DocumentStore(
-    "https://a.leadia.ravendb.community",
-    "leadsoft",
+    process.env.RAVEN_URL!,
+    process.env.RAVEN_DATABASE!,
     {
       type: 'pfx',
       certificate: certificateBuffer,

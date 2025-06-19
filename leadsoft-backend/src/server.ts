@@ -8,6 +8,7 @@ import commentRoutes from "./adapters/routes/commentRoutes";
 
 const app=express();
 const PORT = process.env.PORT || 5000;
+console.log("🔍 RAVEN_URL:", process.env.RAVEN_URL);
 
 app.use(cors())
 

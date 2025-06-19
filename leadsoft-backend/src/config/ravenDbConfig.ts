@@ -12,7 +12,7 @@ tls.checkServerIdentity = () => undefined;
 process.env['RAVEN_NodeJs_UseIpv6'] = 'false';
 
 export const getRavenDbConnection = (): DocumentStore => {
-  const certificatePath = process.env.RAVEN_CERT_PATH || path.resolve(__dirname, 'leadia.client.certificate.pfx');
+  const certificatePath = process.env.RAVEN_CERT_PATH || path.resolve(__dirname, 'backend.pfx');
 
   const certificateBuffer = fs.readFileSync(certificatePath);
   console.log("📁 Carregando certificado de:", certificatePath);

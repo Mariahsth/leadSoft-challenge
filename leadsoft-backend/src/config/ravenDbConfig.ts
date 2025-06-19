@@ -9,14 +9,10 @@ dotenv.config();
 tls.checkServerIdentity = () => undefined;
 
 
-
-if (process.env.NODE_ENV !== 'production') {
-  process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = '0';
-}
 process.env['RAVEN_NodeJs_UseIpv6'] = 'false';
 
 export const getRavenDbConnection = (): DocumentStore => {
-  const certificatePath = process.env.RAVEN_CERT_PATH || path.resolve(__dirname, 'backend-render.pfx');
+  const certificatePath = process.env.RAVEN_CERT_PATH || path.resolve(__dirname, 'leadia.client.certificate.pfx');
 
   const certificateBuffer = fs.readFileSync(certificatePath);
   console.log("📁 Carregando certificado de:", certificatePath);

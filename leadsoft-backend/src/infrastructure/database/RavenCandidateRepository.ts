@@ -4,7 +4,7 @@ import { DocumentStore } from 'ravendb';
 import { getRavenDbConnection } from '../../config/ravenDbConfig';
 import { Buffer } from 'buffer';
 import { Readable } from 'stream';
-import { fileTypeFromBuffer } from 'file-type';
+import fileType from 'file-type';
 import { PutAttachmentOperation } from 'ravendb';
 
 export class RavenCandidateRepository implements CandidateRepository {
@@ -34,7 +34,7 @@ export class RavenCandidateRepository implements CandidateRepository {
   await session.saveChanges();
 
   // 🔍 Detecta mimetype real
-  const detectedType = await fileTypeFromBuffer(imageBuffer);
+  const detectedType = await fileType.fromBuffer(imageBuffer);
   const realMimeType = detectedType?.mime || mimeType;
   console.log('🧪 MimeType real:', realMimeType);
 

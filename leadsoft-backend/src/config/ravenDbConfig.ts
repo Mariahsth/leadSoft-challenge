@@ -22,6 +22,7 @@ export const getRavenDbConnection = (): DocumentStore => {
   console.log("📁 Carregando certificado de:", certificatePath);
   console.log("🔐 Tamanho do buffer do certificado:", certificateBuffer.length);
   console.log("🔍 RAVEN_URL:", process.env.RAVEN_URL);
+  console.log("📁 Existe certificado?", fs.existsSync(certificatePath));
 
   const store = new DocumentStore(
     process.env.RAVEN_URL!,

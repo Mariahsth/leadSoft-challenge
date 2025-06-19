@@ -8,6 +8,9 @@ dotenv.config();
 
 tls.checkServerIdentity = () => undefined;
 
+console.log("🔍 RAVEN_URL:", process.env.RAVEN_URL);
+
+
 if (process.env.NODE_ENV !== 'production') {
   process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = '0';
 }

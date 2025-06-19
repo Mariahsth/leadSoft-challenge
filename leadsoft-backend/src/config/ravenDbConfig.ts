@@ -8,7 +8,7 @@ dotenv.config();
 
 tls.checkServerIdentity = () => undefined;
 
-
+process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = '0'
 process.env['RAVEN_NodeJs_UseIpv6'] = 'false';
 
 export const getRavenDbConnection = (): DocumentStore => {

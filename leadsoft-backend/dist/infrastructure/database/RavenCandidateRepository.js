@@ -1,9 +1,12 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.RavenCandidateRepository = void 0;
 const Candidate_1 = require("../../domain/entities/Candidate");
 const ravenDbConfig_1 = require("../../config/ravenDbConfig");
-const file_type_1 = require("file-type");
+const file_type_1 = __importDefault(require("file-type"));
 const ravendb_1 = require("ravendb");
 class RavenCandidateRepository {
     constructor() {
@@ -25,7 +28,7 @@ class RavenCandidateRepository {
         session.advanced.getMetadataFor(candidateDoc)['@collection'] = 'Candidates';
         await session.saveChanges();
         // 🔍 Detecta mimetype real
-        const detectedType = await (0, file_type_1.fileTypeFromBuffer)(imageBuffer);
+        const detectedType = await file_type_1.default.fromBuffer(imageBuffer);
         const realMimeType = detectedType?.mime || mimeType;
         console.log('🧪 MimeType real:', realMimeType);
         // 🧩 Usa PutAttachmentOperation

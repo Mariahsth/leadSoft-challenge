@@ -12,6 +12,7 @@ const auth_1 = __importDefault(require("./adapters/routes/auth"));
 const commentRoutes_1 = __importDefault(require("./adapters/routes/commentRoutes"));
 const app = (0, express_1.default)();
 const PORT = process.env.PORT || 5000;
+console.log("🔍 RAVEN_URL:", process.env.RAVEN_URL);
 app.use((0, cors_1.default)());
 app.use(express_1.default.json({ limit: '10mb' }));
 app.use(express_1.default.urlencoded({ extended: true, limit: '10mb' }));
@@ -29,4 +30,5 @@ app.use((err, req, res, next) => {
 });
 app.listen(PORT, () => {
     console.log(`Servidor escutando em http://localhost:${PORT}`);
+    console.log("🔍 RAVEN_URL:", process.env.RAVEN_URL);
 });

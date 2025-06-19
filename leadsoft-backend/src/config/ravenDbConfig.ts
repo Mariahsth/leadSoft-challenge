@@ -47,7 +47,7 @@ tls.checkServerIdentity = () => undefined;
 process.env['RAVEN_NodeJs_UseIpv6'] = 'false';
 
 export const getRavenDbConnection = (): DocumentStore => {
-  const certPath = path.resolve(__dirname, '../certs/backend.pfx'); // Pasta certs no projeto
+  const certPath = path.resolve(__dirname, '../certs/backend-final.pfx'); // Pasta certs no projeto
   let certificateBuffer: Buffer;
 
   try {

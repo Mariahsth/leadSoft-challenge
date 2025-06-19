@@ -33,4 +33,5 @@ app.use((err: any, req: express.Request, res: express.Response, next: express.Ne
 
 app.listen(PORT, () => {
     console.log(`Servidor escutando em http://localhost:${PORT}`)
+    console.log("🔍 RAVEN_URL:", process.env.RAVEN_URL);
 })

@@ -5,7 +5,6 @@ const Candidate_1 = require("../../domain/entities/Candidate");
 const Caption_1 = require("../../domain/value-objects/Caption");
 const DateOfBirth_1 = require("../../domain/value-objects/DateOfBirth");
 const Email_1 = require("../../domain/value-objects/Email");
-const Image_1 = require("../../domain/value-objects/Image");
 const Name_1 = require("../../domain/value-objects/Name");
 const CPF_1 = require("../../domain/value-objects/CPF");
 class RegisterCandidate {
@@ -13,17 +12,13 @@ class RegisterCandidate {
         this.candidateRepository = candidateRepository;
         this.recaptchaVerifier = recaptchaVerifier;
     }
-    async execute(name, cpf, email, dateOfBirth, caption, image, recaptchaToken) {
-        const existingCandidate = await this.candidateRepository.findByCpf(cpf);
-        if (existingCandidate) {
-            throw new Error('Candidato com este CPF já existe');
+    async execute(name, cpf, email, dateOfBirth, caption, imageBuffer, recaptchaToken, mimeType, fileName) {
+        const isHuman = await this.recaptchaVerifier.verify(recaptchaToken, "submit");
+        if (!isHuman) {
+            throw new Error("Verificação reCAPTCHA falhou. Ação suspeita detectada.");
         }
-        const isValidRecaptcha = await this.recaptchaVerifier.verify(recaptchaToken);
-        if (!isValidRecaptcha) {
-            throw new Error('reCAPTCHA inválido');
-        }
-        const candidate = new Candidate_1.Candidate(new Name_1.Name(name), new Email_1.Email(email), new Caption_1.Caption(caption), new DateOfBirth_1.DateOfBirth(dateOfBirth), new CPF_1.CPF(cpf), new Image_1.Image(image.toString('base64')));
-        await this.candidateRepository.save(candidate);
+        const candidate = new Candidate_1.Candidate(new Name_1.Name(name), new Email_1.Email(email), new Caption_1.Caption(caption), new DateOfBirth_1.DateOfBirth(dateOfBirth), new CPF_1.CPF(cpf));
+        await this.candidateRepository.save(candidate, imageBuffer, mimeType, fileName);
     }
 }
 exports.RegisterCandidate = RegisterCandidate;

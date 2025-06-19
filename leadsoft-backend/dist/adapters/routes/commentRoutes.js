@@ -1,0 +1,16 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const CommentOnCandidate_1 = require("../../application/use-cases/CommentOnCandidate");
+const RavenCommentRepository_1 = require("../../infrastructure/database/RavenCommentRepository");
+const CommentController_1 = require("../controllers/CommentController");
+const GoogleRecaptchaVerifier_1 = require("../../infrastructure/services/GoogleRecaptchaVerifier");
+const router = (0, express_1.Router)();
+const commentRepo = new RavenCommentRepository_1.RavenCommentRepository();
+const recaptchaVerifier = new GoogleRecaptchaVerifier_1.GoogleRecaptchaVerifier(process.env.RECAPTCHA_SECRET_KEY);
+const commentUseCase = new CommentOnCandidate_1.CommentOnCandidate(commentRepo, recaptchaVerifier);
+const controller = new CommentController_1.CommentController(commentUseCase, commentRepo);
+router.post("/comments", controller.add.bind(controller));
+router.get("/comments/:candidateId", controller.getByCandidate.bind(controller));
+router.delete("/comments/:id", controller.deleteById.bind(controller));
+exports.default = router;

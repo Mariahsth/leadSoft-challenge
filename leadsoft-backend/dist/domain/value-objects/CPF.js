@@ -4,10 +4,11 @@ exports.CPF = void 0;
 const cpfValidator_1 = require("../../utils/cpfValidator");
 class CPF {
     constructor(value) {
-        if (!(0, cpfValidator_1.validateCPF)(value)) {
+        const cleanedValue = value.replace(/\D/g, '');
+        if (!(0, cpfValidator_1.validateCPF)(cleanedValue)) {
             throw new Error('CPF inválido');
         }
-        this.value = value;
+        this.value = cleanedValue;
     }
     getValue() {
         return this.value;

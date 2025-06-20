@@ -117,11 +117,21 @@ export class CandidateController {
           res.setHeader('Access-Control-Allow-Origin', origin);
         }
         
-        const contentType = result.details?.contentType || 'image/jpeg'; 
+        const contentType = result.details?.contentType || 'application/octet-stream';
         res.setHeader('Content-Type', contentType);
         res.setHeader('Content-Disposition', `inline; filename="${attachmentName}"`);
         res.setHeader('Content-Length', result.details.size);
-        result.data.pipe(res);
+        const chunks: Buffer[] = [];
+        result.data.on('data', (chunk) => chunks.push(chunk));
+        result.data.on('end', () => {
+          const buffer = Buffer.concat(chunks);
+          res.end(buffer);
+        });
+        result.data.on('error', (err) => {
+          console.error("Erro ao ler stream de imagem:", err);
+          res.status(500).send('Erro ao processar imagem');
+        });
+
       } catch (error) {
         console.error('Erro ao buscar imagem do candidato:', error);
         res.status(500).json({ message: 'Erro ao buscar imagem do candidato' });

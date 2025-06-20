@@ -177,9 +177,7 @@ export default React.memo(function ItemGaleria({
         <ImagemItemGaleria
           src={imagem}
           alt={`imagem de ${nome}`}
-          onError={(e) => {
-            e.currentTarget.src = "/fallback-image.png";
-          }}
+
         />
       </ContainerImagem>
       <p>{legenda}</p>

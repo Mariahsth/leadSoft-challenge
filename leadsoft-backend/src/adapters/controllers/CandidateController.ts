@@ -116,7 +116,9 @@ export class CandidateController {
         if (origin && allowedOrigins.includes(origin)) {
           res.setHeader('Access-Control-Allow-Origin', origin);
         }
-        res.setHeader('Content-Type', result.details.contentType);
+        
+        const contentType = result.details?.contentType || 'image/jpeg'; 
+        res.setHeader('Content-Type', contentType);
         res.setHeader('Content-Disposition', `inline; filename="${attachmentName}"`);
         res.setHeader('Content-Length', result.details.size);
         result.data.pipe(res);

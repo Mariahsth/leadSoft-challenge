@@ -5,6 +5,11 @@ import cors from 'cors';
 import candidateRoutes from './adapters/routes/candidateRoutes';
 import authRoutes from "./adapters/routes/auth";
 import commentRoutes from "./adapters/routes/commentRoutes";
+import { getRavenDbConnection } from './config/ravenDbConfig';
+
+
+
+
 
 const app=express();
 const PORT = process.env.PORT || 5000;
@@ -35,3 +40,14 @@ app.listen(PORT, () => {
     console.log(`Servidor escutando em http://localhost:${PORT}`)
     console.log("🔍 RAVEN_URL:", process.env.RAVEN_URL);
 })
+
+const store = getRavenDbConnection();
+
+async function test() {
+  const session = store.openSession();
+  const results = await session.query({ collection: 'Candidates' }).all();
+  console.log("✅ Dados encontrados:", results);
+  await session.dispose();
+}
+
+test();

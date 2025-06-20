@@ -4,7 +4,7 @@
   "main": "src/server.ts",
   "scripts": {
     "dev": "cross-env NODE_ENV=development ts-node src/server.ts",
-    "build": "tsc && cpx \"src/config/*.pfx\" dist/config",
+    "build": "tsc && cpx \"src/config/certificados/*.pfx\" dist/config/certificados",
     "start": "cross-env NODE_ENV=production node dist/server.js"
   },
   "dependencies": {

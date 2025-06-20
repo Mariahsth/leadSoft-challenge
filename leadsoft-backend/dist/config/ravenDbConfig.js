@@ -8,21 +8,27 @@ const dotenv_1 = __importDefault(require("dotenv"));
 const ravendb_1 = require("ravendb");
 const path_1 = __importDefault(require("path"));
 const fs_1 = __importDefault(require("fs"));
-const tls_1 = __importDefault(require("tls"));
 dotenv_1.default.config();
-tls_1.default.checkServerIdentity = () => undefined;
-process.env['RAVEN_NodeJs_UseIpv6'] = 'false';
 const getRavenDbConnection = () => {
-    const certificatePath = process.env.RAVEN_CERT_PATH || path_1.default.resolve(__dirname, 'backend.pfx');
+    const certificatePath = process.env.RAVEN_CERT_PATH || path_1.default.resolve(__dirname, 'free.mariahsth.client.certificate.2025-06-20.with.password.pfx');
+    const certificatePassword = process.env.RAVEN_CERT_PASSWORD;
+    if (!fs_1.default.existsSync(certificatePath)) {
+        throw new Error(`❌ Certificado não encontrado em: ${certificatePath}`);
+    }
     const certificateBuffer = fs_1.default.readFileSync(certificatePath);
+    const ravenUrl = process.env.RAVEN_URL;
+    const database = process.env.RAVEN_DATABASE;
     console.log("📁 Carregando certificado de:", certificatePath);
     console.log("🔐 Tamanho do buffer do certificado:", certificateBuffer.length);
     console.log("🔍 RAVEN_URL:", process.env.RAVEN_URL);
     console.log("📁 Existe certificado?", fs_1.default.existsSync(certificatePath));
-    const store = new ravendb_1.DocumentStore(process.env.RAVEN_URL, process.env.RAVEN_DATABASE, {
+    if (!ravenUrl || !database || !certificatePassword) {
+        throw new Error('❌ Variáveis de ambiente RAVEN_URL, RAVEN_DATABASE ou RAVEN_CERT_PASSWORD não estão definidas');
+    }
+    const store = new ravendb_1.DocumentStore(ravenUrl, database, {
         type: 'pfx',
         certificate: certificateBuffer,
-        password: process.env.RAVEN_CERT_PASSWORD || '',
+        password: certificatePassword || '',
     });
     store.initialize();
     return store;

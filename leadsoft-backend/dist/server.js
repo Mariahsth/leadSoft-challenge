@@ -10,6 +10,7 @@ const cors_1 = __importDefault(require("cors"));
 const candidateRoutes_1 = __importDefault(require("./adapters/routes/candidateRoutes"));
 const auth_1 = __importDefault(require("./adapters/routes/auth"));
 const commentRoutes_1 = __importDefault(require("./adapters/routes/commentRoutes"));
+const ravenDbConfig_1 = require("./config/ravenDbConfig");
 const app = (0, express_1.default)();
 const PORT = process.env.PORT || 5000;
 console.log("🔍 RAVEN_URL:", process.env.RAVEN_URL);
@@ -32,3 +33,11 @@ app.listen(PORT, () => {
     console.log(`Servidor escutando em http://localhost:${PORT}`);
     console.log("🔍 RAVEN_URL:", process.env.RAVEN_URL);
 });
+const store = (0, ravenDbConfig_1.getRavenDbConnection)();
+async function test() {
+    const session = store.openSession();
+    const results = await session.query({ collection: 'Candidates' }).all();
+    console.log("✅ Dados encontrados:", results);
+    await session.dispose();
+}
+test();

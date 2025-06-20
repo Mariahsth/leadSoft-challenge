@@ -107,7 +107,15 @@ export class CandidateController {
         if (!result || !result.data) {
           return res.status(404).send('Imagem não encontrada');
         }
-    
+        const origin = req.headers.origin;
+        const allowedOrigins = [
+          'https://lead-soft-challenge.vercel.app',
+          'http://localhost:3000'
+        ];
+
+        if (origin && allowedOrigins.includes(origin)) {
+          res.setHeader('Access-Control-Allow-Origin', origin);
+        }
         res.setHeader('Content-Type', result.details.contentType);
         res.setHeader('Content-Disposition', `inline; filename="${attachmentName}"`);
         res.setHeader('Content-Length', result.details.size);

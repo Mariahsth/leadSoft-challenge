@@ -3,7 +3,6 @@ import { Candidate } from '../../domain/entities/Candidate';
 import { DocumentStore } from 'ravendb'; 
 import { getRavenDbConnection } from '../../config/ravenDbConfig';
 import { Buffer } from 'buffer';
-import { Readable } from 'stream';
 import fileType from 'file-type';
 import { PutAttachmentOperation } from 'ravendb';
 

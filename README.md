@@ -166,6 +166,10 @@ leadsoft-backend/
     │   │   ├── RavenCandidateRepository.ts ← Implementa persistência de candidatos no RavenDB
     │   │   ├── RavenCommentRepository.ts   ← Implementa persistência de comentários no RavenDB
     │   │   └── RavenUserRepository.ts      ← Implementa persistência de admins no RavenDB
+    │   ├── config/
+    │   │   ├── certificados/
+    │   │   │   └── certificado.pfx    ← Certificado de cliente para acessar RavenDB Cloud
+    │   │   └── ravenDbConfig.ts       ← Inicializa a conexão com o RavenDB (usando certificado)
     │   └── services/
     │       ├── JwtService.ts               ← Geração e validação de tokens JWT
     │       └── GoogleRecaptchaVerifier.ts  ← Verificação real via API Google reCAPTCHA
@@ -188,10 +192,6 @@ leadsoft-backend/
     │   ├── emailValidator.ts      ← Verifica formato de e-mail
     │   ├── imageValidator.ts      ← Valida tipo e tamanho da imagem
     │   └── nameValidator.ts       ← Verifica caracteres permitidos no nome
-    ├── config/
-    │   ├── certificados/
-    │   │   └── certificado.pfx    ← Certificado de cliente para acessar RavenDB Cloud
-    │   └── ravenDbConfig.ts       ← Inicializa a conexão com o RavenDB (usando certificado)
     ├── types/
     │   └── express/
     │       └── index.d.ts         ←  Extensão de tipos Express para incluir `req.file` (upload de imagem com multer)

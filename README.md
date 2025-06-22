@@ -1,6 +1,6 @@
 # 🚀 Desafio Full Stack – LeadSoft
 Landing Page de inscrição para missão espacial
-![alt text](inicio.PNG)
+![alt text](leadsoft-frontend/public/inicio.PNG)
 Este repositório contém a solução para o desafio técnico full stack proposto pela LeadSoft.
 
 🔗 Link do projeto no ar: https://lead-soft-challenge.vercel.app/
@@ -26,21 +26,21 @@ Este repositório contém a solução para o desafio técnico full stack propost
 ## 🔨 Recursos do aplicativo
 - Área pública:  
     - Inscrição de candidatos com validação reCAPTCHA v3   
-    ![alt text](Video_250622115529.gif)
+    ![alt text](leadsoft-frontend/public/Video_250622115529.gif)
         - Validação de nome, CPF, e-mail, data de nascimento, legenda e imagem  
-        ![alt text](Video_250622115323.gif)
+        ![alt text](leadsoft-frontend/public/Video_250622115323.gif)
     - Galeria com exibição de candidatos inscritos com nome, foto e legenda 
-     ![alt text](galeria.PNG)
+     ![alt text](leadsoft-frontend/public/galeria.PNG)
     - Funcionalidade de enviar comentários para candidatos inscritos com validação reCAPTCHA v3 
-    ![alt text](Video_250622115833.gif)
+    ![alt text](leadsoft-frontend/public/Video_250622115833.gif)
 - Área restrita com login e senha de administradores com validação reCAPTCHA v3:  
-![alt text](paineladmin.PNG)
+![alt text](leadsoft-frontend/public/paineladmin.PNG)
     - Painel privado com informações de candidatos  
-    ![alt text](paineladmin-restrito.PNG)
+    ![alt text](leadsoft-frontend/public/paineladmin-restrito.PNG)
     - Opção de deletar comentários  
-     ![alt text](Video_250622120157.gif)
+     ![alt text](leadsoft-frontend/public/Video_250622120157.gif)
     - Opção de deletar candidatos inscritos  
-    ![alt text](Video_250622120548.gif)
+    ![alt text](leadsoft-frontend/public/Video_250622120548.gif)
 ## 🛠️ Tecnologias utilizadas
 
 ### Front-end

@@ -10,42 +10,63 @@ Todos os nomes de entidades, variáveis e casos de uso foram baseados diretament
 
 | Termo do domínio  | Significado / uso no código |
 |-------------------|-----------------------------|
-| Candidato         | Pessoa que se cadastra para a missão |
-| Legenda           | Texto criativo que acompanha a imagem |
-| Galeria pública   | Página onde os candidatos são exibidos |
-| Comentário        | Feedback público deixado em uma imagem |
-| Painel de administração | Área protegida com autenticação (LeadIA) |
+| Candidato/Candidate         | Pessoa que se cadastra para a missão |
+| Legenda/Caption           | Texto criativo que acompanha a imagem |
+| Galeria/Gallery    | Página onde os candidatos são exibidos |
+| Comentário/Comment        | Feedback público deixado em uma imagem |
+| Painel admin | Área protegida com autenticação (LeadIA) |
+| Usuário/User | Pessoa com autenticação de administradora que acessa o painel admin|
 
 ---
 
 ## 📦 Entidades e Modelos
 
-- `Candidato`: representa a pessoa inscrita com nome, CPF único, e-mail único, data de nascimento, legenda e imagem.
-- `Comentário`: associado a um candidato, pode ser adicionado e removido.
-- `Imagem`: armazenada como attachment no RavenDB, associada a um `Candidato`.
-
+- `Candidate`: Representa a inscrição de uma pessoa na missão. Contém regras como:
+  - CPF e e-mail únicos
+  - Validação de caracteres de CPF, email, nome
+  - Validação de formato de data e idade (mínima e máxima)
+  - Validação de números máximos de caracteres de legenda
+  - Validação de formato e tamanho de imagem
+- `Comment`: Representa um comentário público associado a um candidato. Pode ser criado livremente e removido apenas por um `User`.
+- `User`: Representa um administrador autenticado. Pode realizar login e tem permissões exclusivas (ex: deletar candidatos/comentários).
+> Todas essas entidades estão desacopladas da infraestrutura (como banco de dados ou Express), permitindo testabilidade e reuso.
 ---
 
 ## ✅ Casos de Uso (Application Layer)
+Orquestram a lógica entre entidades, serviços e repositórios:
 
-- `CadastrarCandidato`
-- `ComentarCandidato`
-- `ExcluirCandidato`
-- `ListarCandidatos`
-- `VisualizarGaleria`
-- `LoginLeadIA`
+- `RegisterCandidate`: cadastra um novo candidato após validações de domínio.
+- `DeleteCandidate`: remove um candidato e seus dados relacionados.
+- `CommentOnCandidate`: permite ao público comentar uma inscrição de um candidato.
+- `LoginUser`: autentica um administrador e gera um JWT.
+
 
 ---
 
 ## 🧱 Limites de Contexto (Bounded Context)
 
-Neste desafio, todo o sistema gira em torno do contexto único de **Candidatura à Missão**. Portanto, não foi necessário mapear múltiplos contextos.
+Neste desafio, todo o sistema está centrado em um único contexto: **Candidatura à Missão Espacial**.
+
+Por isso, a modelagem segue um único domínio coeso. Caso o projeto evoluísse (ex: ranking, seleção, entrevistas), novos contextos poderiam ser mapeados e isolados.
+
+---
+## ♻️ Arquitetura Hexagonal
+
+O projeto adota uma separação clara entre:
+
+- **Domínio** (regras puras)
+- **Aplicação** (coordenação e casos de uso)
+- **Infraestrutura** (detalhes como RavenDB, Recaptcha, JWT, Express)
+- **Adaptadores** (entrada/saída: rotas, controllers, middlewares)
+
+Essa abordagem permite trocar implementações (ex: banco de dados) sem impactar o núcleo do domínio.
 
 ---
 
-## 💡 Considerações
 
-- A modelagem priorizou a clareza e o alinhamento com o negócio.
-- O domínio foi isolado da infraestrutura com base em Arquitetura Hexagonal.
-- O reCAPTCHA e a persistência (RavenDB) são tratados como detalhes externos, seguindo os princípios de DDD.
+## 💡 Considerações finais
+
+- A modelagem priorizou clareza, separação de responsabilidades e alinhamento com o problema real.
+- Todos os nomes, regras e comportamentos foram inspirados no enunciado da missão LeadIA.
+- A estrutura permite escalar, testar e evoluir o sistema com segurança.
 

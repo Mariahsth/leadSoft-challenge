@@ -1,6 +1,6 @@
 import { CommentRepository } from "../../domain/repositories/CommentRepository";
 import { Comment } from "../../domain/entities/Comment";
-import { getRavenDbConnection } from "../../config/ravenDbConfig";
+import { getRavenDbConnection } from "../config/ravenDbConfig";
 import { v4 as uuidv4 } from "uuid";
 
 export class RavenCommentRepository implements CommentRepository {
@@ -9,7 +9,7 @@ export class RavenCommentRepository implements CommentRepository {
 
     const id = `comments/${uuidv4()}`;
     await session.store(comment, id);
-    session.advanced.getMetadataFor(comment)['@collection'] = 'Comments';
+    session.advanced.getMetadataFor(comment)["@collection"] = "Comments";
 
     await session.saveChanges();
   }
@@ -25,19 +25,19 @@ export class RavenCommentRepository implements CommentRepository {
       const metadata = session.advanced.getMetadataFor(comment);
       return {
         ...comment,
-        id: metadata['@id'], 
+        id: metadata["@id"],
       };
     });
   }
 
   async deleteById(commentId: string): Promise<void> {
     const session = getRavenDbConnection().openSession();
-  
+
     const comment = await session.load(commentId);
     if (!comment) {
       throw new Error("Comentário não encontrado");
     }
-  
+
     await session.delete(comment);
     await session.saveChanges();
   }

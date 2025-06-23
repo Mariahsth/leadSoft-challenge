@@ -128,6 +128,7 @@ export default function Inscricao() {
           <CampoFormulario
             id="name"
             label="Nome:"
+            placeholder="Digite seu nome"
             value={formData.name}
             error={formErrors.name}
             required

@@ -61,12 +61,16 @@ export const Input = styled.input`
   border-radius: 16px;
   border: transparent;
   width: 100%;
-
+  min-height: 1rem;
   background-color: white;
   font-weight: 500;
   color: var(--secundary-color9);
-  text-align: center;
 
+  text-align: center;
+  &[type="date"] {
+    min-height: 1rem; 
+    padding: 0.5rem;
+  }
   &::placeholder {
     font-family: var(--font-body);
     color: var(--secundary-color9);

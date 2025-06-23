@@ -9,12 +9,9 @@ export const enviarInscricao = async (formData: FormData) => {
     });
     return response.data;
   } catch (error:any) {
-    // Verifica se o erro veio do backend (ex: 400, 409...)
     if (error.response && error.response.data) {
       throw error.response.data;
     }
-
-    // Erro inesperado
     throw new Error(error.message || 'Erro ao enviar inscrição');
   }
 };

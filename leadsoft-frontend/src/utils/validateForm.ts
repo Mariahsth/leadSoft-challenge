@@ -39,7 +39,6 @@ export const validateForm = async (formData: FormFields, image: File | null): Pr
     setError("image", imageError);  
   }
 
-  console.log(errors)
   return {
     isValid: Object.keys(errors).length === 0,  
     errors,

@@ -48,7 +48,7 @@ export const resizeImage = (file: File, width = 1080, height = 1080): Promise<Fi
         canvas.toBlob(
           (blob) => {
             if (blob) {
-              const resizedFile = new File([blob], file.name, { type: "image/jpg" });
+              const resizedFile = new File([blob], file.name, { type: file.type });
               resolve(resizedFile);
             } else {
               reject("Erro ao converter canvas para blob");

@@ -14,7 +14,7 @@ const PainelAdmin = dynamic(() => import("@/components/PainelAdmin"), { ssr: fal
 
 export default function Home() {
   return (
-    <div >
+    < >
       <Header/>
       <Banner/>
       <Inicio/>
@@ -23,6 +23,6 @@ export default function Home() {
       <PainelAdmin/>
       <Footer/> 
 
-    </div>
+    </>
   );
 }

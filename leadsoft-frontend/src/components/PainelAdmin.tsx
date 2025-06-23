@@ -58,11 +58,9 @@ export default function PainelAdmin() {
       const result = await login({ user, password, recaptchaToken: token });
 
       alert("Login realizado com sucesso!");
-      // Armazene o token ou redirecione
       Cookies.set("token", result.token, { expires: 1, secure: true, sameSite: "strict" });
       router.push("/admin");
     } catch (error: any) {
-      // Erro retornado do backend: { field: "user", message: "Usuário inválido" }
       if (error.field && error.message) {
         setErrors((prev) => ({ ...prev, [error.field]: error.message }));
       } else {

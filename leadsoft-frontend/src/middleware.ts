@@ -10,7 +10,6 @@ export function middleware(request: NextRequest) {
   return NextResponse.next();
 }
 
-// Define quais rotas devem usar o middleware
 export const config = {
   matcher: ["/admin"],
 };

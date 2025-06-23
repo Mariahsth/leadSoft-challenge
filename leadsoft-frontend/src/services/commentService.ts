@@ -22,7 +22,6 @@ export const buscarComentarios = async (candidateId: string): Promise<Comment[]>
 
 export const deleteComment = async (commentId: string, token: string) => {
   const encodedId = encodeURIComponent(commentId); 
-  console.log("Comentário ID encoded:", encodedId);
   const response = await apiClient.delete(`/api/comments/${encodedId}`, {
     headers: {
       Authorization: `Bearer ${token}`,

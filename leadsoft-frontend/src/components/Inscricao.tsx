@@ -128,7 +128,6 @@ export default function Inscricao() {
           <CampoFormulario
             id="name"
             label="Nome:"
-            placeholder="Digite seu nome"
             value={formData.name}
             error={formErrors.name}
             required
@@ -137,7 +136,6 @@ export default function Inscricao() {
           <CampoFormulario
             id="cpf"
             label="CPF:"
-            placeholder="Digite seu CPF"
             value={formData.cpf}
             error={formErrors.cpf}
             required
@@ -146,7 +144,6 @@ export default function Inscricao() {
           <CampoFormulario
             id="email"
             label="E-mail:"
-            placeholder="Digite seu email"
             value={formData.email}
             error={formErrors.email}
             required
@@ -156,7 +153,6 @@ export default function Inscricao() {
             id="dateOfBirth"
             label="Data de nascimento:"
             type="date"
-            placeholder="dd/mm/aaaa"
             value={formData.dateOfBirth}
             error={formErrors.dateOfBirth}
             required
@@ -165,7 +161,6 @@ export default function Inscricao() {
           <CampoFormulario
             id="caption"
             label="Legenda:"
-            placeholder="Digite uma legenda criativa"
             value={formData.caption}
             error={formErrors.caption}
             required

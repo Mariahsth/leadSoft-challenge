@@ -9,7 +9,6 @@ type CampoProps = {
   error?: string;
   required?: boolean;
   accept?: string;
-  placeholder?:string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
@@ -21,7 +20,6 @@ export const CampoFormulario = React.memo(function CampoFormulario({
   error,
   required,
   accept,
-  placeholder,
   onChange,
 }: CampoProps) {
   return (
@@ -34,7 +32,6 @@ export const CampoFormulario = React.memo(function CampoFormulario({
         accept={accept}
         onChange={onChange}
         required={required}
-        placeholder={placeholder}
       />
       {error && <span style={{ color: "red" }}>{error}</span>}
     </>

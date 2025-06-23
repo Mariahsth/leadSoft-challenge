@@ -156,6 +156,7 @@ export default function Inscricao() {
             id="dateOfBirth"
             label="Data de nascimento:"
             type="date"
+            placeholder="dd/mm/aaaa"
             value={formData.dateOfBirth}
             error={formErrors.dateOfBirth}
             required

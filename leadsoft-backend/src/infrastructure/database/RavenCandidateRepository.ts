@@ -37,12 +37,9 @@ export class RavenCandidateRepository implements CandidateRepository {
     session.advanced.getMetadataFor(candidateDoc)["@collection"] = "Candidates";
     await session.saveChanges();
 
-    // 🔍 Detecta mimetype real
     const detectedType = await fileType.fromBuffer(imageBuffer);
     const realMimeType = detectedType?.mime || mimeType;
-    console.log("🧪 MimeType real:", realMimeType);
 
-    // 🧩 Usa PutAttachmentOperation
     const operation = new PutAttachmentOperation(
       docId,
       fileName,
@@ -52,14 +49,12 @@ export class RavenCandidateRepository implements CandidateRepository {
     await this.store.operations.send(operation);
   }
 
-  // Método para buscar um candidato por ID
   async findById(id: string): Promise<Candidate | null> {
     const session = this.store.openSession();
     const candidate = await session.load<Candidate>(id);
     return candidate ? candidate : null;
   }
 
-  // Método para buscar todos os candidatos
   async findAll(): Promise<Candidate[]> {
     const session = this.store.openSession();
     try {
@@ -71,7 +66,6 @@ export class RavenCandidateRepository implements CandidateRepository {
     }
   }
 
-  // Método para deletar um candidato
   async delete(id: string): Promise<void> {
     const session = this.store.openSession();
     const candidate = await session.load<Candidate>(id);
@@ -81,7 +75,6 @@ export class RavenCandidateRepository implements CandidateRepository {
     }
   }
 
-  // Método para buscar um candidato pelo cpf
   async findByCpf(cpf: string): Promise<Candidate | null> {
     const session = this.store.openSession();
 
@@ -97,7 +90,6 @@ export class RavenCandidateRepository implements CandidateRepository {
       throw new Error("Erro ao consultar candidato por CPF");
     }
   }
-  // Método para buscar um candidato pelo email
   async findByEmail(email: string): Promise<Candidate | null> {
     const session = this.store.openSession();
 

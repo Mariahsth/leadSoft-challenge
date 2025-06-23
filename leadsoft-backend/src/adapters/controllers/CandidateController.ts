@@ -19,9 +19,7 @@ export class CandidateController {
     this.candidateRepository = candidateRepository;
   }
 
-  // Método para registrar um candidato
   async register(req: Request, res: Response) {
-    console.log("Recebido no backend:", req.body);
 
     try {
       const { name, cpf, email, dateOfBirth, caption, recaptchaToken } =
@@ -31,16 +29,9 @@ export class CandidateController {
       }
 
       const imageBuffer = req.file.buffer;
-
       const mimeType = req.file.mimetype;
       const fileName = req.file.originalname;
-      console.log(
-        req.file?.mimetype,
-        req.file?.originalname,
-        req.file?.buffer?.length
-      );
 
-      // verifica se já tem o cpf cadastrado
       const cleanedCpf = cpf.replace(/\D/g, "");
       const existingCPF = await this.candidateRepository.findByCpf(cleanedCpf);
       if (existingCPF) {
@@ -49,7 +40,6 @@ export class CandidateController {
           .json({ field: "cpf", message: "CPF já cadastrado" });
       }
 
-      // verifica se já tem o email cadastrado
       const existingEmail = await this.candidateRepository.findByEmail(email);
       if (existingEmail) {
         return res
@@ -69,9 +59,6 @@ export class CandidateController {
         fileName
       );
 
-      console.log("📦 Arquivo recebido:", req.file);
-      console.log("📦 Buffer:", req.file?.buffer?.slice(0, 20));
-
       res.status(201).json({ message: "Candidato registrado com sucesso!" });
     } catch (error: unknown) {
       if (error instanceof Error) {
@@ -83,7 +70,6 @@ export class CandidateController {
     }
   }
 
-  // Método para buscar todos os candidatos
   async getAllCandidates(req: Request, res: Response) {
     try {
       const candidates = await this.candidateRepository.findAll();
@@ -94,7 +80,6 @@ export class CandidateController {
     }
   }
 
-  //Método para buscar as imagens dos candidatos
   async getImages(req: Request, res: Response) {
     try {
       const session = getRavenDbConnection().openSession();
@@ -107,7 +92,6 @@ export class CandidateController {
 
       const metadata = session.advanced.getMetadataFor(candidateDoc);
       const attachments = metadata["@attachments"];
-
       if (!attachments || attachments.length === 0) {
         return res
           .status(404)
@@ -115,7 +99,6 @@ export class CandidateController {
       }
 
       const attachmentName = attachments[0].name;
-
       const result = await session.advanced.attachments.get(id, attachmentName);
 
       if (!result || !result.data) {
@@ -132,13 +115,14 @@ export class CandidateController {
       }
 
       const contentType =
-        result.details?.contentType || "application/octet-stream";
+      result.details?.contentType || "application/octet-stream";
       res.setHeader("Content-Type", contentType);
       res.setHeader(
         "Content-Disposition",
         `inline; filename="${attachmentName}"`
       );
       res.setHeader("Content-Length", result.details.size);
+      
       const chunks: Buffer[] = [];
       result.data.on("data", (chunk) => chunks.push(chunk));
       result.data.on("end", () => {
@@ -155,7 +139,6 @@ export class CandidateController {
     }
   }
 
-  // Método para buscar um candidato por ID
   async getCandidateById(req: Request, res: Response) {
     try {
       const candidateId = req.params.id;

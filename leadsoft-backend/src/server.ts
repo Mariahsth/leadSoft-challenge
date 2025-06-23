@@ -8,7 +8,6 @@ import commentRoutes from "./adapters/routes/commentRoutes";
 
 const app=express();
 const PORT = process.env.PORT || 5000;
-console.log("🔍 RAVEN_URL:", process.env.RAVEN_URL);
 
 const allowedOrigins = [
   'http://localhost:3000',

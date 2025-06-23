@@ -22,9 +22,7 @@ export class GoogleRecaptchaVerifier implements RecaptchaVerifier {
       );
   
       const data = response.data;
-  
-      console.log("🔍 Resultado reCAPTCHA:", data);
-  
+    
       const isValid =
         data.success === true &&
         data.action === expectedAction &&

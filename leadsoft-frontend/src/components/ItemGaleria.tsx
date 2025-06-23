@@ -163,12 +163,12 @@ export default React.memo(function ItemGaleria({
   };
 
   useEffect(() => {
-    if (mostrarComentario) {
+    if (visualizarDetalhes) {
       buscarComentarios(id)
         .then(setComentarios)
         .catch(() => setComentarios([]));
     }
-  }, [mostrarComentario]);
+  }, [visualizarDetalhes]);
 
   return (
     <ItemGaleriaContainer ref={slideInRef} className="slide-out">

@@ -68,8 +68,11 @@ export const Input = styled.input`
 
   text-align: center;
   &[type="date"] {
+    -webkit-appearance: none;
+    appearance: none;
     min-height: 2.2rem; 
     padding: 0.5rem;
+    
   }
   &::placeholder {
     font-family: var(--font-body);

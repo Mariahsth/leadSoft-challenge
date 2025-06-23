@@ -33,7 +33,7 @@ export default function AdminPage() {
     <ProtectedRoute>
       <Header />
       <PainelSection>
-        <ContainerTitulo ref={slideInRef} className="slide-in">
+        <ContainerTitulo style={{marginTop:'2rem'}} ref={slideInRef} className="slide-in">
           <h1>Painel Admin</h1>
           <h3>Candidatos cadastrados</h3>
         </ContainerTitulo>

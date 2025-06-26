@@ -9,6 +9,7 @@ import { useState, useRef, useEffect, useCallback } from "react";
 import { usePathname } from "next/navigation";
 import { useRouter } from "next/navigation";
 import Cookies from "js-cookie";
+import Link from "next/link";
 
 const HeaderStyle = styled.header`
   display: flex;
@@ -81,7 +82,7 @@ const ContainerListaNav = styled.ul`
     gap: 2.5rem;
   }
 `;
-const ItemAncora = styled.a`
+const ItemAncora = styled(Link)`
   color: var(--secundary-color1);
   font-size: 1.2em;
   font-family: var(--font-title);
@@ -142,7 +143,6 @@ export default function Header() {
   function logout(){
     alert("Realizando logout");
     Cookies.remove("token");
-    router.push("/");
   }
 
   return (
@@ -163,9 +163,10 @@ export default function Header() {
                   <FiArrowLeft />
                   Voltar ao site
                 </ItemAncora>
+
               </li>
              <li>
-                <ItemAncora onClick={() => logout()}>
+                <ItemAncora onClick={() => logout()} href="/">
                   <FiLogOut />
                   Logout
                 </ItemAncora>

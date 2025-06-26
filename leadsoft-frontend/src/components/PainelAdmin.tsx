@@ -17,6 +17,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Cookies from "js-cookie";
 import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
+import Link from "next/link";
 
 export const PainelSection = styled(FormSection)`
   flex-direction: column;
@@ -93,7 +94,11 @@ export default function PainelAdmin() {
         (
           <ContainerColuna style={{ gap: "1rem", textAlign: "center" }}>
             <p>Você já está logado!</p>
-            <Botao style={{ width: "100%"}} onClick={() => router.push("/admin")}>Acessar Painel</Botao>
+            <Botao style={{ width: "100%"}} onClick={() => router.push("/admin")}>
+              <Link href="/admin" style={{color: 'var(--secundary-color12)'}}>
+                Acessar Painel
+              </Link>
+              </Botao>
           </ContainerColuna>
         )
         :

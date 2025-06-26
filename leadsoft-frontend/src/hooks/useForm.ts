@@ -31,7 +31,7 @@ export function useForm() {
   const handleImageChange = useCallback(async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
-
+    if (typeof window === "undefined") return; // Garantindo que resizeImage só roda no client
     try {
       const resized = await resizeImage(file);
       setImageFile(resized);

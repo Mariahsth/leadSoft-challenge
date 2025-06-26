@@ -18,7 +18,7 @@ const TituloInicio = styled(ContainerHorizontal)`
   gap: 1rem;
   font-size: 1.7em;
   padding: 1em 0;
-  text-align:center;
+  text-align: center;
   ${slideInStyle}
   @media (max-width: ${breakpoints.tablet}) {
     flex-direction: column;
@@ -76,7 +76,7 @@ const ContainerTextoInicio = styled(ContainerColuna)`
   justify-content: space-between;
   width: 80%;
   position: relative;
-
+  text-align:center;
   &::before {
     content: "";
     position: absolute;
@@ -109,7 +109,7 @@ const ContainerTextoInicio = styled(ContainerColuna)`
 const ConteudoTexto = styled(ContainerColuna)`
   margin: 3rem 0.5rem;
   gap: 0.7rem;
-  text-align:center;
+  text-align: center;
 `;
 
 export default function Inicio() {
@@ -119,10 +119,10 @@ export default function Inicio() {
   return (
     <ContainerInicio>
       <TituloInicio ref={slideInRef} className="slide-in">
-        <h1 >
+        <h1>
           Missão Marte com a <TextoDestaque>LeadSoft </TextoDestaque>
         </h1>
-        <div >
+        <div>
           <MdRocketLaunch color="var(--secundary-color5)" size={32} />
         </div>
       </TituloInicio>

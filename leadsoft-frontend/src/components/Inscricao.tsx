@@ -23,10 +23,12 @@ const ImgFoguete = styled.img`
   width: 15em;
   height: auto;
   border-bottom: 1px solid var(--secundary-color12);
+  
   @media (max-width: ${breakpoints.mobile}) {
     display: none;
   }
 `;
+
 
 export default function Inscricao() {
   const slideInRef = useSlideInOnView("slide-in", { threshold: 0.1 });
@@ -89,16 +91,19 @@ export default function Inscricao() {
     } catch (error: any) {
       if (typeof error === "object" && error !== null) {
         if ("field" in error && "message" in error) {
-          setFormErrors((prev) => ({ ...prev, [error.field as keyof FormFields]: error.message }));
+          setFormErrors((prev) => ({
+            ...prev,
+            [error.field as keyof FormFields]: error.message,
+          }));
           return;
         }
-    
+
         if ("errors" in error && typeof error.errors === "object") {
           setFormErrors(error.errors);
           return;
         }
       }
-    
+
       // Fallback se não for um erro conhecido
       alert(error.message || "Erro desconhecido");
     }
@@ -178,13 +183,14 @@ export default function Inscricao() {
           {previewUrl && <ImagePreview src={previewUrl} />}
 
           <ContainerBotao>
-            <Botao type="submit" disabled={isSubmitting} aria-busy={isSubmitting}>
+            <Botao
+              type="submit"
+              disabled={isSubmitting}
+              aria-busy={isSubmitting}
+            >
               {isSubmitting ? "Enviando..." : "Enviar"}
             </Botao>
-            <Botao
-              type="reset"
-              onClick={resetForm}
-            >
+            <Botao type="reset" onClick={resetForm}>
               Cancelar
             </Botao>
           </ContainerBotao>

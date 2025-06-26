@@ -177,7 +177,8 @@ export default React.memo(function ItemGaleria({
         <ImagemItemGaleria
           src={imagem}
           alt={`imagem de ${nome}`}
-
+          width={400}
+          height={300}
         />
       </ContainerImagem>
       <p>{legenda}</p>

@@ -2,6 +2,7 @@
 import { breakpoints } from "@/styles/breakPoints";
 import styled from "styled-components";
 import { slideInStyle } from "./slideAnimation";
+import Image from "next/image";
 
 export const FormSection=styled.section`
 display:flex;
@@ -161,7 +162,7 @@ export const ContainerItensGaleria = styled.div`
   margin-top: 2rem;
 `;
 
-export const ImagemItemGaleria = styled.img`
+export const ImagemItemGaleria = styled(Image)`
   width: 100%;
   height: auto;
   display: block;

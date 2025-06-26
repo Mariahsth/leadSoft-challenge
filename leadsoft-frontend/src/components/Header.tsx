@@ -23,8 +23,7 @@ const HeaderStyle = styled.header`
   left: 0;
   z-index: 1000;
   width: 100%;
-  background-color:var(--primary-color1);
-  
+  background-color: var(--primary-color1);
 
   @media (max-width: ${breakpoints.tablet}) {
     padding: 1rem;
@@ -32,7 +31,6 @@ const HeaderStyle = styled.header`
 
   @media (max-width: ${breakpoints.mobile}) {
     flex-direction: row-reverse;
-
   }
 `;
 const AncoraLogo = styled.a`
@@ -45,6 +43,7 @@ const AncoraLogo = styled.a`
 const Logo = styled.img`
   width: 90%;
 `;
+
 const Nav = styled.nav<{ $isOpen: boolean }>`
   width: 60%;
 
@@ -56,20 +55,20 @@ const Nav = styled.nav<{ $isOpen: boolean }>`
     top: 100%;
     left: 0;
     width: 50%;
-    min-height:100vh;
+    min-height: 100vh;
     background: var(--primary-color1);
     display: ${({ $isOpen }) => ($isOpen ? "block" : "none")};
     padding: 1rem 0;
     z-index: 999;
     border-top: 1px solid var(--secundary-color12);
-    border-right:1px solid var(--secundary-color12);
-    border-bottom:1px solid var(--secundary-color12);
+    border-right: 1px solid var(--secundary-color12);
+    border-bottom: 1px solid var(--secundary-color12);
   }
 `;
 const ContainerListaNav = styled.ul`
   display: flex;
   justify-content: center;
-  align-items:center;
+  align-items: center;
   width: 100%;
   gap: 5rem;
 
@@ -91,7 +90,7 @@ const ItemAncora = styled(Link)`
   align-items: center;
   text-align: center;
   gap: 0.2rem;
-  cursor:pointer;
+  cursor: pointer;
 
   &:hover {
     color: var(--primary-color2);
@@ -100,7 +99,6 @@ const ItemAncora = styled(Link)`
   @media (max-width: ${breakpoints.tablet}) {
     font-size: 1em;
   }
-
 `;
 const MenuToggle = styled.button`
   background: none;
@@ -116,7 +114,7 @@ const MenuToggle = styled.button`
 
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
-  const toggleMenu = useCallback(() => setMenuOpen(prev => !prev), []);
+  const toggleMenu = useCallback(() => setMenuOpen((prev) => !prev), []);
   const navRef = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
   const isAdminPage = pathname === "/admin";
@@ -132,15 +130,15 @@ export default function Header() {
         setMenuOpen(false);
       }
     };
-  
+
     document.addEventListener("mousedown", handleClickOutside);
-  
+
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [menuOpen]);
 
-  function logout(){
+  function logout() {
     alert("Realizando logout");
     Cookies.remove("token");
   }
@@ -149,7 +147,6 @@ export default function Header() {
     <HeaderStyle>
       <AncoraLogo href="#home">
         <Logo src="/logotipo-leadsoft-branco.svg" alt="Logo LeadSoft" />
-
       </AncoraLogo>
       <MenuToggle onClick={toggleMenu} aria-label="Abrir menu de navegação">
         {menuOpen ? <FiX /> : <FiMenu />}
@@ -158,25 +155,20 @@ export default function Header() {
         <ContainerListaNav>
           {isAdminPage ? (
             <>
-             <li>
+              <li>
                 <ItemAncora href="/">
                   <FiArrowLeft />
                   Voltar ao site
                 </ItemAncora>
-
               </li>
-             <li>
+              <li>
                 <ItemAncora onClick={() => logout()} href="/">
                   <FiLogOut />
                   Logout
                 </ItemAncora>
               </li>
-              
-
             </>
-          )
-          :
-          (
+          ) : (
             <>
               <li>
                 <ItemAncora href="#home">
@@ -203,8 +195,7 @@ export default function Header() {
                 </ItemAncora>
               </li>
             </>
-          )
-          }
+          )}
         </ContainerListaNav>
       </Nav>
     </HeaderStyle>

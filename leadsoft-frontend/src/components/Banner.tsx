@@ -4,6 +4,7 @@ import Slider from "react-slick";
 import { breakpoints } from "@/styles/breakPoints";
 import { useMemo } from "react";
 import type { Settings } from "react-slick";
+import Image from "next/image";
 
 const BannerContainer = styled.section`
   width: 100%;
@@ -54,13 +55,11 @@ const TitleOverlay = styled.h3`
   }
 `;
 
-const Slide = styled.div<{ $bg: string }>`
+const Slide = styled.div`
   width: 100%;
   height: 100%;
-  background-image: url(${({ $bg }) => `/${$bg}`});
-  background-size: cover;
-  background-position: 50% 55%;
 
+  position: relative;
 `;
 
 export default function Banner() {
@@ -82,7 +81,16 @@ export default function Banner() {
     <BannerContainer>
       <Slider {...settings} accessibility={true} >
         {images.map((src, i) => (
-          <Slide key={i} $bg={src} role="img" aria-label={`Imagem de fundo ${i + 1}`}/>
+          <Slide key={i}>
+              <Image
+                src={`/${src}`}
+                alt={`Imagem de fundo ${i + 1}`}
+                fill
+                priority={i === 0}
+                sizes="100vw"
+                style={{ objectFit: "cover", objectPosition: "center 55%" }}
+              />
+          </Slide>
         ))}
       </Slider>
       <TitleOverlay id='home' role="heading" aria-level={2}>Potencializando decisões com inteligência além da Terra</TitleOverlay>

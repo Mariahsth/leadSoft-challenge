@@ -1,8 +1,6 @@
 "use client";
 import ProtectedRoute from "@/components/ProtectedRoute";
-
 import Footer from "@/components/Footer";
-import Header from "@/components/Header";
 import { ContainerItensGaleria, ContainerTitulo } from "@/styles/ReusableStyle";
 import { PainelSection } from "@/components/PainelAdmin";
 import ItemGaleria from "@/components/ItemGaleria";
@@ -10,6 +8,7 @@ import { buscarCandidatos } from "@/services/candidateService";
 import { useEffect, useState } from "react";
 import { Candidate } from "@/types/Candidate";
 import { useSlideInOnView } from "@/hooks/useSlideInOnView";
+import HeaderClient from "@/components/Header/HeaderClient";
 
 export default function AdminPage() {
   const [candidatos, setCandidatos] = useState<Candidate[]>([]);
@@ -31,9 +30,13 @@ export default function AdminPage() {
 
   return (
     <ProtectedRoute>
-      <Header />
+      <HeaderClient />
       <PainelSection>
-        <ContainerTitulo style={{marginTop:'2rem'}} ref={slideInRef} className="slide-in">
+        <ContainerTitulo
+          style={{ marginTop: "2rem" }}
+          ref={slideInRef}
+          className="slide-in"
+        >
           <h1>Painel Admin</h1>
           <h3>Candidatos cadastrados</h3>
         </ContainerTitulo>
@@ -54,7 +57,7 @@ export default function AdminPage() {
                 dataNascimento={item.dateOfBirth}
                 email={item.email}
                 onDelete={(id) => {
-                  setCandidatos(prev => prev.filter(c => c.id !== id));
+                  setCandidatos((prev) => prev.filter((c) => c.id !== id));
                 }}
               />
             ))}

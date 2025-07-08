@@ -80,6 +80,8 @@ export default function InscricaoClient() {
             ...prev,
             [error.field as keyof FormFields]: error.message,
           }));
+          setIsSubmitting(false);
+
           return;
         }
 

@@ -1,6 +1,6 @@
 "use client";
 import Footer from "@/components/Footer";
-import Inicio from "@/components/Inicio";
+import Inicio from "@/components/Inicio/Inicio";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Inscricao from "@/components/Inscricao";

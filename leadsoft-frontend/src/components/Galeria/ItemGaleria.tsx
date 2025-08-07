@@ -1,70 +1,41 @@
-"use client";
+'use client';
 import { ItemGaleriaProps } from "@/types/ItemGaleriaTypes";
-import styled from "styled-components";
-import { FaComment, FaPlus, FaMinus, FaTrash } from "react-icons/fa";
-import { FiX, FiSend  } from "react-icons/fi";
+import {
+  ItemGaleriaContainer,
+  ContainerImagem,
+  ContainerBotaoComentar,
+  TextoBotao,
+  ContainerComentarios,
+  ExcluirComentario,
+} from "./ItemGaleriaStyle";
+
 import {
   Botao,
-  Card,
-  ContainerBotao,
-  ContainerColuna,
-  ContainerHorizontal,
   ImagemItemGaleria,
   Input,
+  ContainerColuna,
   TexAreaInput,
 } from "@/styles/ReusableStyle";
+
 import { useSlideInOnView } from "@/hooks/useSlideInOnView";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
-import { deleteCandidate } from "@/services/candidateService";
 import Cookies from "js-cookie";
-import { enviarComentario, buscarComentarios, deleteComment } from "@/services/commentService";
+import { deleteCandidate } from "@/services/candidateService";
+import {
+  enviarComentario,
+  buscarComentarios,
+  deleteComment,
+} from "@/services/commentService";
 import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
 import { Comment } from "@/types/Comment";
 import { formatCPF } from "@/utils/formatCpf";
 import { formatDate } from "@/utils/formatDate";
 import { ageCalculator } from "@/utils/ageCalculator";
+import { FaComment, FaPlus, FaMinus, FaTrash } from "react-icons/fa";
+import { FiX, FiSend } from "react-icons/fi";
+import React from "react";
 
-const ItemGaleriaContainer = styled(Card)`
-  padding: 1rem;
-  gap: 0.5rem;
-`;
-const ContainerImagem = styled(ContainerHorizontal)`
-  height: 100%;
-`;
-const ContainerBotaoComentar = styled(ContainerBotao)`
-  width: 100%;
-`;
-const TextoBotao = styled.span`
-  color: var(--secundary-color12);
-`;
-const ContainerComentarios=styled.div`
-display:flex;
-text-align:left;
-justify-content:center;
-align-items:center;
-width:100%;
-gap:0.3rem;
-border:1px solid var(--secundary-color9);
-border-radius:16px;
-padding:0.5rem;
-margin-bottom:0.5rem;
-
-&:hover{
-border:1px solid var(--primary-color3);
-  p{
-    color:var(--primary-color3);
-
-  }
-}
-`
-const ExcluirComentario=styled(FiX)`
-cursor:pointer;
-
-&:hover{
-color:var(--primary-color3);
-}
-`
 export default React.memo(function ItemGaleria({
   id,
   nome,
@@ -97,19 +68,18 @@ export default React.memo(function ItemGaleria({
     try {
       await deleteCandidate(id, token);
       alert("Candidato excluído com sucesso!");
-      if (onDelete) onDelete(id);
+      onDelete?.(id);
     } catch (err: any) {
       alert(err.message);
     }
   };
 
-  const handleDeleteComment = async (comment:Comment) => {
-
+  const handleDeleteComment = async (comment: Comment) => {
     if (!comment.id) {
       alert("ID do comentário não encontrado.");
       return;
     }
-    
+
     if (!confirm(`Deseja realmente excluir o comentário de ${comment.author}?`)) return;
 
     const token = Cookies.get("token");
@@ -155,7 +125,7 @@ export default React.memo(function ItemGaleria({
       setComentarios(novos);
       setAuthor("");
       setContent("");
-      setMostrarComentario(!mostrarComentario)
+      setMostrarComentario(false);
       alert("Comentário enviado com sucesso!");
     } catch (err: any) {
       alert(err.message || "Erro ao comentar");
@@ -174,17 +144,12 @@ export default React.memo(function ItemGaleria({
     <ItemGaleriaContainer ref={slideInRef} className="slide-out">
       <h2>{nome}</h2>
       <ContainerImagem>
-        <ImagemItemGaleria
-          src={imagem}
-          alt={`imagem de ${nome}`}
-          width={400}
-          height={300}
-        />
+        <ImagemItemGaleria src={imagem} alt={`imagem de ${nome}`} width={400} height={300} />
       </ContainerImagem>
       <p>{legenda}</p>
+
       {isAdminPage ? (
         <>
-          
           {visualizarDetalhes && (
             <>
               <div style={{ textAlign: "left" }}>
@@ -194,46 +159,33 @@ export default React.memo(function ItemGaleria({
                 <p><strong>Idade:</strong> {ageCalculator(dataNascimento)} anos</p>
               </div>
               <h5>Comentários:</h5>
-              {comentarios.length > 0 ? 
-              (
-                <ul >
+              {comentarios.length > 0 ? (
+                <ul>
                   {comentarios.map((c, i) => (
-                    <li key={i} >
-                      <ContainerComentarios >
+                    <li key={i}>
+                      <ContainerComentarios>
                         <ContainerColuna>
-                          <h5 >{c.author}:</h5>
-                          <p style={{textAlign:'center'}}>{c.content}</p>
+                          <h5>{c.author}:</h5>
+                          <p style={{ textAlign: "center" }}>{c.content}</p>
                         </ContainerColuna>
-                        <ExcluirComentario onClick={() => handleDeleteComment(c)}/>
+                        <ExcluirComentario onClick={() => handleDeleteComment(c)} />
                       </ContainerComentarios>
                     </li>
                   ))}
                 </ul>
-              )
-              : 
-              (
+              ) : (
                 <p>Nenhum comentário</p>
-              )
-            
-            }
+              )}
             </>
           )}
           <Botao onClick={() => {
-            setVisualizarDetalhes(!visualizarDetalhes)
-            setMostrarComentario(!mostrarComentario)
-            }}>
-            {visualizarDetalhes ? (
-              <>
-                <TextoBotao>Ver menos</TextoBotao>
-                <FaMinus />
-              </>
-            ) : (
-              <>
-                <TextoBotao>Ver mais</TextoBotao>
-                <FaPlus />
-              </>
-            )}
+            setVisualizarDetalhes(!visualizarDetalhes);
+            setMostrarComentario(!mostrarComentario);
+          }}>
+            <TextoBotao>{visualizarDetalhes ? "Ver menos" : "Ver mais"}</TextoBotao>
+            {visualizarDetalhes ? <FaMinus /> : <FaPlus />}
           </Botao>
+
           <Botao onClick={handleDelete} style={{ marginTop: "0" }}>
             <TextoBotao>Excluir</TextoBotao>
             <FaTrash />
@@ -259,33 +211,18 @@ export default React.memo(function ItemGaleria({
               />
               <Botao onClick={novoComentario}>
                 <TextoBotao>Enviar</TextoBotao>
-                <FiSend/>
+                <FiSend />
               </Botao>
             </ContainerColuna>
           )}
-          <ContainerBotaoComentar >
-            <Botao
-              onClick={() => setMostrarComentario(!mostrarComentario)}
-              style={{ marginTop: "0" }}
-            >
-              {mostrarComentario ? (
-                <>
-                  <TextoBotao>Cancelar</TextoBotao>
-                  <FiX />
-                </>
-              ) : (
-                <>
-                  <TextoBotao>Comentar</TextoBotao>
-                  <FaComment />
-                </>
-              )}
+          <ContainerBotaoComentar>
+            <Botao onClick={() => setMostrarComentario(!mostrarComentario)} style={{ marginTop: "0" }}>
+              <TextoBotao>{mostrarComentario ? "Cancelar" : "Comentar"}</TextoBotao>
+              {mostrarComentario ? <FiX /> : <FaComment />}
             </Botao>
           </ContainerBotaoComentar>
-          
         </>
       )}
     </ItemGaleriaContainer>
   );
 });
-
-

@@ -1,4 +1,5 @@
 import { createGlobalStyle } from 'styled-components';
+import { breakpoints } from './breakPoints';
 
 const GlobalStyles = createGlobalStyle`
   :root {
@@ -76,9 +77,14 @@ const GlobalStyles = createGlobalStyle`
   p, a, span, li,  button, label {
     font-family: var(--font-body);
     color:var(--secundary-color9);
+    font-size:18px;
     
   }
-
+  @media (max-width: ${breakpoints.mobile}) {
+    p, a, span, li,  button, label {
+    font-size:16px;
+  }
+  }
 
 `;
 

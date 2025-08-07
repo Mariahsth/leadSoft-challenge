@@ -3,7 +3,7 @@ import ProtectedRoute from "@/components/ProtectedRoute";
 import Footer from "@/components/Footer";
 import { ContainerItensGaleria, ContainerTitulo } from "@/styles/ReusableStyle";
 import { PainelSection } from "@/components/PainelAdmin";
-import ItemGaleria from "@/components/ItemGaleria";
+import ItemGaleria from "@/components/Galeria/ItemGaleria";
 import { buscarCandidatos } from "@/services/candidateService";
 import { useEffect, useState } from "react";
 import { Candidate } from "@/types/Candidate";

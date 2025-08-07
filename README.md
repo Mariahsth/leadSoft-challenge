@@ -1,6 +1,7 @@
 # 🚀 Desafio Full Stack – LeadSoft
 Landing Page de inscrição para missão espacial
-![alt text](leadsoft-frontend/public/inicio.PNG)
+<img width="1895" height="914" alt="leadsoft" src="https://github.com/user-attachments/assets/97ee76ee-8573-41a7-8c8e-b8757cf47ae5" />
+
 Este repositório contém a solução para o desafio técnico full stack proposto pela LeadSoft.
 
 🔗 Link do projeto no ar: https://lead-soft-challenge.vercel.app/

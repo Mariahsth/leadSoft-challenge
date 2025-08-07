@@ -27,21 +27,21 @@ Este repositório contém a solução para o desafio técnico full stack propost
 ## 🔨 Recursos do aplicativo
 - Área pública:  
     - Inscrição de candidatos com validação reCAPTCHA v3   
-    ![alt text](leadsoft-frontend/public/Video_250622115529.gif)
+    ![inscrição de candidatos](leadsoft-frontend/public/Video_250622115529.gif)
         - Validação de nome, CPF, e-mail, data de nascimento, legenda e imagem  
-        ![alt text](leadsoft-frontend/public/Video_250622115323.gif)
+        ![validação de erros](leadsoft-frontend/public/Video_250622115323.gif)
     - Galeria com exibição de candidatos inscritos com nome, foto e legenda 
-     ![alt text](leadsoft-frontend/public/galeria.PNG)
+     ![galeria](leadsoft-frontend/public/galeria.PNG)
     - Funcionalidade de enviar comentários para candidatos inscritos com validação reCAPTCHA v3 
-    ![alt text](leadsoft-frontend/public/Video_250622115833.gif)
+    ![comentando na galeria](leadsoft-frontend/public/Video_250622115833.gif)
 - Área restrita com login e senha de administradores com validação reCAPTCHA v3:  
-![alt text](leadsoft-frontend/public/paineladmin.PNG)
+![login no painel admin](leadsoft-frontend/public/paineladmin.PNG)
     - Painel privado com informações de candidatos  
-    ![alt text](leadsoft-frontend/public/paineladmin-restrito.PNG)
+    ![painel admin](leadsoft-frontend/public/paineladmin-restrito.PNG)
     - Opção de deletar comentários  
-     ![alt text](leadsoft-frontend/public/Video_250622120157.gif)
+     ![deletando comentários](leadsoft-frontend/public/Video_250622120157.gif)
     - Opção de deletar candidatos inscritos  
-    ![alt text](leadsoft-frontend/public/Video_250622120548.gif)
+    ![deletando candidatos](leadsoft-frontend/public/Video_250622120548.gif)
 ## 🛠️ Tecnologias utilizadas
 
 ### Front-end

@@ -5,7 +5,7 @@ import {
   ContainerHorizontal,
   ContainerBotao,
 } from "@/styles/ReusableStyle";
-
+import { FaComment } from "react-icons/fa";
 export const ItemGaleriaContainer = styled(Card)`
   padding: 1rem;
   gap: 0.5rem;
@@ -17,6 +17,7 @@ export const ContainerImagem = styled(ContainerHorizontal)`
 
 export const ContainerBotaoComentar = styled(ContainerBotao)`
   width: 100%;
+
 `;
 
 export const TextoBotao = styled.span`

@@ -100,7 +100,7 @@ export const TexAreaInput = styled.textarea`
 
 export const Botao = styled.button`
 padding: 0.5rem 1rem;
-width: 50%;
+
 border-radius: 8px;
 color: var(--secundary-color12);
 font-weight: 800;
@@ -117,6 +117,7 @@ background: linear-gradient(
   justify-content: center;
   box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.25);
   margin-top:1rem;
+
   
   &:hover{
     background: linear-gradient(

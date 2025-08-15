@@ -12,9 +12,23 @@ export const ContainerInicio = styled(ContainerColuna)`
 `;
 
 export const CardInicio = styled(Card)`
+
+  h2 {
+    font-size:32px;
+  }
+  h4 {
+    font-size:28px;
+  }
   @media (max-width: ${breakpoints.tablet}) {
     padding:1rem;
     margin-top:0;
+
+    h2 {
+    font-size:26px;
+    }
+    h4 {
+      font-size:18px;
+    }
   }
 `
 
@@ -49,9 +63,20 @@ export const ConteudoInicio = styled.div`
 
 export const ConteudoTexto = styled(ContainerColuna)`
   margin: 3rem 0.5rem;
-  gap: 1.5rem;
+  gap: 1rem;
   text-align: center;
 
+  p {
+    font-size:22px;
+
+  }
+
+  @media (max-width: ${breakpoints.tablet}) {
+    p {
+    font-size:16px;
+
+  }
+  }
   @media (max-width: ${breakpoints.mobile}) {
     gap: 1rem;
   }
